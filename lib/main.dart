@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const d_green = Color(0xFF54D3C2);
-const d_grey = Color(0xFF424242);
+const dGreen = Color(0xFF6AC045);
+const dGrey = Color(0xFF717171);
 
 void main() {
   runApp(const MyApp());
@@ -42,25 +42,50 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(70);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_outlined,
-          color: d_grey,
-          size: 20,
+      leadingWidth: 100,
+      leading: Row(children: [
+        IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+            size: 20,
+          ),
+          onPressed: () {},
         ),
-        onPressed: () {},
-      ),
-      title: Text(
-        'Event',
-        style: GoogleFonts.nunito(
-            color: Colors.black, fontSize: 22, fontWeight: FontWeight.w800),
-      ),
+        Padding(
+          padding: const EdgeInsets.only(left: 0.0),
+          child: Image.asset(
+            "assets/images/fav.png",
+          ),
+        ),
+      ]),
+      actions: [
+        const CircleAvatar(
+          backgroundImage: AssetImage(
+            "assets/images/profile-imgs/img-13.jpg",
+          ),
+        ),
+        Stack(children: [
+          MaterialButton(
+            elevation: 0,
+            height: 40,
+            color: Color(0XFAF5F5FF),
+            onPressed: () {},
+            shape: const CircleBorder(),
+            child: const Icon(
+              Icons.sunny,
+              color: dGrey,
+              size: 20,
+            ),
+          )
+        ])
+      ],
       centerTitle: true,
     );
   }
@@ -76,6 +101,49 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   bool isHover = false;
 
+  final List hotelList = [
+    {
+      "title": "Grand Royl Hotels",
+      "place": "Wembley, London",
+      "distance": 2,
+      "review": 36,
+      "picture": "assets/images/event-imgs/img-2.jpg",
+      "price": "100",
+    },
+    {
+      "title": "Queen Hotel",
+      "place": "Grand Royl Hotels",
+      "distance": 3,
+      "review": 13,
+      "picture": "assets/images/event-imgs/img-2.jpg",
+      "price": "200",
+    },
+    {
+      "title": "Hilton",
+      "place": "Wembley, London",
+      "distance": 6,
+      "review": 88,
+      "picture": "assets/images/event-imgs/img-2.jpg",
+      "price": "150",
+    },
+    {
+      "title": "Grand Royl Hotels",
+      "place": "Wembley, London",
+      "distance": 11,
+      "review": 36,
+      "picture": "assets/images/event-imgs/img-2.jpg",
+      "price": "700",
+    },
+    {
+      "title": "Grand Royl Hotels",
+      "place": "Wembley, London",
+      "distance": 2,
+      "review": 36,
+      "picture": "assets/images/event-imgs/img-2.jpg",
+      "price": "1000",
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,56 +151,37 @@ class _EventScreenState extends State<EventScreen> {
       color: Colors.white,
       child: Column(
         children: [
-           Center(
-            child: Text("Home Page",
-                style: GoogleFonts.nunito(
-                    color: Colors.black, fontSize: 22, fontWeight: FontWeight.w800),
+          Container(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("550 hotels founds",
+                    style: GoogleFonts.nunito(
+                      color: Colors.black,
+                      fontSize: 15,
+                    )),
+                Row(children: [
+                  Text("Filters",
+                      style: GoogleFonts.nunito(
+                        color: Colors.black,
+                        fontSize: 15,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.filter_list_outlined,
+                        color: dGreen,
+                        size: 25,
+                      ))
+                ])
+              ],
             ),
           ),
-           Center(
-            child: Text("Home Page",
-                style: GoogleFonts.nunito(
-                    color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-          ),
-           Center(
-            child: Text("Home Page",
-                style: GoogleFonts.nunito(
-                    color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          ElevatedButton(
-            onPressed: () async {},
-            onHover: (val) {
-              setState(() {
-                isHover = val;
-              });
-            },
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.red),
-                overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.black45;
-                    } //<-- SEE HERE
-                    return null; // Defer to the widget's default.
-                  },
-                ),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10))),
-                padding: MaterialStateProperty.all(
-                  const EdgeInsets.symmetric(vertical: 10),
-                )),
-            child: const Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "Connexion",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
+          Column(
+            children: hotelList.map((hotel) {
+              return HotelCard(hotelData: hotel);
+            }).toList(),
           )
         ],
       ),
@@ -178,12 +227,12 @@ class HotelCard extends StatelessWidget {
                     top: 5,
                     right: -15,
                     child: MaterialButton(
-                      color: Colors.white,
+                      color: dGreen,
                       onPressed: () {},
                       shape: const CircleBorder(),
                       child: const Icon(
-                        Icons.favorite_border_rounded,
-                        color: d_green,
+                        Icons.bookmark_border,
+                        color: Colors.white,
                         size: 20,
                       ),
                     ))
@@ -227,7 +276,7 @@ class HotelCard extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.place,
-                      color: d_green,
+                      color: dGreen,
                       size: 14.0,
                     ),
                     Text("${hotelData['distance'].toString()} km to city",
@@ -255,27 +304,27 @@ class HotelCard extends StatelessWidget {
                   children: const [
                     Icon(
                       Icons.star_rate,
-                      color: d_green,
+                      color: dGreen,
                       size: 14,
                     ),
                     Icon(
                       Icons.star_rate,
-                      color: d_green,
+                      color: dGreen,
                       size: 14,
                     ),
                     Icon(
                       Icons.star_rate,
-                      color: d_green,
+                      color: dGreen,
                       size: 14,
                     ),
                     Icon(
                       Icons.star_rate,
-                      color: d_green,
+                      color: dGreen,
                       size: 14,
                     ),
                     Icon(
                       Icons.star_border,
-                      color: d_green,
+                      color: dGreen,
                       size: 14,
                     ),
                   ],
