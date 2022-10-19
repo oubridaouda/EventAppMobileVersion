@@ -75,7 +75,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           MaterialButton(
             elevation: 0,
             height: 40,
-            color: Color(0XFAF5F5FF),
+            color: const Color(0xFFE8F7F7),
             onPressed: () {},
             shape: const CircleBorder(),
             child: const Icon(
