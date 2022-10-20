@@ -1,8 +1,10 @@
+import 'package:event_mobile_app/colors/colors.dart';
+import 'package:event_mobile_app/menu/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const dGreen = Color(0xFF6AC045);
-const dGrey = Color(0xFF717171);
+
+GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 void main() {
   runApp(const MyApp());
@@ -16,18 +18,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Hotel Booking',
+      title: 'DuckEvent',
       home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: NavDrawer(scaffoldKey: _scaffoldKey),
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -47,6 +51,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       backgroundColor: Colors.white,
       leadingWidth: 100,
       leading: Row(children: [
@@ -56,7 +61,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.black,
             size: 20,
           ),
-          onPressed: () {},
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
         ),
         Padding(
           padding: const EdgeInsets.only(left: 0.0),
@@ -66,25 +73,36 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ]),
       actions: [
-        const CircleAvatar(
-          backgroundImage: AssetImage(
-            "assets/images/profile-imgs/img-13.jpg",
-          ),
-        ),
-        Stack(children: [
-          MaterialButton(
-            elevation: 0,
-            height: 40,
-            color: const Color(0xFFE8F7F7),
-            onPressed: () {},
-            shape: const CircleBorder(),
-            child: const Icon(
-              Icons.sunny,
-              color: dGrey,
-              size: 20,
+        Row(
+          children: const [
+            CircleAvatar(
+              backgroundImage: AssetImage(
+                "assets/images/profile-imgs/img-13.jpg",
+              ),
             ),
-          )
-        ])
+            Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black,
+            )
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 5.0),
+          child: Stack(children: [
+            MaterialButton(
+              elevation: 0,
+              height: 40,
+              color: dBackgroud,
+              onPressed: () {},
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.sunny,
+                color: dGrey,
+                size: 20,
+              ),
+            )
+          ]),
+        )
       ],
       centerTitle: true,
     );
@@ -101,9 +119,9 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   bool isHover = false;
 
-  final List hotelList = [
+  final List eventList = [
     {
-      "title": "Grand Royl Hotels",
+      "title": "Grand Royl Event",
       "place": "Wembley, London",
       "distance": 2,
       "review": 36,
@@ -112,7 +130,7 @@ class _EventScreenState extends State<EventScreen> {
     },
     {
       "title": "Queen Hotel",
-      "place": "Grand Royl Hotels",
+      "place": "Grand Royl Event",
       "distance": 3,
       "review": 13,
       "picture": "assets/images/event-imgs/img-2.jpg",
@@ -127,7 +145,7 @@ class _EventScreenState extends State<EventScreen> {
       "price": "150",
     },
     {
-      "title": "Grand Royl Hotels",
+      "title": "Grand Royl Event",
       "place": "Wembley, London",
       "distance": 11,
       "review": 36,
@@ -135,7 +153,7 @@ class _EventScreenState extends State<EventScreen> {
       "price": "700",
     },
     {
-      "title": "Grand Royl Hotels",
+      "title": "Grand Royl Event",
       "place": "Wembley, London",
       "distance": 2,
       "review": 36,
@@ -147,40 +165,20 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: dBackgroud,
       padding: const EdgeInsets.all(10),
-      color: Colors.white,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("550 hotels founds",
-                    style: GoogleFonts.nunito(
-                      color: Colors.black,
-                      fontSize: 15,
-                    )),
-                Row(children: [
-                  Text("Filters",
-                      style: GoogleFonts.nunito(
-                        color: Colors.black,
-                        fontSize: 15,
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.filter_list_outlined,
-                        color: dGreen,
-                        size: 25,
-                      ))
-                ])
-              ],
+              children: [Container()],
             ),
           ),
           Column(
-            children: hotelList.map((hotel) {
-              return HotelCard(hotelData: hotel);
+            children: eventList.map((hotel) {
+              return eventCard(hotelData: hotel);
             }).toList(),
           )
         ],
@@ -189,20 +187,20 @@ class _EventScreenState extends State<EventScreen> {
   }
 }
 
-class HotelCard extends StatelessWidget {
+class eventCard extends StatelessWidget {
   final Map hotelData;
 
-  const HotelCard({Key? key, required this.hotelData}) : super(key: key);
+  const eventCard({Key? key, required this.hotelData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      height: 230,
+      height: 400,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(18)),
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -213,10 +211,10 @@ class HotelCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 140,
+            height: 200,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(18), topRight: Radius.circular(18)),
+                  topLeft: Radius.circular(5), topRight: Radius.circular(5)),
               color: Colors.red,
               image: DecorationImage(
                   image: AssetImage(hotelData['picture']), fit: BoxFit.cover),
@@ -252,25 +250,20 @@ class HotelCard extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 50),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Text("\$ ${hotelData['price']}",
                     style: GoogleFonts.nunito(
                       color: Colors.black,
                       fontWeight: FontWeight.w800,
                       fontSize: 18,
-                    )),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(hotelData['place'],
-                    style: GoogleFonts.nunito(
-                      color: Colors.grey[500],
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
                     )),
                 Row(
                   children: [
@@ -332,12 +325,14 @@ class HotelCard extends StatelessWidget {
                 const SizedBox(
                   width: 20,
                 ),
-                Text("${hotelData['review'].toString()} Review",
-                    style: GoogleFonts.nunito(
-                      color: Colors.grey[500],
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ))
+                Text(
+                  "${hotelData['review'].toString()} Review",
+                  style: GoogleFonts.nunito(
+                    color: Colors.grey[500],
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ),
               ],
             ),
           ),
