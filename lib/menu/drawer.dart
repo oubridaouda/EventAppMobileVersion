@@ -1,6 +1,9 @@
 import 'package:event_mobile_app/colors/colors.dart';
+import 'package:event_mobile_app/screen/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavDrawer extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -12,6 +15,8 @@ class NavDrawer extends StatefulWidget {
 }
 
 class _NavDrawerState extends State<NavDrawer> {
+  final storage = FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -39,6 +44,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 semanticsLabel: "DuckEvent",
                               ),
                               MaterialButton(
+                                disabledElevation: 0,
                                 elevation: 0,
                                 height: 40,
                                 minWidth: 40,
@@ -68,7 +74,16 @@ class _NavDrawerState extends State<NavDrawer> {
                           padding: const EdgeInsets.all(12),
                           primary: dGreen,
                         ),
-                        onPressed: () {},
+                        onPressed: () async{
+                          final logged = await SharedPreferences.getInstance();
+                          logged.setBool("isLoggedIn", false);
+                          print(storage);
+                          storage.deleteAll();
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
+                          setState((){
+
+                          });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [

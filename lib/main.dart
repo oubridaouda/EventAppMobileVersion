@@ -1,25 +1,32 @@
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/menu/drawer.dart';
+import 'package:event_mobile_app/screen/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final logged = await SharedPreferences.getInstance();
+  final isLoggedIn = logged.getBool('isLoggedIn') ?? false;
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isLoggedIn;
+  MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
+  var isLogin = true;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'DuckEvent',
-      home: HomePage(),
+      home: isLoggedIn ? HomePage(): LoginPage(),
     );
   }
 }
@@ -254,7 +261,7 @@ class eventCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.only(top: 30),
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,29 +269,8 @@ class eventCard extends StatelessWidget {
                 Text("\$ ${hotelData['price']}",
                     style: GoogleFonts.nunito(
                       color: Colors.black,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w500,
                       fontSize: 18,
-                    )),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.place,
-                      color: dGreen,
-                      size: 14.0,
-                    ),
-                    Text("${hotelData['distance'].toString()} km to city",
-                        style: GoogleFonts.nunito(
-                          color: Colors.grey[500],
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                        ))
-                  ],
-                ),
-                Text('Per night',
-                    style: GoogleFonts.nunito(
-                      color: Colors.grey[500],
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
                     )),
               ],
             ),
@@ -296,27 +282,7 @@ class eventCard extends StatelessWidget {
                 Row(
                   children: const [
                     Icon(
-                      Icons.star_rate,
-                      color: dGreen,
-                      size: 14,
-                    ),
-                    Icon(
-                      Icons.star_rate,
-                      color: dGreen,
-                      size: 14,
-                    ),
-                    Icon(
-                      Icons.star_rate,
-                      color: dGreen,
-                      size: 14,
-                    ),
-                    Icon(
-                      Icons.star_rate,
-                      color: dGreen,
-                      size: 14,
-                    ),
-                    Icon(
-                      Icons.star_border,
+                      Icons.calendar_today_outlined,
                       color: dGreen,
                       size: 14,
                     ),
