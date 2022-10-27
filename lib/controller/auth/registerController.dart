@@ -14,6 +14,12 @@ class RegisterController {
   var passController = TextEditingController();
   var confirmPassController = TextEditingController();
 
+
+  String modalTitle = "";
+  String modalMessage = "";
+  bool openModal= false;
+  bool modalStatus= false;
+
   // Create storage
   final storage = FlutterSecureStorage();
 
@@ -25,12 +31,16 @@ class RegisterController {
       "firstname": firstNameController.text,
       "lastname": lastNameController.text,
       "username": emailController.text,
-      "password": passController.text
+      "password": passController.text,
+      "recaptchaType" : "v2"
     });
     var result = json.decode(response.body);
 
     if (response.statusCode == 200 && result['status'] == 1) {
       //Create new token
+      openModal = false;
+      modalTitle = "";
+      modalMessage = "";
       token(storage, result['token'], result['username']);
 // Write value
       String? value = await storage.read(key: 'jwt');
@@ -40,6 +50,9 @@ class RegisterController {
           .push(MaterialPageRoute(builder: (context) => HomePage()));
       print(value);
     } else {
+      openModal = true;
+      modalTitle = result["title"];
+      modalMessage = result["message"];
       print(response.body);
     }
   }

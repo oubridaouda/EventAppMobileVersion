@@ -1,14 +1,14 @@
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/menu/drawer.dart';
-import 'package:event_mobile_app/screen/login.dart';
+import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final logged = await SharedPreferences.getInstance();
   final isLoggedIn = logged.getBool('isLoggedIn') ?? false;
@@ -17,6 +17,7 @@ void main() async{
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
+
   MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
   var isLogin = true;
 
@@ -26,20 +27,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'DuckEvent',
-      home: isLoggedIn ? HomePage(): LoginPage(),
+      home: isLoggedIn ? HomePage() : LoginPage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-   const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(scaffoldKey: _scaffoldKey),
-      appBar: const MyAppBar(),
+      appBar:  MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [EventScreen()],
@@ -50,7 +51,8 @@ class HomePage extends StatelessWidget {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({Key? key}) : super(key: key);
+  MyAppBar({Key? key}) : super(key: key);
+  final storage = FlutterSecureStorage();
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -81,12 +83,21 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ]),
       actions: [
         Row(
-          children: const [
-            CircleAvatar(
-              backgroundImage: AssetImage(
-                "assets/images/profile-imgs/img-13.jpg",
-              ),
-            ),
+          children: [
+            GestureDetector(
+                onTap: () async {
+                  final logged = await SharedPreferences.getInstance();
+                  logged.setBool("isLoggedIn", false);
+                  print(storage);
+                  storage.deleteAll();
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                },
+                child: const CircleAvatar(
+                  backgroundImage: AssetImage(
+                    "assets/images/profile-imgs/img-13.jpg",
+                  ),
+                )),
             Icon(
               Icons.arrow_drop_down,
               color: Colors.black,
