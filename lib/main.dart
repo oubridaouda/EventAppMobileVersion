@@ -1,12 +1,15 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/menu/drawer.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+AppColors appColor = AppColors();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,11 +27,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'DuckEvent',
-      home: isLoggedIn ? HomePage() : LoginPage(),
-    );
+    return AdaptiveTheme(
+        light: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.red,
+        ),
+        dark: ThemeData(
+            brightness: Brightness.dark, primarySwatch: Colors.orange),
+        initial: AdaptiveThemeMode.light,
+        builder: (theme, darkTheme) => MaterialApp(
+              theme: theme,
+              darkTheme: darkTheme,
+              debugShowCheckedModeBanner: false,
+              title: 'DuckEvent',
+              home: isLoggedIn ? HomePage() : LoginPage(),
+            ));
   }
 }
 
@@ -40,7 +53,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(scaffoldKey: _scaffoldKey),
-      appBar:  MyAppBar(),
+      appBar: MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [EventScreen()],
@@ -50,18 +63,61 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  MyAppBar({Key? key}) : super(key: key);
-  final storage = FlutterSecureStorage();
+class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
+  @override
+  _MyAppBarState createState() => _MyAppBarState();
+
+  // you can replace 100 to whatever value you wish to use
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
+}
+
+class _MyAppBarState extends State<MyAppBar> {
+  final storage = FlutterSecureStorage();
+  bool darkmode = false;
+  dynamic saveThemeMode;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentTheme();
+  }
+
+  Future getCurrentTheme() async {
+    saveThemeMode = await AdaptiveTheme.getThemeMode();
+    dynamic iconAddress;
+
+    if (saveThemeMode.toString() == "AdaptiveThemeMode.dark") {
+      print("thème claire");
+
+      setState(() {
+        appColor.dBackgroud = const Color(0xFFE8F7F7);
+        appColor.btnColor = const Color(0xFFE8F7F7);
+        appColor.dWhite = const Color(0xFFFFFFFF);
+
+        AdaptiveTheme.of(context).setLight();
+        darkmode = false;
+        iconAddress = Icon(Icons.shield_moon_outlined);
+      });
+    } else {
+      print("thème sombre");
+      setState(() {
+        appColor.dBackgroud = const Color(0xFF111315);
+        appColor.btnColor = Color(0xFF6AC045);
+        appColor.dWhite = const Color(0xFF1A1D1F);
+        iconAddress = Icon(Icons.sunny);
+        AdaptiveTheme.of(context).setDark();
+        darkmode = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: appColor.dWhite,
       leadingWidth: 100,
       leading: Row(children: [
         IconButton(
@@ -98,7 +154,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     "assets/images/profile-imgs/img-13.jpg",
                   ),
                 )),
-            Icon(
+            const Icon(
               Icons.arrow_drop_down,
               color: Colors.black,
             )
@@ -110,14 +166,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             MaterialButton(
               elevation: 0,
               height: 40,
-              color: dBackgroud,
-              onPressed: () {},
+              color: appColor.btnColor,
+              onPressed: () {
+                getCurrentTheme();
+              },
               shape: const CircleBorder(),
-              child: const Icon(
-                Icons.sunny,
-                color: dGrey,
-                size: 20,
-              ),
+              child: darkmode ? const FaIcon(FontAwesomeIcons.solidMoon) :const FaIcon(FontAwesomeIcons.solidSun),
             )
           ]),
         )
@@ -183,7 +237,7 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: dBackgroud,
+      color: appColor.dBackgroud,
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
@@ -217,15 +271,9 @@ class eventCard extends StatelessWidget {
       height: 400,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: appColor.dWhite,
           borderRadius: const BorderRadius.all(Radius.circular(5)),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.shade200,
-                spreadRadius: 4,
-                blurRadius: 6,
-                offset: const Offset(0, 3)),
-          ]),
+          ),
       child: Column(
         children: [
           Container(
@@ -243,7 +291,7 @@ class eventCard extends StatelessWidget {
                     top: 5,
                     right: -15,
                     child: MaterialButton(
-                      color: dGreen,
+                      color: appColor.dGreen,
                       onPressed: () {},
                       shape: const CircleBorder(),
                       child: const Icon(
@@ -263,7 +311,6 @@ class eventCard extends StatelessWidget {
                 Text(
                   hotelData['title'],
                   style: GoogleFonts.nunito(
-                    color: Colors.black,
                     fontWeight: FontWeight.w800,
                     fontSize: 18,
                   ),
@@ -279,7 +326,6 @@ class eventCard extends StatelessWidget {
               children: [
                 Text("\$ ${hotelData['price']}",
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     )),
@@ -291,10 +337,10 @@ class eventCard extends StatelessWidget {
             child: Row(
               children: [
                 Row(
-                  children: const [
+                  children: [
                     Icon(
                       Icons.calendar_today_outlined,
-                      color: dGreen,
+                      color: appColor.dGreen,
                       size: 14,
                     ),
                   ],

@@ -5,8 +5,9 @@ import 'package:event_mobile_app/screen/auth/resetPassword.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+AppColors appColor = AppColors();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -83,18 +84,18 @@ class _LoginPageState extends State<LoginPage> {
                     errorText: _submitted ? _errorText : null,
                     hintText: "Entrez votre email",
                     filled: true,
-                    fillColor: InputColor,
-                    enabledBorder: const OutlineInputBorder(
+                    fillColor: appColor.InputColor,
+                    enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color: InputBorderColor,
+                        color: appColor.InputBorderColor,
                       ),
                     ),
                     errorBorder: const OutlineInputBorder(
@@ -124,10 +125,11 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ResetPassword()));
                       },
-                      child: const Text(
+                      child:  Text(
                         "Mot de passe oublié?",
                         style: TextStyle(
-                            color: dGreen, fontWeight: FontWeight.w500),
+                            color: appColor.dGreen,
+                            fontWeight: FontWeight.w500),
                       ),
                     )
                   ],
@@ -141,20 +143,20 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (textPass) => setState(() => textPassword),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: InputColor,
+                    fillColor: appColor.InputColor,
                     errorText: _submitted ? _errorPassword : null,
                     hintText: 'Entrez votre mot de passe',
-                    enabledBorder: const OutlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
                     errorBorder: const OutlineInputBorder(
                       //Outline border type for TextFeild
@@ -168,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () => setState(() => _isSecret = !_isSecret),
                       child: Icon(
                         !_isSecret ? Icons.visibility : Icons.visibility_off,
-                        color: dGrey,
+                        color: appColor.dGrey,
                       ),
                     ),
                   ),
@@ -185,25 +187,24 @@ class _LoginPageState extends State<LoginPage> {
                         authController.passController.text.length >= 8) {
                       setState(() => isLoading = true);
                       await authController.loginUser(context);
-                      await authController.getToken();
                       setState(() => isLoading = false);
 
                       authController.openModal
                           ? CoolAlert.show(
-                        title: authController.modalTitle,
-                        backgroundColor: Colors.white,
-                        context: context,
-                        type: authController.modalStatus
-                            ? CoolAlertType.success
-                            : CoolAlertType.error,
-                        text: authController.modalMessage,
-                        confirmBtnColor: dGreen,
-                      )
+                              title: authController.modalTitle,
+                              backgroundColor: Colors.white,
+                              context: context,
+                              type: authController.modalStatus
+                                  ? CoolAlertType.success
+                                  : CoolAlertType.error,
+                              text: authController.modalMessage,
+                              confirmBtnColor: appColor.dGreen,
+                            )
                           : 0;
                     } else {}
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: dGreen,
+                    primary: appColor.dGreen,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading
@@ -243,8 +244,8 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => SignUp()));
                       },
-                      child: const Text('Inscription',
-                          style: TextStyle(color: dGreen)),
+                      child:  Text('Inscription',
+                          style: TextStyle(color: appColor.dGreen)),
                     )
                   ],
                 )

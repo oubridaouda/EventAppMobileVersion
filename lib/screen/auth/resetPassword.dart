@@ -6,8 +6,9 @@ import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+AppColors appColor = AppColors();
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -72,18 +73,18 @@ class _ResetPasswordState extends State<ResetPassword> {
                     errorText: _submitted ? _errorText : null,
                     hintText: "Entrez votre email",
                     filled: true,
-                    fillColor: InputColor,
-                    enabledBorder: const OutlineInputBorder(
+                    fillColor:appColor.InputColor,
+                    enabledBorder:  OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color:appColor.InputBorderColor,
                         )),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder:  OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color: InputBorderColor,
+                        color:appColor.InputBorderColor,
                       ),
                     ),
                     errorBorder: const OutlineInputBorder(
@@ -119,13 +120,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                                   ? CoolAlertType.success
                                   : CoolAlertType.error,
                               text: resetPasswordController.modalMessage,
-                              confirmBtnColor: dGreen,
+                              confirmBtnColor:appColor.dGreen,
                             )
                           : 0;
                     } else {}
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: dGreen,
+                    primary:appColor.dGreen,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading
@@ -163,17 +164,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children:  [
                         Icon(
                           Icons.arrow_circle_left_outlined,
-                          color: dGreen,
+                          color:appColor.dGreen,
                         ),
                         SizedBox(
                           width: 8,
                         ),
                         Text('Revenir sur la page de connexion',
                             style: TextStyle(
-                                color: dGreen, fontWeight: FontWeight.w600)),
+                                color:appColor.dGreen, fontWeight: FontWeight.w600)),
                       ],
                     ))
               ],

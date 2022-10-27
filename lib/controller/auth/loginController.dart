@@ -4,7 +4,6 @@ import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,12 +19,7 @@ class AuthController extends State<LoginPage> {
   String _token = 'Click the below button to generate token';
   bool badgeVisible = true;
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> getToken() async {
-    String token = await GRecaptchaV3.execute('submit') ?? 'null returned';
 
-      _token = token;
-      print(_token);
-  }
   Future loginUser(context) async {
     print("Mon debug dans login controller");
     var client = http.Client();
@@ -34,8 +28,6 @@ class AuthController extends State<LoginPage> {
     //     await storage.deleteAll();
     String? value = await storage.read(key: 'jwt');
     // print(value);
-    String tokens = await GRecaptchaV3.execute('submit') ?? 'null returned';
-      _token = tokens;
     var response = await client.post(Uri.https(url, 'fr/login-method'), body: {
       "username": emailController.text,
       "password": passController.text,

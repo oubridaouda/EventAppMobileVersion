@@ -4,7 +4,8 @@ import 'package:event_mobile_app/controller/auth/registerController.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
+
+AppColors appColor = AppColors();
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -91,19 +92,19 @@ class _SignUpState extends State<SignUp> {
                   onChanged: (text) => setState(() => textUsername),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: InputColor,
-                    enabledBorder: const OutlineInputBorder(
+                    fillColor:appColor.InputColor,
+                    enabledBorder:  OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color: InputBorderColor,
+                        color:appColor.InputBorderColor,
                       ),
                     ),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder:  OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color: InputBorderColor,
+                        color:appColor.InputBorderColor,
                       ),
                     ),
                     errorBorder: const OutlineInputBorder(
@@ -130,18 +131,18 @@ class _SignUpState extends State<SignUp> {
                   onChanged: (text) => setState(() => textUsername),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: InputColor,
-                    enabledBorder: const OutlineInputBorder(
+                    fillColor:appColor.InputColor,
+                    enabledBorder:  OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color:appColor.InputBorderColor,
                         )),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder:  OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color:appColor.InputBorderColor,
                         )),
                     errorBorder: const OutlineInputBorder(
                       //Outline border type for TextFeild
@@ -167,18 +168,18 @@ class _SignUpState extends State<SignUp> {
                   onChanged: (text) => setState(() => textUsername),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: InputColor,
-                    enabledBorder: const OutlineInputBorder(
+                    fillColor:appColor.InputColor,
+                    enabledBorder:  OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color:appColor.InputBorderColor,
                         )),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder:  OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color:appColor.InputBorderColor,
                         )),
                     errorBorder: const OutlineInputBorder(
                       //Outline border type for TextFeild
@@ -205,18 +206,18 @@ class _SignUpState extends State<SignUp> {
                   onChanged: (textPass) => setState(() => textConfirmPassword),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: InputColor,
-                    enabledBorder: const OutlineInputBorder(
+                    fillColor: appColor.InputColor,
+                    enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder:  OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color: InputBorderColor,
+                        color: appColor.InputBorderColor,
                       ),
                     ),
                     errorBorder: const OutlineInputBorder(
@@ -232,7 +233,7 @@ class _SignUpState extends State<SignUp> {
                       onTap: () => setState(() => _isSecret = !_isSecret),
                       child: Icon(
                         !_isSecret ? Icons.visibility : Icons.visibility_off,
-                        color: dGrey,
+                        color: appColor.dGrey,
                       ),
                     ),
                   ),
@@ -260,13 +261,13 @@ class _SignUpState extends State<SignUp> {
                             ? CoolAlertType.success
                             : CoolAlertType.error,
                         text: registerController.modalMessage,
-                        confirmBtnColor: dGreen,
+                        confirmBtnColor:appColor.dGreen,
                       )
                           : 0;
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: dGreen,
+                    primary:appColor.dGreen,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading
@@ -308,9 +309,9 @@ class _SignUpState extends State<SignUp> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => LoginPage()));
                       },
-                      child: const Text(
+                      child:  Text(
                         'Connexion',
-                        style: TextStyle(color: dGreen),
+                        style: TextStyle(color:appColor.dGreen),
                       ),
                     )
                   ],
