@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -46,8 +47,7 @@ class RegisterController {
       String? value = await storage.read(key: 'jwt');
       final logged = await SharedPreferences.getInstance();
       logged.setBool("isLoggedIn", true);
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.of(context).pushReplacementNamed("/");
       print(value);
     } else {
       openModal = true;

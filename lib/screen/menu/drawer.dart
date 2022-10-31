@@ -59,7 +59,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                   widget.scaffoldKey.currentState
                                       ?.closeDrawer();
                                 },
-                                child:  Icon(
+                                child: Icon(
                                   Icons.close_rounded,
                                   color: appColor.dGrey,
                                   size: 23,
@@ -74,15 +74,17 @@ class _NavDrawerState extends State<NavDrawer> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12), backgroundColor: appColor.dGreen,
+                          padding: const EdgeInsets.all(12),
+                          backgroundColor: appColor.dGreen,
                         ),
-                        onPressed: () async{
+                        onPressed: () async {
                           final logged = await SharedPreferences.getInstance();
                           logged.setBool("isLoggedIn", false);
                           print(storage);
                           storage.deleteAll();
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
-                          setState((){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LoginPage()));
+                          setState(() {
 
                           });
                         },
@@ -210,7 +212,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color:appColor.dGreen,
+                                              color: appColor.dGreen,
                                               height: 20,
                                               'assets/social/instagram.svg')),
                                     ),
@@ -227,7 +229,7 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor:appColor.dGreen,
+                              backgroundColor: appColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
@@ -240,7 +242,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color:appColor.dGreen,
+                                              color: appColor.dGreen,
                                               height: 20,
                                               'assets/social/twitter.svg')),
                                     ),
@@ -257,7 +259,7 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor:appColor.dGreen,
+                              backgroundColor: appColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
@@ -270,7 +272,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color:appColor.dGreen,
+                                              color: appColor.dGreen,
                                               height: 20,
                                               'assets/social/linkedin.svg')),
                                     ),
@@ -287,7 +289,7 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor:appColor.dGreen,
+                              backgroundColor: appColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
@@ -300,7 +302,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color:appColor.dGreen,
+                                              color: appColor.dGreen,
                                               height: 20,
                                               'assets/social/youtube.svg')),
                                     ),

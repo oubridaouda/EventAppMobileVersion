@@ -5,6 +5,7 @@ import 'package:event_mobile_app/screen/auth/resetPassword.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AppColors appColor = AppColors();
@@ -125,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ResetPassword()));
                       },
-                      child:  Text(
+                      child: Text(
                         "Mot de passe oublié?",
                         style: TextStyle(
                             color: appColor.dGreen,
@@ -204,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                     } else {}
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: appColor.dGreen,
+                    backgroundColor: appColor.dGreen,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading
@@ -232,6 +233,40 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             ]),
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                      setState(() => isLoading = true);
+                      await authController.signIn(context);
+                      setState(() => isLoading = false);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: appColor.dWhite,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: isLoading
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CircularProgressIndicator(color: Colors.white),
+                            SizedBox(width: 14),
+                            Text(
+                              'Veuillez  patienter...',
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                              FaIcon(
+                                FontAwesomeIcons.google,
+                                color: Colors.red,
+                              ),
+                            ]),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -244,11 +279,11 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => SignUp()));
                       },
-                      child:  Text('Inscription',
+                      child: Text('Inscription',
                           style: TextStyle(color: appColor.dGreen)),
                     )
                   ],
-                )
+                ),
               ],
             ),
           ),
