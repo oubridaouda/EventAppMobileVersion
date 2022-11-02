@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="app_name">Duck</string>
+    <string name="facebook_app_id">1577594352694827</string>
+    <string name="fb_login_protocol_scheme">fb1577594352694827</string>
+    <string name="facebook_client_token">23a05fe17997a2a3547d1da3bc395968</string>
+</resources>
