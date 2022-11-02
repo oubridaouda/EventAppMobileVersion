@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ResetPasswordController extends State<LoginPage> {
   var emailController = TextEditingController();
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   String modalTitle = "";
   String modalMessage = "";
   bool openModal= false;

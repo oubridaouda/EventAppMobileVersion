@@ -238,8 +238,40 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                      setState(() => isLoading = true);
-                      await authController.signIn(context);
+                      await authController.googleSignIn(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: appColor.dWhite,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: isLoading
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CircularProgressIndicator(color: Colors.white),
+                            SizedBox(width: 14),
+                            Text(
+                              'Veuillez  patienter...',
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                              FaIcon(
+                                FontAwesomeIcons.google,
+                                color: Colors.red,
+                              ),
+                            Text("Connectez vous avec Google",style: TextStyle(color: Colors.black),)
+                          ]),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                      await authController.loginFacebook(context);
                       setState(() => isLoading = false);
                   },
                   style: ElevatedButton.styleFrom(
@@ -260,11 +292,13 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                               FaIcon(
-                                FontAwesomeIcons.google,
-                                color: Colors.red,
+                                FontAwesomeIcons.facebook,
+                                color: Colors.blue,
                               ),
+                            SizedBox(width: 5),
+                            Text("Connectez vous avec Facebook",style: TextStyle(color: Colors.black),)
                             ]),
                 ),
                 Row(

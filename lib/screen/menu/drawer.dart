@@ -1,11 +1,11 @@
 import 'package:event_mobile_app/colors/colors.dart';
+import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-AppColors appColor = AppColors();
 
 
 class NavDrawer extends StatefulWidget {
@@ -54,14 +54,14 @@ class _NavDrawerState extends State<NavDrawer> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(3.0),
                                 ),
-                                color: appColor.dBackgroud,
+                                color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                                 onPressed: () {
                                   widget.scaffoldKey.currentState
                                       ?.closeDrawer();
                                 },
                                 child: Icon(
                                   Icons.close_rounded,
-                                  color: appColor.dGrey,
+                                  color: darkMode ? darkColor.dGrey : lightColor.dGrey,
                                   size: 23,
                                 ),
                               ),
@@ -70,12 +70,12 @@ class _NavDrawerState extends State<NavDrawer> {
                         )),
                     Container(
                       padding: const EdgeInsets.all(30.0),
-                      color: appColor.dBackgroud,
+                      color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(12),
-                          backgroundColor: appColor.dGreen,
+                          backgroundColor: darkMode ? darkColor.dGreen : lightColor.dGreen,
                         ),
                         onPressed: () async {
                           final logged = await SharedPreferences.getInstance();
@@ -91,11 +91,12 @@ class _NavDrawerState extends State<NavDrawer> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            Icon(Icons.calendar_month),
+                            FaIcon(FontAwesomeIcons.calendarDays,color: Colors.white),
+                            SizedBox(width: 10),
                             Text(
                               "Create Event",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                  fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
                             ),
                           ],
                         ),
@@ -169,12 +170,12 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor: appColor.dGreen,
+                              backgroundColor: darkMode ? darkColor.dGreen : lightColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: appColor.dWhite,
+                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -182,7 +183,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color: appColor.dGreen,
+                                              color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                                               height: 20,
                                               'assets/social/facebook.svg')),
                                     ),
@@ -199,12 +200,12 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor: appColor.dGreen,
+                              backgroundColor: darkMode ? darkColor.dGreen : lightColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: appColor.dBackgroud,
+                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -212,7 +213,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color: appColor.dGreen,
+                                              color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                                               height: 20,
                                               'assets/social/instagram.svg')),
                                     ),
@@ -229,12 +230,12 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor: appColor.dGreen,
+                              backgroundColor: darkMode ? darkColor.dGreen : lightColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: appColor.dWhite,
+                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -242,7 +243,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color: appColor.dGreen,
+                                              color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                                               height: 20,
                                               'assets/social/twitter.svg')),
                                     ),
@@ -259,12 +260,12 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor: appColor.dGreen,
+                              backgroundColor: darkMode ? darkColor.dGreen : lightColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: appColor.dWhite,
+                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -272,7 +273,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color: appColor.dGreen,
+                                              color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                                               height: 20,
                                               'assets/social/linkedin.svg')),
                                     ),
@@ -289,12 +290,12 @@ class _NavDrawerState extends State<NavDrawer> {
                             height: 40,
                             child: CircleAvatar(
                               radius: 135,
-                              backgroundColor: appColor.dGreen,
+                              backgroundColor: darkMode ? darkColor.dGreen : lightColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: appColor.dWhite,
+                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -302,7 +303,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                       radius: 200,
                                       child: ClipRRect(
                                           child: SvgPicture.asset(
-                                              color: appColor.dGreen,
+                                              color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                                               height: 20,
                                               'assets/social/youtube.svg')),
                                     ),

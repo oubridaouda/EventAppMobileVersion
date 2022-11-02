@@ -5,13 +5,11 @@ import 'package:event_mobile_app/routes/routeGenerator.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-AppColors appColor = AppColors();
+AppColors lightColor = AppColors();
+AppNightModeColors darkColor = AppNightModeColors();
+bool darkMode = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,8 +42,8 @@ class MyApp extends StatelessWidget {
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
         title: 'DuckEvent',
-        home: HomePage(),
-        initialRoute: '/login',
+        home: const HomePage(),
+        initialRoute: isLoggedIn ?'/': '/login',
         onGenerateRoute: (settings) => RouteGenerator.generateRoute(settings),
       ),
     );

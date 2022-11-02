@@ -1,3 +1,7 @@
+import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/menu/appNavBar.dart';
 import 'package:event_mobile_app/screen/menu/drawer.dart';
 import 'package:flutter/cupertino.dart';
@@ -129,7 +133,7 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: appColor.dBackgroud,
+      color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
@@ -163,7 +167,7 @@ class eventCard extends StatelessWidget {
       height: 400,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: appColor.dWhite,
+        color: darkMode ? darkColor.dWhite : lightColor.dWhite,
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: Column(
@@ -183,7 +187,7 @@ class eventCard extends StatelessWidget {
                     top: 5,
                     right: -15,
                     child: MaterialButton(
-                      color: appColor.dGreen,
+                      color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                       onPressed: () {},
                       shape: const CircleBorder(),
                       child: const Icon(
@@ -232,7 +236,7 @@ class eventCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.calendar_today_outlined,
-                      color: appColor.dGreen,
+                      color: darkMode ? darkColor.dGreen : lightColor.dGreen,
                       size: 14,
                     ),
                   ],

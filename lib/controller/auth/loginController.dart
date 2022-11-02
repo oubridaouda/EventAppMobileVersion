@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,10 +21,13 @@ class AuthController extends State<LoginPage> {
   final storage = FlutterSecureStorage();
   String _token = 'Click the below button to generate token';
   bool badgeVisible = true;
+  Map<String,dynamic>? _userData;
+  AccessToken? _accessToken;
+
 
   // Platform messages are asynchronous, so we initialize in an async method.
 
-  Future<void> signIn(context) async {
+  Future<void> googleSignIn(context) async {
     try {
       //This method signIn user and get her information
       final user = await _googleSignIn.signIn();
@@ -34,6 +38,7 @@ class AuthController extends State<LoginPage> {
       logged.setString("username", user!.displayName!);
       logged.setString("email", user.email);
 
+      //return home page if sign in successfully
       Navigator.of(context).pushReplacementNamed("/");
 
 
@@ -41,6 +46,50 @@ class AuthController extends State<LoginPage> {
     } catch (e) {
       print("Error Sign In $e");
     }
+  }
+
+  Future facebookSign(context) async{
+    final accessToken = await FacebookAuth.instance.accessToken;
+
+    if(_accessToken != null){
+      print(accessToken?.toJson());
+      final userData = await FacebookAuth.instance.getUserData();
+      _accessToken = accessToken;
+      _userData = userData;
+    }else{
+      loginFacebook(context);
+    }
+  }
+
+  Future loginFacebook(context) async{
+    final LoginResult result = await FacebookAuth.instance.login();
+
+    if(result.status == LoginStatus.success){
+      _accessToken = result.accessToken;
+
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
+
+      print("Mes données $_userData");
+
+      final logged = await SharedPreferences.getInstance();
+      //if singin succesfully pass isLoggedIn to true
+      logged.setBool("isLoggedIn", true);
+      Navigator.of(context).pushReplacementNamed("/");
+    }else{
+      print(result.status);
+      print(result.message);
+    }
+  }
+
+  facebookLogOut(context) async{
+    await FacebookAuth.instance.logOut();
+    final logged = await SharedPreferences.getInstance();
+    //if singin succesfully pass isLoggedIn to true
+    logged.setBool("isLoggedIn", false);
+    _accessToken = null;
+    _userData = null;
+    Navigator.of(context).pushReplacementNamed("/login");
   }
 
   Future loginUser(context) async {

@@ -1,10 +1,13 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
+import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -22,12 +25,12 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _MyAppBarState extends State<MyAppBar> {
   final storage = const FlutterSecureStorage();
-  bool darkmode = false;
   dynamic saveThemeMode;
 
   @override
   void initState() {
     super.initState();
+    print("theme actu ${saveThemeMode.toString()}");
     getCurrentTheme();
   }
 
@@ -35,27 +38,33 @@ class _MyAppBarState extends State<MyAppBar> {
     saveThemeMode = await AdaptiveTheme.getThemeMode();
     dynamic iconAddress;
 
-    if (saveThemeMode.toString() == "AdaptiveThemeMode.dark") {
-      print("thème claire");
+    final shareStorage = await SharedPreferences.getInstance();
+
+    darkMode = shareStorage.getBool("darkmode")!;
+
+    // if ( saveThemeMode.toString() == "AdaptiveThemeMode.dark") {
+  }
+
+  Future changeCurrentTheme() async {
+    final shareStorage = await SharedPreferences.getInstance();
+
+    saveThemeMode = await AdaptiveTheme.getThemeMode();
+    dynamic iconAddress;
+
+    if (darkMode) {
+      print("thème claire cool");
 
       setState(() {
-        appColor.dBackgroud = const Color(0xFFE8F7F7);
-        appColor.btnColor = const Color(0xFFE8F7F7);
-        appColor.dWhite = const Color(0xFFFFFFFF);
-
+        darkMode = false;
         AdaptiveTheme.of(context).setLight();
-        darkmode = false;
-        iconAddress = Icon(Icons.shield_moon_outlined);
+        shareStorage.setBool("darkmode", false);
       });
     } else {
-      print("thème sombre");
+      print("thème sombre cool");
       setState(() {
-        appColor.dBackgroud = const Color(0xFF111315);
-        appColor.btnColor = Color(0xFF6AC045);
-        appColor.dWhite = const Color(0xFF1A1D1F);
-        iconAddress = Icon(Icons.sunny);
+        darkMode = true;
         AdaptiveTheme.of(context).setDark();
-        darkmode = true;
+        shareStorage.setBool("darkmode", true);
       });
     }
   }
@@ -64,13 +73,13 @@ class _MyAppBarState extends State<MyAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: appColor.dWhite,
+      backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
       leadingWidth: 100,
       leading: Row(children: [
         IconButton(
-          icon: const Icon(
+          icon:  Icon(
             Icons.menu,
-            color: Colors.black,
+            color: darkMode ? Colors.white : Colors.black,
             size: 20,
           ),
           onPressed: () {
@@ -94,6 +103,9 @@ class _MyAppBarState extends State<MyAppBar> {
 
                   //Classic log out
                   LogOutController().logOutClassic(context);
+
+                  //Facebook logout
+                  AuthController().facebookLogOut(context);
                 },
                 child: const CircleAvatar(
                   backgroundImage: AssetImage(
@@ -112,12 +124,13 @@ class _MyAppBarState extends State<MyAppBar> {
             MaterialButton(
               elevation: 0,
               height: 40,
-              color: appColor.btnColor,
-              onPressed: () {
-                getCurrentTheme();
+              color: darkMode ? darkColor.btnColor : lightColor.btnColor,
+              onPressed: () async {
+                changeCurrentTheme();
+                Navigator.of(context).pushReplacementNamed("/");
               },
               shape: const CircleBorder(),
-              child: darkmode
+              child: darkMode
                   ? const FaIcon(FontAwesomeIcons.solidMoon)
                   : const FaIcon(FontAwesomeIcons.solidSun),
             )
