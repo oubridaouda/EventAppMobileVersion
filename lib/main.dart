@@ -10,11 +10,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 AppColors lightColor = AppColors();
 AppNightModeColors darkColor = AppNightModeColors();
 bool darkMode = false;
+bool isLoggedIn = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final logged = await SharedPreferences.getInstance();
-  final isLoggedIn = logged.getBool('isLoggedIn') ?? false;
+  final shareStorage = await SharedPreferences.getInstance();
+  final isLoggedIn = shareStorage.getBool('isLoggedIn') ?? false;
+  darkMode = shareStorage.getBool("darkmode") ?? false;
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
@@ -43,10 +45,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'DuckEvent',
         home: const HomePage(),
-        initialRoute: isLoggedIn ?'/': '/login',
+        initialRoute: isLoggedIn ? '/' : '/login',
         onGenerateRoute: (settings) => RouteGenerator.generateRoute(settings),
       ),
     );
   }
 }
-

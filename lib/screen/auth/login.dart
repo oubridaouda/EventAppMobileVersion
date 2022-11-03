@@ -1,6 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
+import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/resetPassword.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
 import 'package:flutter/material.dart';
@@ -87,11 +88,12 @@ class _LoginPageState extends State<LoginPage> {
                     filled: true,
                     fillColor: appColor.InputColor,
                     enabledBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                        borderRadius: BorderRadius.all(Radius.circular(2)),
-                        borderSide: BorderSide(
-                          color: appColor.InputBorderColor,
-                        )),
+                      //Outline border type for TextFeild
+                      borderRadius: BorderRadius.all(Radius.circular(2)),
+                      borderSide: BorderSide(
+                        color: appColor.InputBorderColor,
+                      ),
+                    ),
                     focusedBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -109,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
+                  style: const TextStyle(color: Colors.black),
                 ),
                 const SizedBox(
                   height: 15,
@@ -142,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: _isSecret,
                   controller: authController.passController,
                   onChanged: (textPass) => setState(() => textPassword),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: appColor.InputColor,
@@ -238,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                      await authController.googleSignIn(context);
+                    await authController.googleSignIn(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: appColor.dWhite,
@@ -258,21 +262,24 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                              FaIcon(
-                                FontAwesomeIcons.google,
-                                color: Colors.red,
-                              ),
-                            Text("Connectez vous avec Google",style: TextStyle(color: Colors.black),)
-                          ]),
+                          children:  [
+                            SvgPicture.asset(
+                                height: 20,
+                                'assets/images/google.svg'),
+                              const SizedBox(width: 5),
+                              const Text(
+                                "Connectez vous avec Google",
+                                style: TextStyle(color: Colors.black),
+                              )
+                            ]),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                      await authController.loginFacebook(context);
-                      setState(() => isLoading = false);
+                    await authController.loginFacebook(context);
+                    setState(() => isLoading = false);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: appColor.dWhite,
@@ -297,8 +304,11 @@ class _LoginPageState extends State<LoginPage> {
                                 FontAwesomeIcons.facebook,
                                 color: Colors.blue,
                               ),
-                            SizedBox(width: 5),
-                            Text("Connectez vous avec Facebook",style: TextStyle(color: Colors.black),)
+                              SizedBox(width: 5),
+                              Text(
+                                "Connectez vous avec Facebook",
+                                style: TextStyle(color: Colors.black),
+                              )
                             ]),
                 ),
                 Row(

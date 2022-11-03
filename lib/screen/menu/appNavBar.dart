@@ -30,30 +30,16 @@ class _MyAppBarState extends State<MyAppBar> {
   @override
   void initState() {
     super.initState();
-    print("theme actu ${saveThemeMode.toString()}");
-    getCurrentTheme();
-  }
-
-  Future getCurrentTheme() async {
-    saveThemeMode = await AdaptiveTheme.getThemeMode();
-    dynamic iconAddress;
-
-    final shareStorage = await SharedPreferences.getInstance();
-
-    darkMode = shareStorage.getBool("darkmode")!;
-
-    // if ( saveThemeMode.toString() == "AdaptiveThemeMode.dark") {
+    print("theme actu $darkMode}");
   }
 
   Future changeCurrentTheme() async {
     final shareStorage = await SharedPreferences.getInstance();
 
     saveThemeMode = await AdaptiveTheme.getThemeMode();
-    dynamic iconAddress;
 
     if (darkMode) {
       print("thème claire cool");
-
       setState(() {
         darkMode = false;
         AdaptiveTheme.of(context).setLight();
@@ -77,9 +63,9 @@ class _MyAppBarState extends State<MyAppBar> {
       leadingWidth: 100,
       leading: Row(children: [
         IconButton(
-          icon:  Icon(
+          icon: Icon(
             Icons.menu,
-            color: darkMode ? Colors.white : Colors.black,
+            color: darkMode ? darkColor.forthBackground : darkColor.forthBackground,
             size: 20,
           ),
           onPressed: () {
@@ -105,16 +91,16 @@ class _MyAppBarState extends State<MyAppBar> {
                   LogOutController().logOutClassic(context);
 
                   //Facebook logout
-                  AuthController().facebookLogOut(context);
+                  LogOutController().facebookLogOut(context);
                 },
                 child: const CircleAvatar(
                   backgroundImage: AssetImage(
                     "assets/images/profile-imgs/img-13.jpg",
                   ),
                 )),
-            const Icon(
+             Icon(
               Icons.arrow_drop_down,
-              color: Colors.black,
+              color: darkMode ? darkColor.forthBackground : darkColor.forthBackground,
             )
           ],
         ),

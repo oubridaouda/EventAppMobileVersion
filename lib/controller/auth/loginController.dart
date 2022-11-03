@@ -21,75 +21,92 @@ class AuthController extends State<LoginPage> {
   final storage = FlutterSecureStorage();
   String _token = 'Click the below button to generate token';
   bool badgeVisible = true;
-  Map<String,dynamic>? _userData;
-  AccessToken? _accessToken;
 
 
   // Platform messages are asynchronous, so we initialize in an async method.
-
   Future<void> googleSignIn(context) async {
-    try {
+      var client = http.Client();
+      const url = 'www.auth.e.kossyam.com';
       //This method signIn user and get her information
       final user = await _googleSignIn.signIn();
 
-      //Store the user data in local sercure storage
+      //Store the user data in local secure storage
       final logged = await SharedPreferences.getInstance();
       logged.setBool("isLoggedIn", true);
       logged.setString("username", user!.displayName!);
       logged.setString("email", user.email);
 
-      //return home page if sign in successfully
+      print("google user : $user");
+
+      var response = await client.post(Uri.https(url, 'fr/create-google-or-facebook-user'), body: {
+        "email": user.email,
+        "name": user.displayName,
+        "password": user.id,
+      });
+
+      print("response body ${response.body}");
+
+      var result = json.decode(response.body);
+
+      if (response.statusCode == 200 && result['status'] == 1) {
+
+        storeUserSecureInformation(storage, result['token'], result['username'],result['email']);
+        // Write value
+        String? value = await storage.read(key: 'jwt');
+        final logged = await SharedPreferences.getInstance();
+        logged.setBool("isLoggedIn", true);
+
+        print("token $value");
+      }
+        //return home page if sign in successfully
       Navigator.of(context).pushReplacementNamed("/");
 
 
       print("username ${user}");
-    } catch (e) {
-      print("Error Sign In $e");
-    }
-  }
-
-  Future facebookSign(context) async{
-    final accessToken = await FacebookAuth.instance.accessToken;
-
-    if(_accessToken != null){
-      print(accessToken?.toJson());
-      final userData = await FacebookAuth.instance.getUserData();
-      _accessToken = accessToken;
-      _userData = userData;
-    }else{
-      loginFacebook(context);
-    }
   }
 
   Future loginFacebook(context) async{
     final LoginResult result = await FacebookAuth.instance.login();
+    var client = http.Client();
+    const url = 'www.auth.e.kossyam.com';
 
     if(result.status == LoginStatus.success){
-      _accessToken = result.accessToken;
+      final accessToken = result.accessToken;
 
       final userData = await FacebookAuth.instance.getUserData();
-      _userData = userData;
 
-      print("Mes données $_userData");
+      print("Mes données $userData");
 
       final logged = await SharedPreferences.getInstance();
       //if singin succesfully pass isLoggedIn to true
       logged.setBool("isLoggedIn", true);
+
+      var response = await client.post(Uri.https(url, 'fr/create-google-or-facebook-user'), body: {
+        "email": userData["email"],
+        "name": userData['name'],
+        "password": userData['id'],
+      });
+
+      print("response body ${response.body}");
+
+      var jsonDecode = json.decode(response.body);
+
+      if (response.statusCode == 200 && jsonDecode['status'] == 1) {
+
+        storeUserSecureInformation(storage, jsonDecode['token'], jsonDecode['username'],jsonDecode['email']);
+        // Write value
+        String? value = await storage.read(key: 'jwt');
+        final logged = await SharedPreferences.getInstance();
+        logged.setBool("isLoggedIn", true);
+
+        print("token $value");
+      }
+
       Navigator.of(context).pushReplacementNamed("/");
     }else{
       print(result.status);
       print(result.message);
     }
-  }
-
-  facebookLogOut(context) async{
-    await FacebookAuth.instance.logOut();
-    final logged = await SharedPreferences.getInstance();
-    //if singin succesfully pass isLoggedIn to true
-    logged.setBool("isLoggedIn", false);
-    _accessToken = null;
-    _userData = null;
-    Navigator.of(context).pushReplacementNamed("/login");
   }
 
   Future loginUser(context) async {
@@ -117,8 +134,7 @@ class AuthController extends State<LoginPage> {
       modalMessage = "";
 
       if (value == null) {
-        storeUserSecureInformation(
-            storage, result['token'], loginArray['username'], result['email']);
+        storeUserSecureInformation(storage, result['token'], loginArray['username'], result['email']);
       } else {
         print(_token);
       }

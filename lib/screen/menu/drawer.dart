@@ -23,6 +23,7 @@ class _NavDrawerState extends State<NavDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
       width: 400,
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -175,7 +176,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+                                  backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -205,7 +206,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+                                  backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -235,7 +236,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+                                  backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -265,7 +266,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+                                  backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(
@@ -295,7 +296,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
-                                  backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+                                  backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: CircleAvatar(

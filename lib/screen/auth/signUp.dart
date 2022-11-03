@@ -1,9 +1,11 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:event_mobile_app/colors/colors.dart';
+import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/controller/auth/registerController.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 AppColors appColor = AppColors();
 
@@ -90,6 +92,7 @@ class _SignUpState extends State<SignUp> {
                 TextField(
                   controller: registerController.firstNameController,
                   onChanged: (text) => setState(() => textUsername),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor:appColor.InputColor,
@@ -129,6 +132,7 @@ class _SignUpState extends State<SignUp> {
                 TextField(
                   controller: registerController.lastNameController,
                   onChanged: (text) => setState(() => textUsername),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor:appColor.InputColor,
@@ -166,6 +170,7 @@ class _SignUpState extends State<SignUp> {
                 TextField(
                   controller: registerController.emailController,
                   onChanged: (text) => setState(() => textUsername),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor:appColor.InputColor,
@@ -204,6 +209,7 @@ class _SignUpState extends State<SignUp> {
                   obscureText: _isSecret,
                   controller: registerController.passController,
                   onChanged: (textPass) => setState(() => textConfirmPassword),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: appColor.InputColor,
@@ -297,6 +303,82 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 35,
                 ),
+
+                const SizedBox(
+                  height: 15,
+                ),
+
+                ElevatedButton(
+                  onPressed: () async {
+                    await AuthController().googleSignIn(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: appColor.dWhite,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: isLoading
+                      ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(color: Colors.white),
+                      SizedBox(width: 14),
+                      Text(
+                        'Veuillez  patienter...',
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  )
+                      : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:  [
+                        SvgPicture.asset(
+                            height: 20,
+                            'assets/images/google.svg'),
+                        const SizedBox(width: 5),
+                        const Text(
+                          "Connectez vous avec Google",
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ]),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await AuthController().loginFacebook(context);
+                    setState(() => isLoading = false);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: appColor.dWhite,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: isLoading
+                      ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(color: Colors.white),
+                      SizedBox(width: 14),
+                      Text(
+                        'Veuillez  patienter...',
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  )
+                      : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        FaIcon(
+                          FontAwesomeIcons.facebook,
+                          color: Colors.blue,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          "Connectez vous avec Facebook",
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ]),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -315,7 +397,19 @@ class _SignUpState extends State<SignUp> {
                       ),
                     )
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text("© 2022, DuckEvent. All rights reserved."),
+                  ],
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
               ],
             ),
           ),

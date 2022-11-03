@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,4 +31,15 @@ class LogOutController {
     storage.deleteAll();
     Navigator.of(context).pushReplacementNamed("/login");
   }
+
+
+  facebookLogOut(context) async{
+    await FacebookAuth.instance.logOut();
+    final logged = await SharedPreferences.getInstance();
+    //if sing out successfully pass isLoggedIn to false
+    logged.setBool("isLoggedIn", false);
+    await storage.deleteAll();
+    Navigator.of(context).pushReplacementNamed("/login");
+  }
+
 }

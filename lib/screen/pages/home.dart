@@ -11,9 +11,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 
-
-GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 class HomePage extends StatefulWidget {
   final bool? loginStatus;
   final String text;
@@ -25,17 +22,12 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
-
-void signUp() {
-  _googleSignIn.disconnect();
-}
-
 class _HomePageState extends State<HomePage> {
-  GoogleSignInAccount? _currentUser;
+  GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>(debugLabel: "homeScreen");
   bool? isLogged = false;
   final Future<SharedPreferences> _shareStorage =
-  SharedPreferences.getInstance();
+      SharedPreferences.getInstance();
 
   Future<bool?> getStorage() async {
     final logged = await SharedPreferences.getInstance();
@@ -47,22 +39,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _googleSignIn.onCurrentUserChanged.listen((account) {
-      setState(() {
-        setState(() {
-          _currentUser = account;
-        });
-      });
-    });
-    _googleSignIn.signInSilently();
+    _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: "homeScreen");
     super.initState();
     getStorage();
   }
 
   @override
   Widget build(BuildContext context) {
-    GoogleSignInAccount? user = _currentUser;
-    print("is logged : ${widget.loginStatus!} and user $user out of");
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(scaffoldKey: _scaffoldKey),
@@ -75,7 +58,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 class EventScreen extends StatefulWidget {
   const EventScreen({Key? key}) : super(key: key);
@@ -133,7 +115,7 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+      color: darkMode ? darkColor.firstBackground : lightColor.firstBackground,
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
@@ -167,7 +149,8 @@ class eventCard extends StatelessWidget {
       height: 400,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: darkMode ? darkColor.dWhite : lightColor.dWhite,
+        color:
+            darkMode ? darkColor.thirdBackground : lightColor.thirdBackground,
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: Column(
