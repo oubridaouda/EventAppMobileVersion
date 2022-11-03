@@ -54,6 +54,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          darkMode ? darkColor.firstBackground : lightColor.firstBackground,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -86,12 +88,15 @@ class _LoginPageState extends State<LoginPage> {
                     errorText: _submitted ? _errorText : null,
                     hintText: "Entrez votre email",
                     filled: true,
-                    fillColor: appColor.InputColor,
+                    fillColor:
+                        darkMode ? darkColor.InputColor : darkColor.InputColor,
                     enabledBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color: appColor.InputBorderColor,
+                        color: darkMode
+                            ? darkColor.InputColor
+                            : lightColor.InputBorderColor,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -111,7 +116,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: darkMode ? lightColor.dWhite : darkColor.dWhite),
                 ),
                 const SizedBox(
                   height: 15,
@@ -145,17 +151,21 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: _isSecret,
                   controller: authController.passController,
                   onChanged: (textPass) => setState(() => textPassword),
-                  style: const TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: darkMode ? lightColor.dWhite : darkColor.dWhite),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: appColor.InputColor,
+                    fillColor:
+                        darkMode ? darkColor.InputColor : lightColor.InputColor,
                     errorText: _submitted ? _errorPassword : null,
                     hintText: 'Entrez votre mot de passe',
                     enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color: appColor.InputBorderColor,
+                          color: darkMode
+                              ? darkColor.InputColor
+                              : lightColor.InputBorderColor,
                         )),
                     focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
@@ -226,14 +236,21 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                               Text(
                                 "Connexion",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: darkMode
+                                        ? lightColor.dWhite
+                                        : darkColor.dWhite),
                               ),
                               Icon(
                                 Icons.login,
                                 size: 20,
+                                color: darkMode
+                                    ? lightColor.dWhite
+                                    : darkColor.dWhite,
                               )
                             ]),
                 ),
@@ -245,7 +262,8 @@ class _LoginPageState extends State<LoginPage> {
                     await authController.googleSignIn(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: appColor.dWhite,
+                    backgroundColor:
+                        darkMode ? darkColor.InputColor : lightColor.dWhite,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading
@@ -262,14 +280,17 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:  [
-                            SvgPicture.asset(
-                                height: 20,
-                                'assets/images/google.svg'),
+                          children: [
+                              SvgPicture.asset(
+                                  height: 20, 'assets/images/google.svg'),
                               const SizedBox(width: 5),
-                              const Text(
+                              Text(
                                 "Connectez vous avec Google",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: darkMode
+                                        ? lightColor.dWhite
+                                        : darkColor.dWhite,
+                                    fontSize: 16),
                               )
                             ]),
                 ),
@@ -282,7 +303,8 @@ class _LoginPageState extends State<LoginPage> {
                     setState(() => isLoading = false);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: appColor.dWhite,
+                    backgroundColor:
+                        darkMode ? darkColor.InputColor : lightColor.dWhite,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading
@@ -299,15 +321,19 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                              FaIcon(
+                          children: [
+                              const FaIcon(
                                 FontAwesomeIcons.facebook,
                                 color: Colors.blue,
                               ),
                               SizedBox(width: 5),
                               Text(
                                 "Connectez vous avec Facebook",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: darkMode
+                                        ? lightColor.dWhite
+                                        : darkColor.dWhite,
+                                    fontSize: 16),
                               )
                             ]),
                 ),

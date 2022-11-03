@@ -25,7 +25,7 @@ class AppNightModeColors {
   Color dBackgroud = const Color(0xFF272B30);
   Color btnColor = Color(0xFF6AC045);
   Color dWhite = const Color(0xFF1A1D1F);
-  Color InputColor = Color(0xF9F3EEEE);
+  Color InputColor = Color(0xFF272B30);
   Color InputBorderColor = Color(0xFFEFEFEF);
   Color dBlack = Color(0xFF000000);
 }
