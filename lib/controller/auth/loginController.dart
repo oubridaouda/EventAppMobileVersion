@@ -109,14 +109,15 @@ class AuthController extends State<LoginPage> {
     }
   }
 
+  //Classic authentication with internal DuckEvent api
   Future loginUser(context) async {
-    print("Mon debug dans login controller");
+    //Use http package to do api call request
     var client = http.Client();
     const url = 'www.auth.e.kossyam.com';
-    // Delete all
-    //     await storage.deleteAll();
+
     String? value = await storage.read(key: 'jwt');
     // print(value);
+    //Do request to login user
     var response = await client.post(Uri.https(url, 'fr/login-method'), body: {
       "username": emailController.text,
       "password": passController.text,
@@ -124,9 +125,7 @@ class AuthController extends State<LoginPage> {
     });
 
     var result = json.decode(response.body);
-
-    print(result);
-
+    //If request success we save user data in secure to storage and open home page
     if (response.statusCode == 200 && result["status"] == 1) {
       var loginArray = json.decode(response.body);
       openModal = false;
@@ -143,7 +142,9 @@ class AuthController extends State<LoginPage> {
       //if singin succesfully pass isLoggedIn to true
       logged.setBool("isLoggedIn", true);
       Navigator.of(context).pushReplacementNamed("/");
-    } else {
+    }
+    //If request was failed we display modal with error message
+    else {
       final logged = await SharedPreferences.getInstance();
       //if singin failed pass isLoggedIn to false
       logged.setBool("isLoggedIn", false);
@@ -151,12 +152,10 @@ class AuthController extends State<LoginPage> {
       openModal = true;
       modalTitle = result["title"];
       modalMessage = result["message"];
-
-      // navigateToNextPage(context, const LoginPage(), widget);
-      // print(response.body);
     }
   }
 
+  //Save user data in secure storage
   static void storeUserSecureInformation(storage, data, username, email) async {
     await storage.write(key: 'jwt', value: data);
     await storage.write(key: 'username', value: username);
