@@ -6,6 +6,7 @@ import 'package:event_mobile_app/screen/menu/appNavBar.dart';
 import 'package:event_mobile_app/screen/menu/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,7 +72,7 @@ class _EventScreenState extends State<EventScreen> {
 
   final List eventList = [
     {
-      "title": "Grand Royl Event",
+      "title": "A New Way Of Life",
       "place": "Wembley, London",
       "distance": 2,
       "review": 36,
@@ -79,7 +80,7 @@ class _EventScreenState extends State<EventScreen> {
       "price": "100",
     },
     {
-      "title": "Queen Hotel",
+      "title": "Earrings Workshop with Bronwyn David",
       "place": "Grand Royl Event",
       "distance": 3,
       "review": 13,
@@ -87,7 +88,7 @@ class _EventScreenState extends State<EventScreen> {
       "price": "200",
     },
     {
-      "title": "Hilton",
+      "title": "Spring Showcase Saturday April 30th 2022 at 7pm",
       "place": "Wembley, London",
       "distance": 6,
       "review": 88,
@@ -95,7 +96,7 @@ class _EventScreenState extends State<EventScreen> {
       "price": "150",
     },
     {
-      "title": "Grand Royl Event",
+      "title": "Shutter Life",
       "place": "Wembley, London",
       "distance": 11,
       "review": 36,
@@ -103,7 +104,7 @@ class _EventScreenState extends State<EventScreen> {
       "price": "700",
     },
     {
-      "title": "Grand Royl Event",
+      "title": "Friday Night Dinner at The Old Station May 27 2022",
       "place": "Wembley, London",
       "distance": 2,
       "review": 36,
@@ -154,6 +155,7 @@ class eventCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             height: 200,
@@ -182,58 +184,80 @@ class eventCard extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Padding(padding: EdgeInsets.only(top: 15,right: 20,bottom: 20,left: 20), child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(
               children: [
-                Text(
-                  hotelData['title'],
-                  style: GoogleFonts.nunito(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 18,
+                Flexible(
+                  child: Text(
+                    hotelData['title'],
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
               ],
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 30),
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
+            SizedBox(height: 60),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("\$ ${hotelData['price']}",
+                Text("AUD \$${hotelData['price']}*",
                     style: GoogleFonts.nunito(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     )),
+                Text("7 Remaining",
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14,
+                    )),
               ],
             ),
-          ),
+          ]),),
           Container(
-            margin: const EdgeInsets.fromLTRB(10, 3, 10, 0),
+            color: darkMode ? darkColor.fiveBackground : lightColor.fiveBackground,
+            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(
-                      Icons.calendar_today_outlined,
-                      color: darkMode ? darkColor.dGreen : lightColor.dGreen,
+                    FaIcon(
+                      FontAwesomeIcons.calendarDay,
+                      color: darkMode ? Colors.grey[500] : lightColor.dGreen,
                       size: 14,
+                    ),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    Text(
+                      "15 Apr Fri, 3.45 PM",
+                      style: GoogleFonts.nunito(
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  "${hotelData['review'].toString()} Review",
-                  style: GoogleFonts.nunito(
-                    color: Colors.grey[500],
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                  ),
+                Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.solidClock,
+                      color: darkMode ? Colors.grey[500] : lightColor.dGreen,
+                      size: 14,
+                    ),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    Text(
+                      "1h",
+                      style: GoogleFonts.nunito(
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

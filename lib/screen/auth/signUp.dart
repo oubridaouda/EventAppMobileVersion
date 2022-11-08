@@ -95,19 +95,19 @@ class _SignUpState extends State<SignUp> {
                   style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor:appColor.InputColor,
-                    enabledBorder:  OutlineInputBorder(
+                    fillColor: appColor.InputColor,
+                    enabledBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color:appColor.InputBorderColor,
+                        color: appColor.InputBorderColor,
                       ),
                     ),
-                    focusedBorder:  OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
-                        color:appColor.InputBorderColor,
+                        color: appColor.InputBorderColor,
                       ),
                     ),
                     errorBorder: const OutlineInputBorder(
@@ -135,18 +135,18 @@ class _SignUpState extends State<SignUp> {
                   style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor:appColor.InputColor,
-                    enabledBorder:  OutlineInputBorder(
+                    fillColor: appColor.InputColor,
+                    enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color:appColor.InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
-                    focusedBorder:  OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color:appColor.InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
                     errorBorder: const OutlineInputBorder(
                       //Outline border type for TextFeild
@@ -173,18 +173,18 @@ class _SignUpState extends State<SignUp> {
                   style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor:appColor.InputColor,
-                    enabledBorder:  OutlineInputBorder(
+                    fillColor: appColor.InputColor,
+                    enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color:appColor.InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
-                    focusedBorder:  OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius: BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
-                          color:appColor.InputBorderColor,
+                          color: appColor.InputBorderColor,
                         )),
                     errorBorder: const OutlineInputBorder(
                       //Outline border type for TextFeild
@@ -219,7 +219,7 @@ class _SignUpState extends State<SignUp> {
                         borderSide: BorderSide(
                           color: appColor.InputBorderColor,
                         )),
-                    focusedBorder:  OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
                       borderSide: BorderSide(
@@ -260,21 +260,22 @@ class _SignUpState extends State<SignUp> {
 
                       registerController.openModal
                           ? CoolAlert.show(
-                        title: registerController.modalTitle,
-                        backgroundColor: Colors.white,
-                        context: context,
-                        type: registerController.modalStatus
-                            ? CoolAlertType.success
-                            : CoolAlertType.error,
-                        text: registerController.modalMessage,
-                        confirmBtnColor:appColor.dGreen,
-                      )
+                              title: registerController.modalTitle,
+                              backgroundColor: Colors.white,
+                              context: context,
+                              type: registerController.modalStatus
+                                  ? CoolAlertType.success
+                                  : CoolAlertType.error,
+                              text: registerController.modalMessage,
+                              confirmBtnColor: appColor.dGreen,
+                            )
                           : 0;
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary:appColor.dGreen,
+                    backgroundColor: appColor.dGreen,
                     padding: const EdgeInsets.all(20),
+                    elevation: 1.0,
                   ),
                   child: isLoading
                       ? Row(
@@ -284,13 +285,15 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(width: 14),
                             Text(
                               'Veuillez patienter...',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400),
                             )
                           ],
                         )
                       : const Text(
                           "Créer un compte",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
                         ),
                 ),
                 const SizedBox(
@@ -303,11 +306,9 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 35,
                 ),
-
                 const SizedBox(
                   height: 15,
                 ),
-
                 ElevatedButton(
                   onPressed: () async {
                     await AuthController().googleSignIn(context);
@@ -315,25 +316,13 @@ class _SignUpState extends State<SignUp> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: appColor.dWhite,
                     padding: const EdgeInsets.all(20),
+                    elevation: 1.0,
                   ),
-                  child: isLoading
-                      ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      CircularProgressIndicator(color: Colors.white),
-                      SizedBox(width: 14),
-                      Text(
-                        'Veuillez  patienter...',
-                        style: TextStyle(fontSize: 16),
-                      )
-                    ],
-                  )
-                      : Row(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [
+                      children: [
                         SvgPicture.asset(
-                            height: 20,
-                            'assets/images/google.svg'),
+                            height: 20, 'assets/images/google.svg'),
                         const SizedBox(width: 5),
                         const Text(
                           "Connectez vous avec Google",
@@ -352,20 +341,9 @@ class _SignUpState extends State<SignUp> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: appColor.dWhite,
                     padding: const EdgeInsets.all(20),
+                    elevation: 1.0,
                   ),
-                  child: isLoading
-                      ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      CircularProgressIndicator(color: Colors.white),
-                      SizedBox(width: 14),
-                      Text(
-                        'Veuillez  patienter...',
-                        style: TextStyle(fontSize: 16),
-                      )
-                    ],
-                  )
-                      : Row(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         FaIcon(
@@ -388,12 +366,12 @@ class _SignUpState extends State<SignUp> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => LoginPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoginPage()));
                       },
-                      child:  Text(
+                      child: Text(
                         'Connexion',
-                        style: TextStyle(color:appColor.dGreen),
+                        style: TextStyle(color: appColor.dGreen),
                       ),
                     )
                   ],

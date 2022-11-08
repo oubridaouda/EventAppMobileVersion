@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "Entrez votre email",
                     filled: true,
                     fillColor:
-                        darkMode ? darkColor.InputColor : darkColor.InputColor,
+                        darkMode ? darkColor.InputColor : lightColor.InputColor,
                     enabledBorder: OutlineInputBorder(
                       //Outline border type for TextFeild
                       borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -221,6 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: appColor.dGreen,
                     padding: const EdgeInsets.all(20),
+                    elevation: 1.0,
                   ),
                   child: isLoading
                       ? Row(
@@ -242,15 +243,15 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: darkMode
-                                        ? lightColor.dWhite
-                                        : darkColor.dWhite),
+                                        ? darkColor.dWhite
+                                        : lightColor.dWhite),
                               ),
                               Icon(
                                 Icons.login,
                                 size: 20,
                                 color: darkMode
-                                    ? lightColor.dWhite
-                                    : darkColor.dWhite,
+                                    ? darkColor.dWhite
+                                    : lightColor.dWhite,
                               )
                             ]),
                 ),
@@ -264,21 +265,10 @@ class _LoginPageState extends State<LoginPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         darkMode ? darkColor.InputColor : lightColor.dWhite,
+                    elevation: 1.0,
                     padding: const EdgeInsets.all(20),
                   ),
-                  child: isLoading
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            CircularProgressIndicator(color: Colors.white),
-                            SizedBox(width: 14),
-                            Text(
-                              'Veuillez  patienter...',
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ],
-                        )
-                      : Row(
+                  child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                               SvgPicture.asset(
@@ -305,21 +295,10 @@ class _LoginPageState extends State<LoginPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         darkMode ? darkColor.InputColor : lightColor.dWhite,
+                    elevation: 1.0,
                     padding: const EdgeInsets.all(20),
                   ),
-                  child: isLoading
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            CircularProgressIndicator(color: Colors.white),
-                            SizedBox(width: 14),
-                            Text(
-                              'Veuillez  patienter...',
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ],
-                        )
-                      : Row(
+                  child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                               const FaIcon(

@@ -3,6 +3,7 @@ import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -33,28 +34,6 @@ class _MyAppBarState extends State<MyAppBar> {
     print("theme actu $darkMode}");
   }
 
-  Future changeCurrentTheme() async {
-    final shareStorage = await SharedPreferences.getInstance();
-
-    saveThemeMode = await AdaptiveTheme.getThemeMode();
-
-    if (darkMode) {
-      print("thème claire cool");
-      setState(() {
-        darkMode = false;
-        AdaptiveTheme.of(context).setLight();
-        shareStorage.setBool("darkmode", false);
-      });
-    } else {
-      print("thème sombre cool");
-      setState(() {
-        darkMode = true;
-        AdaptiveTheme.of(context).setDark();
-        shareStorage.setBool("darkmode", true);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -65,7 +44,9 @@ class _MyAppBarState extends State<MyAppBar> {
         IconButton(
           icon: Icon(
             Icons.menu,
-            color: darkMode ? darkColor.forthBackground : darkColor.forthBackground,
+            color: darkMode
+                ? darkColor.forthBackground
+                : darkColor.forthBackground,
             size: 20,
           ),
           onPressed: () {
@@ -81,47 +62,52 @@ class _MyAppBarState extends State<MyAppBar> {
       ]),
       actions: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            SizedBox(
+                width: 55,
+                child: MaterialButton(
+                  elevation: 0,
+                  height: 40,
+                  color: darkMode ? darkColor.dGreen : lightColor.dGreen,
+                  onPressed: () async {},
+                  shape: const CircleBorder(),
+                  child: const FaIcon(
+                    FontAwesomeIcons.plus,
+                    color: Colors.white,
+                  ),
+                )),
+            SizedBox(
+              width: 55,
+              child: MaterialButton(
+                elevation: 0,
+                height: 40,
+                color: darkMode ? darkColor.dGreen : lightColor.dGreen,
+                onPressed: () async {},
+                shape: const CircleBorder(),
+                child: const FaIcon(
+                  FontAwesomeIcons.search,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(width: 10.0,),
             GestureDetector(
                 onTap: () {
-                  //Google logout
-                  LogOutController().googleLogOut(context);
-
-                  //Classic log out
-                  LogOutController().logOutClassic(context);
-
-                  //Facebook logout
-                  LogOutController().facebookLogOut(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ProfileView(scaffoldKey: widget.scaffoldKey);
+                  }));
                 },
                 child: const CircleAvatar(
                   backgroundImage: AssetImage(
                     "assets/images/profile-imgs/img-13.jpg",
                   ),
                 )),
-             Icon(
-              Icons.arrow_drop_down,
-              color: darkMode ? darkColor.forthBackground : darkColor.forthBackground,
+            SizedBox(
+              width: 10.0,
             )
           ],
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 5.0),
-          child: Stack(children: [
-            MaterialButton(
-              elevation: 0,
-              height: 40,
-              color: darkMode ? darkColor.btnColor : lightColor.btnColor,
-              onPressed: () async {
-                changeCurrentTheme();
-                Navigator.of(context).pushReplacementNamed("/");
-              },
-              shape: const CircleBorder(),
-              child: darkMode
-                  ? const FaIcon(FontAwesomeIcons.solidMoon)
-                  : const FaIcon(FontAwesomeIcons.solidSun),
-            )
-          ]),
-        )
       ],
       centerTitle: true,
     );
