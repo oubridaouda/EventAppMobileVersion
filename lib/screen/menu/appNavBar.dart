@@ -91,7 +91,7 @@ class _MyAppBarState extends State<MyAppBar> {
                 ),
               ),
             ),
-            SizedBox(width: 10.0,),
+            const SizedBox(width: 10.0,),
             GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -103,7 +103,7 @@ class _MyAppBarState extends State<MyAppBar> {
                     "assets/images/profile-imgs/img-13.jpg",
                   ),
                 )),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             )
           ],

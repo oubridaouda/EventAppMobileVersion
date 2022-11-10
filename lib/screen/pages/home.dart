@@ -4,6 +4,7 @@ import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/menu/appNavBar.dart';
 import 'package:event_mobile_app/screen/menu/drawer.dart';
+import 'package:event_mobile_app/screen/menu/toggle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:event_mobile_app/colors/colors.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class HomePage extends StatefulWidget {
   final bool? loginStatus;
@@ -29,6 +31,11 @@ class _HomePageState extends State<HomePage> {
   bool? isLogged = false;
   final Future<SharedPreferences> _shareStorage =
       SharedPreferences.getInstance();
+
+  String? selectEventType;
+  String? selectCity;
+  final List<String> eventListType = ["All", "Arts", "Business", 'Coaching and Consulting', 'Community and Culture', 'Education and Training', 'Family and Friends', 'Fashion and Beauty'];
+
 
   Future<bool?> getStorage() async {
     final logged = await SharedPreferences.getInstance();
@@ -53,7 +60,179 @@ class _HomePageState extends State<HomePage> {
       appBar: MyAppBar(scaffoldKey: _scaffoldKey),
       body: SingleChildScrollView(
         child: Column(
-          children: [EventScreen()],
+          children: [
+            Container(
+              padding: const EdgeInsets.only(
+                  left: 12, right: 12, top: 70, bottom: 80),
+              alignment: Alignment.center,
+              color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+              child: Column(
+                children: [
+                  const Text(
+                    "Discover Events For All The Things You Love",
+                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const ToggleButton(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  DropdownSearch<String>(
+                    popupProps: const PopupProps.menu(
+                      showSearchBox: true,
+                      showSelectedItems: true,
+                      menuProps: MenuProps()
+                    ),
+                    items:  eventListType,
+                    dropdownDecoratorProps:  DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        // labelText: "Menu mode",
+                        labelStyle: TextStyle(color: Colors.blue),
+                        hintText: "Type of event",
+                        filled: true,
+                        fillColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
+                        enabledBorder: OutlineInputBorder(
+                          //Outline border type for TextFeild
+                          borderRadius: const BorderRadius.all(Radius.circular(2)),
+                          borderSide: BorderSide(
+                            color: darkMode
+                                ? darkColor.InputColor
+                                : lightColor.InputBorderColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          //Outline border type for TextFeild
+                          borderRadius: const BorderRadius.all(Radius.circular(2)),
+                          borderSide: BorderSide(
+                            color: lightColor.InputBorderColor,
+                          ),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          //Outline border type for TextFeild
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onChanged: ((value) {
+                      print(value);
+                      selectEventType = value;
+                      print(toggleEventType);
+                    }),
+                    selectedItem: selectEventType,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  DropdownSearch<String>(
+                    popupProps: PopupProps.menu(
+                      showSearchBox: true,
+                      showSelectedItems: true,
+                      disabledItemFn: (String s) => s.startsWith('I'),
+                    ),
+                    items: const ["Ouagadougou", "Lomé", "Brazzaville", 'Abidjan'],
+                    dropdownDecoratorProps:  DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        // labelText: "Menu mode",
+                        hintText: "City",
+                        filled: true,
+                        fillColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
+                        enabledBorder: OutlineInputBorder(
+                          //Outline border type for TextFeild
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          borderSide: BorderSide(
+                            color: darkMode
+                                ? darkColor.InputColor
+                                : lightColor.InputBorderColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          //Outline border type for TextFeild
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          borderSide: BorderSide(
+                            color: lightColor.InputBorderColor,
+                          ),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          //Outline border type for TextFeild
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onChanged: ((value) {
+                      print(value);
+                      selectCity = value;
+                    }),
+                    selectedItem: selectCity,
+                  ),
+                  // DropdownButtonHideUnderline(
+                  //   child: ButtonTheme(
+                  //     alignedDropdown: true,
+                  //     child: DropdownButton(
+                  //       hint: const Text("Select Event Type"),
+                  //       value: _selected,
+                  //       onChanged: (newValue) {
+                  //         setState(() {
+                  //           _selected = newValue;
+                  //         });
+                  //       },
+                  //       items: _myJson.map((myItem) {
+                  //         print(
+                  //             "${myItem["value"]} and select: $_selected and id: ${myItem["id"]}");
+                  //         return DropdownMenuItem(
+                  //           value: myItem["id"].toString(),
+                  //           child: Row(
+                  //             children: [
+                  //               Icon(myItem["icon"]),
+                  //               Text(myItem["value"]),
+                  //             ],
+                  //           ),
+                  //         );
+                  //       }).toList(),
+                  //     ),
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(12),
+                        backgroundColor:
+                            darkMode ? darkColor.dGreen : lightColor.dGreen,
+                      ),
+                      onPressed: () async {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Find",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            EventScreen()
+          ],
         ),
       ),
     );
@@ -184,37 +363,43 @@ class eventCard extends StatelessWidget {
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.only(top: 15,right: 20,bottom: 20,left: 20), child:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    hotelData['title'],
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          Padding(
+            padding: EdgeInsets.only(top: 15, right: 20, bottom: 20, left: 20),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          hotelData['title'],
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 60),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("AUD \$${hotelData['price']}*",
-                    style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    )),
-                Text("7 Remaining",
-                    style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.w200,
-                      fontSize: 14,
-                    )),
-              ],
-            ),
-          ]),),
+                  SizedBox(height: 60),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("AUD \$${hotelData['price']}*",
+                          style: GoogleFonts.nunito(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          )),
+                      Text("7 Remaining",
+                          style: GoogleFonts.nunito(
+                            fontWeight: FontWeight.w200,
+                            fontSize: 14,
+                          )),
+                    ],
+                  ),
+                ]),
+          ),
           Container(
-            color: darkMode ? darkColor.fiveBackground : lightColor.fiveBackground,
+            color:
+                darkMode ? darkColor.fiveBackground : lightColor.fiveBackground,
             padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       initial: AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(
-        theme: theme,
+        theme: theme, 
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
         title: 'DuckEvent',
