@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../main.dart';
+import 'package:event_mobile_app/main.dart';
+
 
 class ProfileView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;

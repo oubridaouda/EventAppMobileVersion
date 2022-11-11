@@ -12,7 +12,8 @@ class ProfileTabSaveEvents extends StatelessWidget {
     return  Column(
       children:  [
         EventCard(title: "Step Up Open Mic Show",date: "Thu, Jun 30, 2022 4:30 AM",
-            bottomButton: Row(
+            bottomButton:
+            Row(
           children: [
             SizedBox(
               height: 50,

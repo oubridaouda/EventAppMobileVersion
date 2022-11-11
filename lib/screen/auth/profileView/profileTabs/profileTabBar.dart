@@ -1,4 +1,5 @@
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/ProfileTabMyOrders.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabAbout.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabHome.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabSetting.dart';
@@ -109,14 +110,12 @@ class _ProfileTabBarState extends State<ProfileTabBar>
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(10.0),
             child:
-            TabBarView(
+            const TabBarView(
               children: [
-                const ProfileTabHome(),
-                const ProfileTabAbout(),
-                const ProfileTabSetting(),
-                Container(
-                  child: Text("User Body"),
-                ),
+                ProfileTabHome(),
+                ProfileTabAbout(),
+                ProfileTabSetting(),
+                ProfileTabMyOrder(),
               ],
             ),
           ),

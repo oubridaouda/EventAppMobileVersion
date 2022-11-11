@@ -1,4 +1,7 @@
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/EmailPreferences.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/PasswordSettings.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/PrivacySettings.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabAttendingEvents.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabOrganiseEvents.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabSaveEvent.dart';
@@ -6,10 +9,18 @@ import 'package:event_mobile_app/screen/events/eventCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ProfileTabSetting extends StatelessWidget {
+class ProfileTabSetting extends StatefulWidget {
   const ProfileTabSetting({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileTabSetting> createState() => _ProfileTabSettingState();
+}
+
+class _ProfileTabSettingState extends State<ProfileTabSetting> {
+  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +60,7 @@ class ProfileTabSetting extends StatelessWidget {
                                 height: 5,
                               ),
                               Text(
-                                "Save Events",
+                                "Email Preferences",
                                 style: TextStyle(
                                     color: darkMode ? darkColor.dBlack : null),
                               )
@@ -74,7 +85,7 @@ class ProfileTabSetting extends StatelessWidget {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text("Organise Events",
+                              Text("Password Settings",
                                   style: TextStyle(
                                       color:
                                           darkMode ? darkColor.dBlack : null))
@@ -96,7 +107,7 @@ class ProfileTabSetting extends StatelessWidget {
                               const SizedBox(
                                 width: 10.0,
                               ),
-                              Text("Attending Events",
+                              Text("Privacy Settings",
                                   style: TextStyle(
                                       color:
                                           darkMode ? darkColor.dBlack : null))
@@ -115,239 +126,11 @@ class ProfileTabSetting extends StatelessWidget {
           ),
           Flexible(
             child: Container(
-              child:  TabBarView(
+              child: const TabBarView(
                 children: [
-
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: darkMode ? darkColor.dWhite : lightColor.dWhite,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        const Text(
-                          "Email Preferences",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Receive order confirmation",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "On purchasing an event you will receive an order confirmation email.",
-                              style: TextStyle(
-                                  color: lightColor.dGrey,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Receive order confirmation",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "On purchasing an event you will receive an order confirmation email.",
-                              style: TextStyle(
-                                  color: lightColor.dGrey,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Receive order confirmation",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "On purchasing an event you will receive an order confirmation email.",
-                              style: TextStyle(
-                                  color: lightColor.dGrey,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ProfileTabOrganiseEvents(),
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: darkMode ? darkColor.dWhite : lightColor.dWhite,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10.0,),
-                        const Text(
-                          "Privacy Settings",
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                        ),
-                        SizedBox(height: 20.0,),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Lock my user profile",
-                              style:
-                              TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "On purchasing an event you will receive an order confirmation email.",
-                              style: TextStyle(
-                                  color: lightColor.dGrey,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Receive order confirmation",
-                              style:
-                              TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "On purchasing an event you will receive an order confirmation email.",
-                              style: TextStyle(
-                                  color: lightColor.dGrey,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Receive order confirmation",
-                              style:
-                              TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "On purchasing an event you will receive an order confirmation email.",
-                              style: TextStyle(
-                                  color: lightColor.dGrey,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        Divider(
-                          thickness: 2,
-                          color: lightColor.dBackgroud,
-                        ),
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                      ],
-                    ),
-                  ),
+                  EmailPreferences(),
+                  PasswordSettings(),
+                  PrivacySettings(),
                 ],
               ),
             ),

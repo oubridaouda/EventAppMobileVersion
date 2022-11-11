@@ -15,6 +15,8 @@ class AppColors {
   Color sixBackground = const Color(0xFF000BBB);
   Color InputColor = Color(0xF9F3EEEE);
   Color InputBorderColor = Color(0xFFEFEFEF);
+  Color cyanColor = const Color(0xFF22B0AF);
+  Color cyanBlueColor = const Color(0xFFEDF1F5);
 }
 
 //Dark mode colors
