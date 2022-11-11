@@ -58,8 +58,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       drawer: NavDrawer(scaffoldKey: _scaffoldKey),
       appBar: MyAppBar(scaffoldKey: _scaffoldKey),
-      body:
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(

@@ -1,4 +1,7 @@
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabAttendingEvents.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabOrganiseEvents.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabSaveEvent.dart';
 import 'package:event_mobile_app/screen/events/eventCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +53,7 @@ class _ProfileTabHomeState extends State<ProfileTabHome> {
                                   child: const Padding(
                                     padding: EdgeInsets.all(2.0),
                                     child: SizedBox(
-                                      child: Text("3"),
+                                      child: Text("1"),
                                     ),
                                   ),
                                 ),
@@ -85,7 +88,7 @@ class _ProfileTabHomeState extends State<ProfileTabHome> {
                                   child: const Padding(
                                     padding: EdgeInsets.all(2.0),
                                     child: SizedBox(
-                                      child: Text("3"),
+                                      child: Text("2"),
                                     ),
                                   ),
                                 ),
@@ -146,16 +149,11 @@ class _ProfileTabHomeState extends State<ProfileTabHome> {
           ),
           Flexible(
             child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: TabBarView(
+              child: const TabBarView(
                 children: [
-                  EventCard(),
-                  Container(
-                    child: Text("User Body"),
-                  ),
-                  Container(
-                    child: Text("User Body"),
-                  ),
+                  ProfileTabSaveEvents(),
+                  ProfileTabOrganiseEvents(),
+                  ProfileTabAttendingEvents(),
                 ],
               ),
             ),

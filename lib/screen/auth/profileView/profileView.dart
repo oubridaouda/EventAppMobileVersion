@@ -22,8 +22,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          darkMode ? darkColor.dBackgroud : lightColor.btnColor,
+      backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.btnColor,
       appBar: MyAppBar(scaffoldKey: widget.scaffoldKey),
       drawer: NavDrawer(scaffoldKey: widget.scaffoldKey),
       body: SizedBox(
@@ -56,75 +55,77 @@ class _ProfileViewState extends State<ProfileView> {
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     children: [
-                  Transform.translate(
-                  offset: const Offset(20.0,0.0),
-                      //User profile image section
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //Profile photo image
-                          SizedBox(
-                            height: 130,
-                            width: 130,
-                            child: CircleAvatar(
-                              radius: 135,
-                              backgroundColor: darkMode
-                                  ? darkColor.dGreen
-                                  : lightColor.dGreen,
-                              child: Padding(
-                                padding: EdgeInsets.all(2.0),
+                      Transform.translate(
+                          offset: const Offset(20.0, 0.0),
+                          //User profile image section
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              //Profile photo image
+                              SizedBox(
+                                height: 130,
+                                width: 130,
                                 child: CircleAvatar(
-                                  radius: 125,
+                                  radius: 135,
                                   backgroundColor: darkMode
-                                      ? darkColor.dWhite
-                                      : lightColor.dWhite,
-                                  child: const Padding(
+                                      ? darkColor.dGreen
+                                      : lightColor.dGreen,
+                                  child: Padding(
                                     padding: EdgeInsets.all(2.0),
-                                    child: SizedBox(
-                                      height: 130,
-                                      width: 130,
-                                      child: CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                          "assets/images/profile-imgs/profile.jpg",
+                                    child: CircleAvatar(
+                                      radius: 125,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dWhite
+                                          : lightColor.dWhite,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: SizedBox(
+                                          height: 130,
+                                          width: 130,
+                                          child: CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                              "assets/images/profile-imgs/profile.jpg",
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          //Profile photo image upload button
-                          Transform.translate(
-                              offset: const Offset(-45.0, 45.0),
-                              child: SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: CircleAvatar(
-                                  radius: 135,
-                                  backgroundColor: darkMode
-                                      ? darkColor.dGreen
-                                      : lightColor.sixBackground,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(1.0),
+                              //Profile photo image upload button
+                              Transform.translate(
+                                  offset: const Offset(-45.0, 45.0),
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 40,
                                     child: CircleAvatar(
-                                      radius: 125,
+                                      radius: 135,
                                       backgroundColor: darkMode
-                                          ? darkColor.dBlack
-                                          : lightColor.dWhite,
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(2.0),
-                                        child: SizedBox(
-                                          child: FaIcon(FontAwesomeIcons.camera,
-                                              color: Colors.black, size: 14.0),
+                                          ? darkColor.dGreen
+                                          : lightColor.sixBackground,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(1.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dBlack
+                                              : lightColor.dWhite,
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(2.0),
+                                            child: SizedBox(
+                                              child: FaIcon(
+                                                  FontAwesomeIcons.camera,
+                                                  color: Colors.black,
+                                                  size: 14.0),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              )),
-                        ],
-                      )),
+                                  )),
+                            ],
+                          )),
 
                       const SizedBox(
                         height: 20.0,
@@ -444,22 +445,26 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
               Transform.translate(
-                  offset: const Offset(0.0, -100.0),
-                  child:
-                      //User profile Tab bar
-                     const ProfileTabBar()),
-              ElevatedButton(
-                onPressed: () {
-                  // Google logout
-                  LogOutController().googleLogOut(context);
+                offset: const Offset(0.0, -100.0),
+                child:
+                    //User profile Tab bar
+                    const ProfileTabBar(),
+              ),
+              Transform.translate(
+                offset: const Offset(0.0, -100.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Google logout
+                    LogOutController().googleLogOut(context);
 
-                  //Classic log out
-                  LogOutController().logOutClassic(context);
+                    //Classic log out
+                    LogOutController().logOutClassic(context);
 
-                  //Facebook logout
-                  LogOutController().facebookLogOut(context);
-                },
-                child: const Text("Log out"),
+                    //Facebook logout
+                    LogOutController().facebookLogOut(context);
+                  },
+                  child: const Text("Log out"),
+                ),
               ),
             ],
           ),

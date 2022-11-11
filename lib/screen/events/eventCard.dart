@@ -4,17 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard({Key? key}) : super(key: key);
+  const EventCard({Key? key,required this.title, required this.date,required this.bottomButton}) : super(key: key);
+  final String title;
+  final String date;
+  final Widget bottomButton;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
         color: darkMode ? darkColor.dWhite : lightColor.dWhite,
         borderRadius: BorderRadius.circular(5.0),
       ),
-      height: 400,
+      height: 360,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,87 +39,18 @@ class EventCard extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const Text(
-            "Step Up Open Mic Show",
+           Text(
+             title,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text("Thu, Jun 30, 2022 4:30 AM"),
+           Text(date),
           const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              SizedBox(
-                height: 50,
-                width: 100,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(12),
-                    backgroundColor:
-                        darkMode ? darkColor.dGreen : lightColor.dGreen,
-                  ),
-                  onPressed: () async {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      FaIcon(
-                        FontAwesomeIcons.bookmark,
-                        size: 14,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        "Save",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              SizedBox(
-                height: 50,
-                width: 100,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(12),
-                    backgroundColor:
-                        darkMode ? darkColor.dWhite : lightColor.dWhite,
-                  ),
-                  onPressed: () async {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      FaIcon(
-                        FontAwesomeIcons.arrowUpFromBracket,
-                        size: 14,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        "Find",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          )
+          bottomButton
         ],
       ),
     );

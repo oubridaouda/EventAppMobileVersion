@@ -1,7 +1,10 @@
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabAbout.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabHome.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabSetting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileTabBar extends StatefulWidget {
@@ -56,13 +59,10 @@ class _ProfileTabBarState extends State<ProfileTabBar>
                     children: [
                       FaIcon(FontAwesomeIcons.house,
                           size: 14.0,
-                          color:
-                              darkMode ? darkColor.dBlack : null),
+                          color: darkMode ? darkColor.dBlack : null),
                       Text("Home",
                           style: TextStyle(
-                              color: darkMode
-                                  ? darkColor.dBlack
-                                  : null))
+                              color: darkMode ? darkColor.dBlack : null))
                     ],
                   ),
                 ),
@@ -72,14 +72,13 @@ class _ProfileTabBarState extends State<ProfileTabBar>
                         children: [
                       FaIcon(FontAwesomeIcons.circleInfo,
                           size: 14.0,
-                          color:
-                              darkMode ? darkColor.dBlack : null),
-                          const SizedBox(width: 5,),
-                          Text("About",
+                          color: darkMode ? darkColor.dBlack : null),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text("About",
                           style: TextStyle(
-                              color: darkMode
-                                  ? darkColor.dBlack
-                                  : null))
+                              color: darkMode ? darkColor.dBlack : null))
                     ])),
                 Tab(
                     child: Row(
@@ -87,49 +86,34 @@ class _ProfileTabBarState extends State<ProfileTabBar>
                         children: [
                       FaIcon(FontAwesomeIcons.gear,
                           size: 14.0,
-                          color:
-                              darkMode ? darkColor.dBlack : null),
+                          color: darkMode ? darkColor.dBlack : null),
                       Text("Setting",
                           style: TextStyle(
-                              color: darkMode
-                                  ? darkColor.dBlack
-                                  : null))
+                              color: darkMode ? darkColor.dBlack : null))
                     ])),
                 Tab(
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FaIcon(FontAwesomeIcons.box,
-                              size: 14.0,
-                              color: darkMode
-                                  ? darkColor.dBlack
-                                  : null),
-                          Text("Orders",
-                              style: TextStyle(
-                                  color: darkMode
-                                      ? darkColor.dBlack
-                                      : null))
-                        ])
-                ),
+                      FaIcon(FontAwesomeIcons.box,
+                          size: 14.0,
+                          color: darkMode ? darkColor.dBlack : null),
+                      Text("Orders",
+                          style: TextStyle(
+                              color: darkMode ? darkColor.dBlack : null))
+                    ])),
               ],
             ),
           ),
           Container(
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(10.0),
-            child: TabBarView(
+            child:
+            TabBarView(
               children: [
-                ProfileTabHome(),
-                Container(
-                  decoration: BoxDecoration(
-                    color: darkMode ? darkColor.dWhite : lightColor.dWhite,
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child: Text("Articles Body"),
-                ),
-                Container(
-                  child: Text("User Body"),
-                ),
+                const ProfileTabHome(),
+                const ProfileTabAbout(),
+                const ProfileTabSetting(),
                 Container(
                   child: Text("User Body"),
                 ),
