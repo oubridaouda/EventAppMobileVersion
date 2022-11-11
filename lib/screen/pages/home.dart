@@ -58,7 +58,8 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       drawer: NavDrawer(scaffoldKey: _scaffoldKey),
       appBar: MyAppBar(scaffoldKey: _scaffoldKey),
-      body: SingleChildScrollView(
+      body:
+      SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -364,7 +365,7 @@ class eventCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 15, right: 20, bottom: 20, left: 20),
+            padding: const EdgeInsets.only(top: 15, right: 20, bottom: 20, left: 20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -373,13 +374,13 @@ class eventCard extends StatelessWidget {
                       Flexible(
                         child: Text(
                           hotelData['title'],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 60),
+                  const SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -400,7 +401,7 @@ class eventCard extends StatelessWidget {
           Container(
             color:
                 darkMode ? darkColor.fiveBackground : lightColor.fiveBackground,
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

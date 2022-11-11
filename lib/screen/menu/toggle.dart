@@ -37,7 +37,7 @@ class _ToggleButtonState extends State<ToggleButton> {
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
-          Radius.circular(10.0),
+          Radius.circular(2.0),
         ),
       ),
       child: Stack(
@@ -51,7 +51,7 @@ class _ToggleButtonState extends State<ToggleButton> {
               decoration: const BoxDecoration(
                 color: Colors.lightGreen,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
+                  Radius.circular(2.0),
                 ),
               ),
             ),

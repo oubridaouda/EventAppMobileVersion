@@ -4,6 +4,7 @@ import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileView.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -55,8 +56,15 @@ class _MyAppBarState extends State<MyAppBar> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 0.0),
-          child: Image.asset(
-            "assets/images/fav.png",
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const HomePage();
+              }));
+            },
+            child: Image.asset(
+              "assets/images/fav.png",
+            ),
           ),
         ),
       ]),
@@ -91,7 +99,9 @@ class _MyAppBarState extends State<MyAppBar> {
                 ),
               ),
             ),
-            const SizedBox(width: 10.0,),
+            const SizedBox(
+              width: 10.0,
+            ),
             GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {

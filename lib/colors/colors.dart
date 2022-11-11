@@ -12,6 +12,7 @@ class AppColors {
   Color thirdBackground = const Color(0xFFFFFFFF);
   Color forthBackground = const Color(0xFF000000);
   Color fiveBackground = const Color(0xFF848484);
+  Color sixBackground = const Color(0xFF000BBB);
   Color InputColor = Color(0xF9F3EEEE);
   Color InputBorderColor = Color(0xFFEFEFEF);
 }
@@ -29,5 +30,5 @@ class AppNightModeColors {
   Color dWhite = const Color(0xFF1A1D1F);
   Color InputColor = Color(0xFF272B30);
   Color InputBorderColor = Color(0xFFEFEFEF);
-  Color dBlack = Color(0xFF000000);
+  Color dBlack = Color(0xFFFFFFFF);
 }
