@@ -9,7 +9,6 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class NavDrawer extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
@@ -18,7 +17,6 @@ class NavDrawer extends StatefulWidget {
   @override
   State<NavDrawer> createState() => _NavDrawerState();
 }
-
 
 class _NavDrawerState extends State<NavDrawer> {
   final storage = const FlutterSecureStorage();
@@ -46,7 +44,6 @@ class _NavDrawerState extends State<NavDrawer> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +90,9 @@ class _NavDrawerState extends State<NavDrawer> {
                                 },
                                 child: Icon(
                                   Icons.close_rounded,
-                                  color: darkMode ? darkColor.dGrey : lightColor
-                                      .dGrey,
+                                  color: darkMode
+                                      ? darkColor.dGrey
+                                      : lightColor.dGrey,
                                   size: 23,
                                 ),
                               ),
@@ -103,15 +101,15 @@ class _NavDrawerState extends State<NavDrawer> {
                         )),
                     Container(
                       padding: const EdgeInsets.all(30.0),
-                      color: darkMode ? darkColor.dBackgroud : lightColor
-                          .dBackgroud,
+                      color: darkMode
+                          ? darkColor.dBackgroud
+                          : lightColor.dBackgroud,
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(12),
-                          backgroundColor: darkMode
-                              ? darkColor.dGreen
-                              : lightColor.dGreen,
+                          backgroundColor:
+                              darkMode ? darkColor.dGreen : lightColor.dGreen,
                         ),
                         onPressed: () async {
                           final logged = await SharedPreferences.getInstance();
@@ -120,9 +118,7 @@ class _NavDrawerState extends State<NavDrawer> {
                           storage.deleteAll();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => LoginPage()));
-                          setState(() {
-
-                          });
+                          setState(() {});
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -147,38 +143,218 @@ class _NavDrawerState extends State<NavDrawer> {
                       title: const Text('Home'),
                       onTap: () {},
                     ),
-                    const ExpansionTile(
-                      trailing: Icon(Icons.arrow_drop_down),
-                      title: Text("Explore Events"),
-                      children: <Widget>[Text("Explore Events"), Text("Venues Event Detail View"),Text("Online Event Detail View")],
-
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child:  ExpansionTile(
+                        childrenPadding: const EdgeInsets.only(left: 40.0),
+                        expandedAlignment: Alignment.topLeft,
+                        collapsedBackgroundColor: Colors.white,
+                        trailing: const Icon(Icons.arrow_drop_down),
+                        title: const Text("Explore Events"),
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:  [
+                              Row(children: [
+                                const SizedBox(
+                                  width: 10,
+                                  child:
+                                  Divider(color: Colors.black, thickness: 3,),
+                                ),
+                                const SizedBox(width: 10,),
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: const Text("Explore Events"),
+                                ),
+                              ],),
+                              const SizedBox(height: 20,),
+                              Row(
+                                children:  [
+                                  SizedBox(
+                                    width: 10,
+                                    child:
+                                    Divider(color: Colors.black, thickness: 3,),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: Text("Venues Event Detail View"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20,),
+                              Row(
+                                children:  [
+                                  SizedBox(
+                                    width: 10,
+                                    child:
+                                    Divider(color: Colors.black, thickness: 3,),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: Text("Online Event Detail View"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     ListTile(
                       title: const Text('Pricing'),
                       onTap: () {},
                     ),
-                    ListTile(
-                      title: const Text('Blog'),
-                      onTap: () {},
-                      trailing: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child:  ExpansionTile(
+                        childrenPadding: const EdgeInsets.only(left: 40.0),
+                        expandedAlignment: Alignment.topLeft,
+                        collapsedBackgroundColor: Colors.white,
+                        trailing: const Icon(Icons.arrow_drop_down),
+                        title: const Text("Blog"),
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:  [
+                              Row(children: [
+                                const SizedBox(
+                                  width: 10,
+                                  child:
+                                  Divider(color: Colors.black, thickness: 3,),
+                                ),
+                                const SizedBox(width: 10,),
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: const Text("Our Blog"),
+                                ),
+                              ],),
+                              const SizedBox(height: 20,),
+                              Row(
+                                children:  [
+                                  const SizedBox(
+                                    width: 10,
+                                    child:
+                                    Divider(color: Colors.black, thickness: 3,),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: const Text("Blog Detail View"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                    ListTile(
-                      title: Text('Help'),
-                      onTap: () {},
-                      trailing: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child:  ExpansionTile(
+                        childrenPadding: const EdgeInsets.only(left: 40.0),
+                        expandedAlignment: Alignment.topLeft,
+                        collapsedBackgroundColor: Colors.white,
+                        trailing: const Icon(Icons.arrow_drop_down),
+                        title: const Text("Help"),
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:  [
+                              Row(children: [
+                                const SizedBox(
+                                  width: 10,
+                                  child:
+                                  Divider(color: Colors.black, thickness: 3,),
+                                ),
+                                const SizedBox(width: 10,),
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: const Text("FAQ"),
+                                ),
+                              ],),
+                              const SizedBox(height: 20,),
+                              Row(
+                                children:  [
+                                  const SizedBox(
+                                    width: 10,
+                                    child:
+                                    Divider(color: Colors.black, thickness: 3,),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: const Text("Help Center"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20,),
+                              Row(
+                                children:  [
+                                  const SizedBox(
+                                    width: 10,
+                                    child:
+                                    Divider(color: Colors.black, thickness: 3,),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: const Text("Contact Us"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                    ListTile(
-                      title: const Text('Pages'),
-                      onTap: () {},
-                      trailing: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child:  ExpansionTile(
+                        childrenPadding: const EdgeInsets.only(left: 40.0),
+                        expandedAlignment: Alignment.topLeft,
+                        collapsedBackgroundColor: Colors.white,
+                        trailing: const Icon(Icons.arrow_drop_down),
+                        title: const Text("Pages"),
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:  [
+                              Row(children: [
+                                const SizedBox(
+                                  width: 10,
+                                  child:
+                                  Divider(color: Colors.black, thickness: 3,),
+                                ),
+                                const SizedBox(width: 10,),
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: const Text("Other Pages"),
+                                ),
+                              ],),
+                              const SizedBox(height: 20,),
+                              Row(
+                                children:  [
+                                  const SizedBox(
+                                    width: 10,
+                                    child:
+                                    Divider(color: Colors.black, thickness: 3,),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: const Text("Create Event"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
                   ],
@@ -355,7 +531,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                   ? darkColor.dGreen
                                   : lightColor.dGreen,
                               child: Padding(
-                                padding: EdgeInsets.all(2.0),
+                                padding: const EdgeInsets.all(2.0),
                                 child: CircleAvatar(
                                   radius: 125,
                                   backgroundColor: darkMode
@@ -381,7 +557,6 @@ class _NavDrawerState extends State<NavDrawer> {
                           )
                         ],
                       ),
-
                     ],
                   ),
                 ),
@@ -410,11 +585,18 @@ class _NavDrawerState extends State<NavDrawer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   children: [
-                    Text("Mode nuit",style: TextStyle(color: lightColor.dWhite),),
-                    SizedBox(height: 10,),
+                    Text(
+                      "Mode nuit",
+                      style: TextStyle(color: darkMode ? darkColor.dWhite : lightColor.dBlack),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     FlutterSwitch(
                       width: 55.0,
                       height: 30.0,
@@ -439,6 +621,9 @@ class _NavDrawerState extends State<NavDrawer> {
                       },
                     ),
 
+                    const SizedBox(
+                      height: 40,
+                    ),
                   ],
                 ),
               ],
