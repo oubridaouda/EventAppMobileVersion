@@ -17,6 +17,7 @@ class AppColors {
   Color InputBorderColor = Color(0xFFEFEFEF);
   Color cyanColor = const Color(0xFF22B0AF);
   Color cyanBlueColor = const Color(0xFFEDF1F5);
+  Color snowDriftColor = const Color(0xFFF9F9F9);
 }
 
 //Dark mode colors

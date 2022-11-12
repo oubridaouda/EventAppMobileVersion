@@ -34,8 +34,16 @@ class _HomePageState extends State<HomePage> {
 
   String? selectEventType;
   String? selectCity;
-  final List<String> eventListType = ["All", "Arts", "Business", 'Coaching and Consulting', 'Community and Culture', 'Education and Training', 'Family and Friends', 'Fashion and Beauty'];
-
+  final List<String> eventListType = [
+    "All",
+    "Arts",
+    "Business",
+    'Coaching and Consulting',
+    'Community and Culture',
+    'Education and Training',
+    'Family and Friends',
+    'Fashion and Beauty'
+  ];
 
   Future<bool?> getStorage() async {
     final logged = await SharedPreferences.getInstance();
@@ -63,14 +71,18 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               padding: const EdgeInsets.only(
-                  left: 12, right: 12, top: 70, bottom: 80),
+                left: 12,
+                right: 12,
+                top: 70,
+                bottom: 80,
+              ),
               alignment: Alignment.center,
               color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
               child: Column(
                 children: [
                   const Text(
                     "Discover Events For All The Things You Love",
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(
@@ -82,21 +94,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                   DropdownSearch<String>(
                     popupProps: const PopupProps.menu(
-                      showSearchBox: true,
-                      showSelectedItems: true,
-                      menuProps: MenuProps()
-                    ),
-                    items:  eventListType,
-                    dropdownDecoratorProps:  DropDownDecoratorProps(
+                        showSearchBox: true,
+                        showSelectedItems: true,
+                        menuProps: MenuProps()),
+                    items: eventListType,
+                    dropdownDecoratorProps: DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                         // labelText: "Menu mode",
                         labelStyle: TextStyle(color: Colors.blue),
                         hintText: "Type of event",
                         filled: true,
-                        fillColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
+                        fillColor:
+                            darkMode ? darkColor.dWhite : lightColor.dWhite,
                         enabledBorder: OutlineInputBorder(
                           //Outline border type for TextFeild
-                          borderRadius: const BorderRadius.all(Radius.circular(2)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(2)),
                           borderSide: BorderSide(
                             color: darkMode
                                 ? darkColor.InputColor
@@ -105,7 +118,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           //Outline border type for TextFeild
-                          borderRadius: const BorderRadius.all(Radius.circular(2)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(2)),
                           borderSide: BorderSide(
                             color: lightColor.InputBorderColor,
                           ),
@@ -136,16 +150,22 @@ class _HomePageState extends State<HomePage> {
                       showSelectedItems: true,
                       disabledItemFn: (String s) => s.startsWith('I'),
                     ),
-                    items: const ["Ouagadougou", "Lomé", "Brazzaville", 'Abidjan'],
-                    dropdownDecoratorProps:  DropDownDecoratorProps(
+                    items: const [
+                      "Ouagadougou",
+                      "Lomé",
+                      "Brazzaville",
+                      'Abidjan'
+                    ],
+                    dropdownDecoratorProps: DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                         // labelText: "Menu mode",
                         hintText: "City",
                         filled: true,
-                        fillColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
+                        fillColor:
+                            darkMode ? darkColor.dWhite : lightColor.dWhite,
                         enabledBorder: OutlineInputBorder(
                           //Outline border type for TextFeild
-                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          borderRadius: const BorderRadius.all(Radius.circular(2)),
                           borderSide: BorderSide(
                             color: darkMode
                                 ? darkColor.InputColor
@@ -364,7 +384,8 @@ class eventCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 15, right: 20, bottom: 20, left: 20),
+            padding:
+                const EdgeInsets.only(top: 15, right: 20, bottom: 20, left: 20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -400,7 +421,8 @@ class eventCard extends StatelessWidget {
           Container(
             color:
                 darkMode ? darkColor.fiveBackground : lightColor.fiveBackground,
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

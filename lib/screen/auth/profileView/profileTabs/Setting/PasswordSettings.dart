@@ -65,7 +65,7 @@ class _PasswordSettingsState extends State<PasswordSettings> {
             "Current password*",
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           TextField(
@@ -129,7 +129,7 @@ class _PasswordSettingsState extends State<PasswordSettings> {
             "Current password*",
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           TextField(

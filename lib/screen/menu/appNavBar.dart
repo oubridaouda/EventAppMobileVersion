@@ -94,7 +94,7 @@ class _MyAppBarState extends State<MyAppBar> {
                 onPressed: () async {},
                 shape: const CircleBorder(),
                 child: const FaIcon(
-                  FontAwesomeIcons.search,
+                  FontAwesomeIcons.magnifyingGlass,
                   color: Colors.white,
                 ),
               ),

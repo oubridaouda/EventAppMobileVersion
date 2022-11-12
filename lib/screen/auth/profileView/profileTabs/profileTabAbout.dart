@@ -1,4 +1,5 @@
 import 'package:event_mobile_app/main.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/About/EditProfileForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,7 +37,14 @@ class ProfileTabAbout extends StatelessWidget {
                         backgroundColor:
                             darkMode ? darkColor.dGreen : lightColor.dGreen,
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return  EditProfileForm();
+                            },
+                            fullscreenDialog: true));
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
