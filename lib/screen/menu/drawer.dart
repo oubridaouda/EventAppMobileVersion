@@ -5,6 +5,7 @@ import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,6 @@ class NavDrawer extends StatefulWidget {
 
 class _NavDrawerState extends State<NavDrawer> {
   final storage = const FlutterSecureStorage();
-
 
   dynamic saveThemeMode;
 
@@ -56,6 +56,7 @@ class _NavDrawerState extends State<NavDrawer> {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,13 +147,11 @@ class _NavDrawerState extends State<NavDrawer> {
                       title: const Text('Home'),
                       onTap: () {},
                     ),
-                    ListTile(
-                      title: const Text('Explore Events'),
-                      onTap: () {},
-                      trailing: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
-                      ),
+                    const ExpansionTile(
+                      trailing: Icon(Icons.arrow_drop_down),
+                      title: Text("Explore Events"),
+                      children: <Widget>[Text("Explore Events"), Text("Venues Event Detail View"),Text("Online Event Detail View")],
+
                     ),
                     ListTile(
                       title: const Text('Pricing'),
@@ -387,27 +386,63 @@ class _NavDrawerState extends State<NavDrawer> {
                   ),
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    MaterialButton(
-                      elevation: 0,
-                      height: 40,
-                      color: darkMode ? darkColor.btnColor : lightColor
-                          .btnColor,
-                      onPressed: () async {
-                        changeCurrentTheme();
-                        Navigator.of(context).pushReplacementNamed("/");
-                      },
-                      shape: const CircleBorder(),
-                      child: darkMode
-                          ? const FaIcon(FontAwesomeIcons.solidMoon)
-                          : const FaIcon(FontAwesomeIcons.solidSun),
-                    )
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: [
+                //     MaterialButton(
+                //       elevation: 0,
+                //       height: 40,
+                //       color: darkMode ? darkColor.btnColor : lightColor
+                //           .btnColor,
+                //       onPressed: () async {
+                //         changeCurrentTheme();
+                //         Navigator.of(context).pushReplacementNamed("/");
+                //       },
+                //       shape: const CircleBorder(),
+                //       child: darkMode
+                //           ? const FaIcon(FontAwesomeIcons.solidMoon)
+                //           : const FaIcon(FontAwesomeIcons.solidSun),
+                //     )
+                //   ],
+                // ),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 20,),
+                Column(
+                  children: [
+                    Text("Mode nuit",style: TextStyle(color: lightColor.dWhite),),
+                    SizedBox(height: 10,),
+                    FlutterSwitch(
+                      width: 55.0,
+                      height: 30.0,
+                      valueFontSize: 25.0,
+                      toggleSize: 30.0,
+                      value: darkMode,
+                      borderRadius: 30.0,
+                      padding: 2.0,
+                      showOnOff: true,
+                      activeText: "",
+                      inactiveIcon: const FaIcon(FontAwesomeIcons.solidSun),
+                      activeIcon: const FaIcon(FontAwesomeIcons.solidMoon),
+                      activeToggleColor: lightColor.dGreen,
+                      inactiveText: "",
+                      activeColor: lightColor.dWhite,
+                      inactiveColor: lightColor.cyanBlueColor,
+                      onToggle: (val) {
+                        setState(() {
+                          changeCurrentTheme();
+                          Navigator.of(context).pushReplacementNamed("/");
+                        });
+                      },
+                    ),
+
+                  ],
+                ),
+              ],
+            )
           ],
         ),
       ),
