@@ -1,13 +1,16 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class NavDrawer extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -47,7 +50,8 @@ class _NavDrawerState extends State<NavDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return
+      Drawer(
       backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
       width: 400,
       child: SingleChildScrollView(
@@ -141,12 +145,17 @@ class _NavDrawerState extends State<NavDrawer> {
                     //Drawer Menu section
                     ListTile(
                       title: const Text('Home'),
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.dashboard);
+                          Navigator.of(context).pop();
+                        });
+                      },
                     ),
                     Theme(
                       data: Theme.of(context)
                           .copyWith(dividerColor: Colors.transparent),
-                      child:  ExpansionTile(
+                      child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
                         collapsedBackgroundColor: Colors.white,
@@ -155,45 +164,78 @@ class _NavDrawerState extends State<NavDrawer> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  [
-                              Row(children: [
-                                const SizedBox(
-                                  width: 10,
-                                  child:
-                                  Divider(color: Colors.black, thickness: 3,),
-                                ),
-                                const SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: const Text("Explore Events"),
-                                ),
-                              ],),
-                              const SizedBox(height: 20,),
+                            children: [
                               Row(
-                                children:  [
-                                  SizedBox(
+                                children: [
+                                  const SizedBox(
                                     width: 10,
-                                    child:
-                                    Divider(color: Colors.black, thickness: 3,),
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
                                   ),
-                                  SizedBox(width: 10,),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    onTap: (){},
+                                    onTap: () {
+                                      setState(() {
+                                        Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.exploreEvents);
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: const Text("Explore Events"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.venueEvent);
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
                                     child: Text("Venues Event Detail View"),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20,),
+                              const SizedBox(
+                                height: 20,
+                              ),
                               Row(
-                                children:  [
-                                  SizedBox(
+                                children: [
+                                  const SizedBox(
                                     width: 10,
-                                    child:
-                                    Divider(color: Colors.black, thickness: 3,),
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
                                   ),
-                                  SizedBox(width: 10,),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    onTap: (){},
+                                    onTap: () {
+                                      setState(() {
+                                        Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.onlineEvent);
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
                                     child: Text("Online Event Detail View"),
                                   ),
                                 ],
@@ -210,7 +252,7 @@ class _NavDrawerState extends State<NavDrawer> {
                     Theme(
                       data: Theme.of(context)
                           .copyWith(dividerColor: Colors.transparent),
-                      child:  ExpansionTile(
+                      child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
                         collapsedBackgroundColor: Colors.white,
@@ -219,30 +261,42 @@ class _NavDrawerState extends State<NavDrawer> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  [
-                              Row(children: [
-                                const SizedBox(
-                                  width: 10,
-                                  child:
-                                  Divider(color: Colors.black, thickness: 3,),
-                                ),
-                                const SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: const Text("Our Blog"),
-                                ),
-                              ],),
-                              const SizedBox(height: 20,),
+                            children: [
                               Row(
-                                children:  [
+                                children: [
                                   const SizedBox(
                                     width: 10,
-                                    child:
-                                    Divider(color: Colors.black, thickness: 3,),
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
                                   ),
-                                  const SizedBox(width: 10,),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    onTap: (){},
+                                    onTap: () {},
+                                    child: const Text("Our Blog"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {},
                                     child: const Text("Blog Detail View"),
                                   ),
                                 ],
@@ -255,7 +309,7 @@ class _NavDrawerState extends State<NavDrawer> {
                     Theme(
                       data: Theme.of(context)
                           .copyWith(dividerColor: Colors.transparent),
-                      child:  ExpansionTile(
+                      child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
                         collapsedBackgroundColor: Colors.white,
@@ -264,45 +318,63 @@ class _NavDrawerState extends State<NavDrawer> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  [
-                              Row(children: [
-                                const SizedBox(
-                                  width: 10,
-                                  child:
-                                  Divider(color: Colors.black, thickness: 3,),
-                                ),
-                                const SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: const Text("FAQ"),
-                                ),
-                              ],),
-                              const SizedBox(height: 20,),
+                            children: [
                               Row(
-                                children:  [
+                                children: [
                                   const SizedBox(
                                     width: 10,
-                                    child:
-                                    Divider(color: Colors.black, thickness: 3,),
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
                                   ),
-                                  const SizedBox(width: 10,),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    onTap: (){},
+                                    onTap: () {},
+                                    child: const Text("FAQ"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {},
                                     child: const Text("Help Center"),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20,),
+                              const SizedBox(
+                                height: 20,
+                              ),
                               Row(
-                                children:  [
+                                children: [
                                   const SizedBox(
                                     width: 10,
-                                    child:
-                                    Divider(color: Colors.black, thickness: 3,),
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
                                   ),
-                                  const SizedBox(width: 10,),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    onTap: (){},
+                                    onTap: () {},
                                     child: const Text("Contact Us"),
                                   ),
                                 ],
@@ -315,7 +387,7 @@ class _NavDrawerState extends State<NavDrawer> {
                     Theme(
                       data: Theme.of(context)
                           .copyWith(dividerColor: Colors.transparent),
-                      child:  ExpansionTile(
+                      child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
                         collapsedBackgroundColor: Colors.white,
@@ -324,30 +396,42 @@ class _NavDrawerState extends State<NavDrawer> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  [
-                              Row(children: [
-                                const SizedBox(
-                                  width: 10,
-                                  child:
-                                  Divider(color: Colors.black, thickness: 3,),
-                                ),
-                                const SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: const Text("Other Pages"),
-                                ),
-                              ],),
-                              const SizedBox(height: 20,),
+                            children: [
                               Row(
-                                children:  [
+                                children: [
                                   const SizedBox(
                                     width: 10,
-                                    child:
-                                    Divider(color: Colors.black, thickness: 3,),
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
                                   ),
-                                  const SizedBox(width: 10,),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    onTap: (){},
+                                    onTap: () {},
+                                    child: const Text("Other Pages"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                    child: Divider(
+                                      color: Colors.black,
+                                      thickness: 3,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {},
                                     child: const Text("Create Event"),
                                   ),
                                 ],
@@ -592,7 +676,9 @@ class _NavDrawerState extends State<NavDrawer> {
                   children: [
                     Text(
                       "Mode nuit",
-                      style: TextStyle(color: darkMode ? darkColor.dWhite : lightColor.dBlack),
+                      style: TextStyle(
+                          color:
+                              darkMode ? darkColor.dWhite : lightColor.dBlack),
                     ),
                     const SizedBox(
                       height: 10,
@@ -620,7 +706,6 @@ class _NavDrawerState extends State<NavDrawer> {
                         });
                       },
                     ),
-
                     const SizedBox(
                       height: 40,
                     ),

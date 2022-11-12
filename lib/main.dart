@@ -1,10 +1,12 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/routes/routeGenerator.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AppColors lightColor = AppColors();
@@ -17,7 +19,10 @@ void main() async {
   final shareStorage = await SharedPreferences.getInstance();
   final isLoggedIn = shareStorage.getBool('isLoggedIn') ?? false;
   darkMode = shareStorage.getBool("darkmode") ?? false;
-  runApp(MyApp(isLoggedIn: isLoggedIn));
+  runApp(ChangeNotifierProvider(
+    create: (_) => AllChangeNotifier(),
+    child: MyApp(isLoggedIn: isLoggedIn),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       initial: AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(
-        theme: theme, 
+        theme: theme,
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
         title: 'DuckEvent',
