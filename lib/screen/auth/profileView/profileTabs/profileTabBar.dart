@@ -1,3 +1,4 @@
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/ProfileTabMyOrders.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabAbout.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTabBar extends StatefulWidget {
   const ProfileTabBar({Key? key}) : super(key: key);
@@ -36,6 +38,7 @@ class _ProfileTabBarState extends State<ProfileTabBar>
 
   @override
   Widget build(BuildContext context) {
+    darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
     return DefaultTabController(
       length: 4,
       child: Column(

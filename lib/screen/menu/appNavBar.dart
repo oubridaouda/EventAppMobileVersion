@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -78,7 +81,8 @@ class _MyAppBarState extends State<MyAppBar> {
                   elevation: 0,
                   height: 40,
                   color: darkMode ? darkColor.dGreen : lightColor.dGreen,
-                  onPressed: () async {},
+                  onPressed: () async {
+                  },
                   shape: const CircleBorder(),
                   child: const FaIcon(
                     FontAwesomeIcons.plus,
@@ -104,9 +108,12 @@ class _MyAppBarState extends State<MyAppBar> {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ProfileView(scaffoldKey: widget.scaffoldKey);
-                  }));
+                  Provider.of<AllChangeNotifier>(context,
+                      listen: false)
+                      .changePage(DrawerSection.profileView);
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  //   return ProfileView();
+                  // }));
                 },
                 child: const CircleAvatar(
                   backgroundImage: AssetImage(

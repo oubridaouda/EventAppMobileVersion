@@ -1,8 +1,10 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/menu/toggle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchEventSection extends StatefulWidget {
   const SearchEventSection({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class _SearchEventSectionState extends State<SearchEventSection> {
 
   @override
   Widget build(BuildContext context) {
+    darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
     return Container(
       padding: const EdgeInsets.only(
         left: 12,

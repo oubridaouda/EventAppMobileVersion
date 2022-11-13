@@ -1,9 +1,11 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/menu/toggle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class EventListScreenView extends StatefulWidget {
   const EventListScreenView({Key? key}) : super(key: key);
@@ -60,6 +62,7 @@ class _EventListScreenViewState extends State<EventListScreenView> {
 
   @override
   Widget build(BuildContext context) {
+    darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
     return Container(
       color: darkMode ? darkColor.firstBackground : lightColor.firstBackground,
       padding: const EdgeInsets.all(10),

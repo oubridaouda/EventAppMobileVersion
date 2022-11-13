@@ -1,3 +1,4 @@
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabBar.dart';
 import 'package:event_mobile_app/screen/menu/appNavBar.dart';
@@ -8,12 +9,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:event_mobile_app/main.dart';
+import 'package:provider/provider.dart';
 
 
 class ProfileView extends StatefulWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const ProfileView({Key? key, required this.scaffoldKey}) : super(key: key);
+  const ProfileView({Key? key}) : super(key: key);
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -22,11 +23,8 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: darkMode ? darkColor.dBackgroud : lightColor.btnColor,
-      appBar: MyAppBar(scaffoldKey: widget.scaffoldKey),
-      drawer: NavDrawer(scaffoldKey: widget.scaffoldKey),
-      body: SizedBox(
+    darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
+    return  SizedBox(
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: Column(
@@ -470,7 +468,6 @@ class _ProfileViewState extends State<ProfileView> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

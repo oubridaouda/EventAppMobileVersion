@@ -26,7 +26,7 @@ class _NavDrawerState extends State<NavDrawer> {
 
   dynamic saveThemeMode;
 
-  Future changeCurrentTheme() async {
+  Future changeCurrentTheme(context) async {
     final shareStorage = await SharedPreferences.getInstance();
 
     saveThemeMode = await AdaptiveTheme.getThemeMode();
@@ -37,6 +37,9 @@ class _NavDrawerState extends State<NavDrawer> {
         darkMode = false;
         AdaptiveTheme.of(context).setLight();
         shareStorage.setBool("darkmode", false);
+        Provider.of<AllChangeNotifier>(context,
+            listen: false)
+            .changeNightMode(false);
       });
     } else {
       print("thème sombre cool");
@@ -44,14 +47,17 @@ class _NavDrawerState extends State<NavDrawer> {
         darkMode = true;
         AdaptiveTheme.of(context).setDark();
         shareStorage.setBool("darkmode", true);
+        Provider.of<AllChangeNotifier>(context,
+            listen: false)
+            .changeNightMode(true);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return
-      Drawer(
+    darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
+    return Drawer(
       backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
       width: 400,
       child: SingleChildScrollView(
@@ -147,7 +153,8 @@ class _NavDrawerState extends State<NavDrawer> {
                       title: const Text('Home'),
                       onTap: () {
                         setState(() {
-                          Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.dashboard);
+                          Provider.of<AllChangeNotifier>(context, listen: false)
+                              .changePage(DrawerSection.dashboard);
                           Navigator.of(context).pop();
                         });
                       },
@@ -158,88 +165,21 @@ class _NavDrawerState extends State<NavDrawer> {
                       child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
-                        collapsedBackgroundColor: Colors.white,
                         trailing: const Icon(Icons.arrow_drop_down),
                         title: const Text("Explore Events"),
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.exploreEvents);
-                                        Navigator.of(context).pop();
-                                      });
-                                    },
-                                    child: const Text("Explore Events"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Explore Events",DrawerSection.exploreEvents),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.venueEvent);
-                                        Navigator.of(context).pop();
-                                      });
-                                    },
-                                    child: Text("Venues Event Detail View"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Venues Event Detail View",DrawerSection.venueEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        Provider.of<AllChangeNotifier>(context, listen: false).changePage(DrawerSection.onlineEvent);
-                                        Navigator.of(context).pop();
-                                      });
-                                    },
-                                    child: Text("Online Event Detail View"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Online Event Detail View",DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -255,52 +195,17 @@ class _NavDrawerState extends State<NavDrawer> {
                       child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
-                        collapsedBackgroundColor: Colors.white,
                         trailing: const Icon(Icons.arrow_drop_down),
                         title: const Text("Blog"),
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("Our Blog"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Our Blog",DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("Blog Detail View"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Blog Detail View",DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -312,73 +217,21 @@ class _NavDrawerState extends State<NavDrawer> {
                       child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
-                        collapsedBackgroundColor: Colors.white,
                         trailing: const Icon(Icons.arrow_drop_down),
                         title: const Text("Help"),
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("FAQ"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("FAQ",DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("Help Center"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Help Center",DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("Contact Us"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Contact Us",DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -390,52 +243,17 @@ class _NavDrawerState extends State<NavDrawer> {
                       child: ExpansionTile(
                         childrenPadding: const EdgeInsets.only(left: 40.0),
                         expandedAlignment: Alignment.topLeft,
-                        collapsedBackgroundColor: Colors.white,
                         trailing: const Icon(Icons.arrow_drop_down),
                         title: const Text("Pages"),
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("Other Pages"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Other Pages",DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                    child: Divider(
-                                      color: Colors.black,
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Text("Create Event"),
-                                  ),
-                                ],
-                              ),
+                              drawerItem("Create Event",DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -678,7 +496,7 @@ class _NavDrawerState extends State<NavDrawer> {
                       "Mode nuit",
                       style: TextStyle(
                           color:
-                              darkMode ? darkColor.dWhite : lightColor.dBlack),
+                              darkMode ? lightColor.dWhite : lightColor.dBlack),
                     ),
                     const SizedBox(
                       height: 10,
@@ -701,8 +519,7 @@ class _NavDrawerState extends State<NavDrawer> {
                       inactiveColor: lightColor.cyanBlueColor,
                       onToggle: (val) {
                         setState(() {
-                          changeCurrentTheme();
-                          Navigator.of(context).pushReplacementNamed("/");
+                          changeCurrentTheme(context);
                         });
                       },
                     ),
@@ -716,6 +533,34 @@ class _NavDrawerState extends State<NavDrawer> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget drawerItem(String title, currentPage) {
+    return Row(
+      children: [
+        const SizedBox(
+          width: 10,
+          child: Divider(
+            color: Colors.black,
+            thickness: 3,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              Provider.of<AllChangeNotifier>(context,
+                  listen: false)
+                  .changePage(currentPage);
+              Navigator.of(context).pop();
+            });
+          },
+          child: Text(title),
+        ),
+      ],
     );
   }
 }
