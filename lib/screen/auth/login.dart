@@ -1,6 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
+import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/resetPassword.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';

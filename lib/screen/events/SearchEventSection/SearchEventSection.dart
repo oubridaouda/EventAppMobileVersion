@@ -16,7 +16,7 @@ class SearchEventSection extends StatefulWidget {
 class _SearchEventSectionState extends State<SearchEventSection> {
 
   String? selectEventType;
-  String? selectCity;
+  String? selectCountry;
   final List<String> eventListType = [
     "All",
     "Arts",
@@ -27,6 +27,8 @@ class _SearchEventSectionState extends State<SearchEventSection> {
     'Family and Friends',
     'Fashion and Beauty'
   ];
+  final List<String> countryListType = ["Burkina Faso", "Mali", "Niger", 'Ghana', "Cote d'Ivoire", 'Nigeria', 'Togo', 'Bénin'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,16 +114,11 @@ class _SearchEventSectionState extends State<SearchEventSection> {
               showSelectedItems: true,
               disabledItemFn: (String s) => s.startsWith('I'),
             ),
-            items: const [
-              "Ouagadougou",
-              "Lomé",
-              "Brazzaville",
-              'Abidjan'
-            ],
+            items: countryListType,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 // labelText: "Menu mode",
-                hintText: "City",
+                hintText: "Country",
                 filled: true,
                 fillColor:
                 darkMode ? darkColor.dWhite : lightColor.dWhite,
@@ -153,9 +150,9 @@ class _SearchEventSectionState extends State<SearchEventSection> {
             ),
             onChanged: ((value) {
               print(value);
-              selectCity = value;
+              selectCountry = value;
             }),
-            selectedItem: selectCity,
+            selectedItem: selectCountry,
           ),
           // DropdownButtonHideUnderline(
           //   child: ButtonTheme(

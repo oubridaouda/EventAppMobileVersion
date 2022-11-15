@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: "homeScreen");
   bool? isLogged = false;
+  bool refresh = false;
   final Future<SharedPreferences> _shareStorage =
       SharedPreferences.getInstance();
   DateTime backPressedTime = DateTime.now();
@@ -55,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
+    refresh = Provider.of<AllChangeNotifier>(context).refresh;
     Widget container = const DashBoard();
     currentPage = Provider.of<AllChangeNotifier>(context).currentPage;
     if (currentPage == DrawerSection.dashboard) {
@@ -69,33 +71,38 @@ class _HomePageState extends State<HomePage> {
       container = const ProfileView();
     }
     return WillPopScope(
-        child: Scaffold(
-          key: _scaffoldKey,
-          drawer: NavDrawer(scaffoldKey: _scaffoldKey),
-          appBar: MyAppBar(scaffoldKey: _scaffoldKey),
-          body: container,
-        ),
-        onWillPop: () async{
-          print("back button pressed");
-          if(currentPage != DrawerSection.dashboard){
-            Provider.of<AllChangeNotifier>(context,
-                listen: false)
-                .changePage(DrawerSection.dashboard);
-            return false;
-          }else{
-            final difference = DateTime.now().difference(backPressedTime);
-            backPressedTime = DateTime.now();
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: NavDrawer(scaffoldKey: _scaffoldKey),
+        appBar: MyAppBar(scaffoldKey: _scaffoldKey),
+        body: !refresh
+            ? container
+            : Center(
+                child: CircularProgressIndicator(color: lightColor.dGreen),
+              ),
+      ),
+      onWillPop: () async {
+        print("back button pressed");
+        if (currentPage != DrawerSection.dashboard) {
+          Provider.of<AllChangeNotifier>(context, listen: false)
+              .changePage(DrawerSection.dashboard);
+          return false;
+        } else {
+          final difference = DateTime.now().difference(backPressedTime);
+          backPressedTime = DateTime.now();
 
-            if(difference >= const Duration(seconds: 2)){
-              ToastContext().init(context);
-              Toast.show("Click again to close the app",duration: Toast.lengthLong,gravity: Toast.bottom);
-              return false;
-            }else{
-              SystemNavigator.pop(animated: true);
-              return true;
-            }
+          if (difference >= const Duration(seconds: 2)) {
+            ToastContext().init(context);
+            Toast.show("Click again to close the app",
+                duration: Toast.lengthLong, gravity: Toast.bottom);
+            return false;
+          } else {
+            SystemNavigator.pop(animated: true);
+            return true;
           }
-        });
+        }
+      },
+    );
   }
 }
 
@@ -104,5 +111,7 @@ enum DrawerSection {
   exploreEvents,
   onlineEvent,
   venueEvent,
-  profileView
+  profileView,
+  loginPage,
+  singUpPage,
 }

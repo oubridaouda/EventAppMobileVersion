@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'dart:convert';
+
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/EmailPreferences.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/PasswordSettings.dart';
@@ -13,7 +17,8 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileTabSetting extends StatefulWidget {
-  const ProfileTabSetting({Key? key}) : super(key: key);
+  Map userInfo;
+  ProfileTabSetting({Key? key,required this.userInfo}) : super(key: key);
 
   @override
   State<ProfileTabSetting> createState() => _ProfileTabSettingState();
@@ -21,9 +26,14 @@ class ProfileTabSetting extends StatefulWidget {
 
 class _ProfileTabSettingState extends State<ProfileTabSetting> {
   bool status = false;
+  var _selectedTabbar = 0;
 
   @override
   Widget build(BuildContext context) {
+    Map userData = widget.userInfo;
+    print(userData['data']['privacySettings']);
+    Map userEmailPreferences = jsonDecode(userData['data']['emailPreferences']);
+    Map userPrivacySettings = jsonDecode(userData['data']['privacySettings']);
     return DefaultTabController(
       length: 3,
       child: Column(
@@ -36,6 +46,12 @@ class _ProfileTabSettingState extends State<ProfileTabSetting> {
               child: Column(
                 children: [
                   TabBar(
+                    onTap: (index) {
+                      print(index);
+                      setState(() {
+                        _selectedTabbar = index;
+                      });
+                    },
                     indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
                         color: lightColor.dGreen),
@@ -126,11 +142,11 @@ class _ProfileTabSettingState extends State<ProfileTabSetting> {
           ),
           Flexible(
             child: Container(
-              child: const TabBarView(
+              child:  TabBarView(
                 children: [
-                  EmailPreferences(),
-                  PasswordSettings(),
-                  PrivacySettings(),
+                  EmailPreferences(preferences: userEmailPreferences),
+                  const PasswordSettings(),
+                  PrivacySettings(preferences: userPrivacySettings),
                 ],
               ),
             ),

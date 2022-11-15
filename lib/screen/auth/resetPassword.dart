@@ -126,7 +126,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     } else {}
                   },
                   style: ElevatedButton.styleFrom(
-                    primary:appColor.dGreen,
+                    backgroundColor: appColor.dGreen,
                     padding: const EdgeInsets.all(20),
                   ),
                   child: isLoading

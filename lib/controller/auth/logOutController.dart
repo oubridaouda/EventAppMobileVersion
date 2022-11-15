@@ -18,7 +18,6 @@ class LogOutController {
       final prefs = await SharedPreferences.getInstance();
       //Remove login state
       prefs.remove("isLoggedIn");
-      Navigator.of(context).pushReplacementNamed("/login");
     } catch (e) {
       print("Log out error $e");
     }
@@ -29,7 +28,6 @@ class LogOutController {
     logged.setBool("isLoggedIn", false);
     print(storage);
     storage.deleteAll();
-    Navigator.of(context).pushReplacementNamed("/login");
   }
 
 
@@ -39,7 +37,6 @@ class LogOutController {
     //if sing out successfully pass isLoggedIn to false
     logged.setBool("isLoggedIn", false);
     await storage.deleteAll();
-    Navigator.of(context).pushReplacementNamed("/login");
   }
 
 }

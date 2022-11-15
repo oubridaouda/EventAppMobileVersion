@@ -11,7 +11,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ProfileTabBar extends StatefulWidget {
-  const ProfileTabBar({Key? key}) : super(key: key);
+  Map user;
+  Map preferences;
+
+  ProfileTabBar({Key? key, required this.user, required this.preferences})
+      : super(key: key);
 
   @override
   State<ProfileTabBar> createState() => _ProfileTabBarState();
@@ -35,6 +39,16 @@ class _ProfileTabBarState extends State<ProfileTabBar>
     super.dispose();
     _tabController.dispose();
   }
+
+  _buildTabContext(int lineCount) => Container(
+    child: ListView.builder(
+      physics: const ClampingScrollPhysics(),
+      itemCount: lineCount,
+      itemBuilder: (BuildContext context, int index) {
+        return Text('some content');
+      },
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +78,9 @@ class _ProfileTabBarState extends State<ProfileTabBar>
                       FaIcon(FontAwesomeIcons.house,
                           size: 14.0,
                           color: darkMode ? darkColor.dBlack : null),
+                      const SizedBox(
+                        width: 5,
+                      ),
                       Text("Home",
                           style: TextStyle(
                               color: darkMode ? darkColor.dBlack : null))
@@ -91,33 +108,42 @@ class _ProfileTabBarState extends State<ProfileTabBar>
                       FaIcon(FontAwesomeIcons.gear,
                           size: 14.0,
                           color: darkMode ? darkColor.dBlack : null),
+                      const SizedBox(
+                        width: 2,
+                      ),
                       Text("Setting",
                           style: TextStyle(
                               color: darkMode ? darkColor.dBlack : null))
                     ])),
                 Tab(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       FaIcon(FontAwesomeIcons.box,
                           size: 14.0,
                           color: darkMode ? darkColor.dBlack : null),
+                      const SizedBox(
+                        width: 5,
+                      ),
                       Text("Orders",
                           style: TextStyle(
                               color: darkMode ? darkColor.dBlack : null))
-                    ])),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
           Container(
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(10.0),
-            child:
-            const TabBarView(
+            child: TabBarView(
               children: [
                 ProfileTabHome(),
-                ProfileTabAbout(),
-                ProfileTabSetting(),
+                ProfileTabAbout(
+                  userInfo: widget.user,
+                ),
+                ProfileTabSetting(userInfo: widget.preferences),
                 ProfileTabMyOrder(),
               ],
             ),

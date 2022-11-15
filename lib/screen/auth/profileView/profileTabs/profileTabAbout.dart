@@ -1,15 +1,29 @@
+import 'dart:convert';
+
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/About/EditProfileForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-class ProfileTabAbout extends StatelessWidget {
-  const ProfileTabAbout({Key? key}) : super(key: key);
+class ProfileTabAbout extends StatefulWidget {
+  Map userInfo;
+   ProfileTabAbout({Key? key,required this.userInfo}) : super(key: key);
 
   @override
+  State<ProfileTabAbout> createState() => _ProfileTabAboutState();
+}
+
+class _ProfileTabAboutState extends State<ProfileTabAbout> {
+  @override
   Widget build(BuildContext context) {
+    Map userData = widget.userInfo;
+    Map userAddresses = jsonDecode(userData['data']["addresses"]);
+    Map socialMedia = jsonDecode(userData['data']['socialNetworks']);
+    print("about page ${userData['data']['addresses']}");
     return Column(
       children: [
         Container(
@@ -41,7 +55,7 @@ class ProfileTabAbout extends StatelessWidget {
 
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return  EditProfileForm();
+                              return  EditProfileForm(userData : userData);
                             },
                             fullscreenDialog: true));
                       },
@@ -84,7 +98,7 @@ class ProfileTabAbout extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "Oubri Daouda",
+                    userData['data']['username'] ?? "",
                     style: TextStyle(
                         color: lightColor.dGrey,
                         fontSize: 16.0,
@@ -103,6 +117,7 @@ class ProfileTabAbout extends StatelessWidget {
                 height: 25.0,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Tell us about yourself and let people know who you are",
@@ -113,7 +128,7 @@ class ProfileTabAbout extends StatelessWidget {
                     height: 13.0,
                   ),
                   Text(
-                    "Je suis Oubri Daouda Développeur Full Stack.",
+                    userData['data']['bio'] ?? "",
                     style: TextStyle(fontSize: 16.0, color: lightColor.dGrey),
                   )
                 ],
@@ -136,14 +151,17 @@ class ProfileTabAbout extends StatelessWidget {
                   const SizedBox(height: 25.0),
                   //Social media icon button
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      socialMedia['facebook'] !=null?
                       SizedBox(
                         width: 40,
                         height: 40,
                         child: CircleAvatar(
                           radius: 135,
-                          backgroundColor:
-                              darkMode ? darkColor.dGreen : lightColor.dGreen,
+                          backgroundColor: darkMode
+                              ? darkColor.dGreen
+                              : lightColor.dGreen,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
@@ -168,17 +186,19 @@ class ProfileTabAbout extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      ) : Container(),
                       const SizedBox(
                         width: 10,
                       ),
+                      socialMedia['instagram'] !=null?
                       SizedBox(
                         width: 40,
                         height: 40,
                         child: CircleAvatar(
                           radius: 135,
-                          backgroundColor:
-                              darkMode ? darkColor.dGreen : lightColor.dGreen,
+                          backgroundColor: darkMode
+                              ? darkColor.dGreen
+                              : lightColor.dGreen,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
@@ -203,17 +223,19 @@ class ProfileTabAbout extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      ) : Container(),
                       const SizedBox(
                         width: 10,
                       ),
+                      socialMedia['twitter'] !=null?
                       SizedBox(
                         width: 40,
                         height: 40,
                         child: CircleAvatar(
                           radius: 135,
-                          backgroundColor:
-                              darkMode ? darkColor.dGreen : lightColor.dGreen,
+                          backgroundColor: darkMode
+                              ? darkColor.dGreen
+                              : lightColor.dGreen,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
@@ -238,17 +260,19 @@ class ProfileTabAbout extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      ) : Container(),
                       const SizedBox(
                         width: 10,
                       ),
+                      socialMedia['linkedIn'] !=null?
                       SizedBox(
                         width: 40,
                         height: 40,
                         child: CircleAvatar(
                           radius: 135,
-                          backgroundColor:
-                              darkMode ? darkColor.dGreen : lightColor.dGreen,
+                          backgroundColor: darkMode
+                              ? darkColor.dGreen
+                              : lightColor.dGreen,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
@@ -273,17 +297,19 @@ class ProfileTabAbout extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      ) : Container(),
                       const SizedBox(
                         width: 10,
                       ),
+                      socialMedia['youtube'] !=null?
                       SizedBox(
                         width: 40,
                         height: 40,
                         child: CircleAvatar(
                           radius: 135,
-                          backgroundColor:
-                              darkMode ? darkColor.dGreen : lightColor.dGreen,
+                          backgroundColor: darkMode
+                              ? darkColor.dGreen
+                              : lightColor.dGreen,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
@@ -308,17 +334,19 @@ class ProfileTabAbout extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      ) : Container(),
                       const SizedBox(
                         width: 10,
                       ),
+                      socialMedia['webSite'] !=null?
                       SizedBox(
                         width: 40,
                         height: 40,
                         child: CircleAvatar(
                           radius: 135,
-                          backgroundColor:
-                              darkMode ? darkColor.dGreen : lightColor.dGreen,
+                          backgroundColor: darkMode
+                              ? darkColor.dGreen
+                              : lightColor.dGreen,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
@@ -333,15 +361,15 @@ class ProfileTabAbout extends StatelessWidget {
                                   radius: 200,
                                   child: ClipRRect(
                                       child: FaIcon(
-                                    FontAwesomeIcons.globe,
-                                    color: lightColor.dGreen,
-                                  )),
+                                        FontAwesomeIcons.globe,
+                                        color: lightColor.dGreen,
+                                      )),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                      ) : Container(),
                     ],
                   ),
                   const SizedBox(height: 25.0),
@@ -360,7 +388,7 @@ class ProfileTabAbout extends StatelessWidget {
                       ),
                       const SizedBox(height: 13.0),
                       Text(
-                        "15-25 Guda-Guda ZAD,Ouagadougou,BF",
+                        "${userAddresses['address']},${userAddresses['city']},${userAddresses['state']}",
                         style: TextStyle(color: lightColor.dGrey),
                       )
                     ],
