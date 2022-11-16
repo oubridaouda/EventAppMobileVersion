@@ -8,6 +8,8 @@ class AllChangeNotifier extends ChangeNotifier {
   var refresh = false;
   var userData = {};
   var userPreferences = {};
+  var height = 1000.0;
+  var avatar = "https://www.e.kossyam.com/assets/images/profile-imgs/nasa-Yj1M5riCKk4-unsplash.jpg";
 
   void changePage(newPage) {
     currentPage = newPage;
@@ -27,6 +29,14 @@ class AllChangeNotifier extends ChangeNotifier {
   }
   void sendUserPreferences(newUserPreferences){
     userPreferences = newUserPreferences;
+    notifyListeners();
+  }
+  void profilePageHeightCustom(newHeight){
+    height = newHeight;
+    notifyListeners();
+  }
+  void profileAvatarImg(newAvatar){
+    avatar = newAvatar;
     notifyListeners();
   }
 }

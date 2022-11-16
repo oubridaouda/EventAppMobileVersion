@@ -6,6 +6,7 @@ import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:toast/toast.dart';
 
 class PreferencesController{
   final storage = const FlutterSecureStorage();
@@ -32,7 +33,10 @@ class PreferencesController{
       // print(loginArray);
       userPreferences = jsonDecode(response.body);
       print("all user data preferences ${userPreferences["data"]}");
-
+      //Init context we use toast
+      ToastContext().init(context);
+      //Toast show message
+      Toast.show("Your email preferences are changed",duration: Toast.lengthLong, gravity: Toast.bottom);
       userPreferences = jsonDecode(response.body);
       Provider.of<AllChangeNotifier>(context, listen: false)
           .sendUserPreferences(userPreferences);
@@ -66,6 +70,10 @@ class PreferencesController{
 
     Provider.of<AllChangeNotifier>(context, listen: false)
         .sendUserPreferences(userPreferences);
+
+
+    Provider.of<AllChangeNotifier>(context, listen: false)
+        .pageRefresh(false);
     //
     // Provider.of<AllChangeNotifier>(context, listen: false)
     //     .pageRefresh(false);

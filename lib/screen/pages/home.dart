@@ -1,4 +1,6 @@
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
+import 'package:event_mobile_app/controller/commonFunction/commonFunction.dart';
+import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileView.dart';
 import 'package:event_mobile_app/screen/events/EventListScreenView/EventListScreenView.dart';
 import 'package:event_mobile_app/screen/events/SearchEventSection/SearchEventSection.dart';
@@ -37,6 +39,7 @@ class _HomePageState extends State<HomePage> {
   final Future<SharedPreferences> _shareStorage =
       SharedPreferences.getInstance();
   DateTime backPressedTime = DateTime.now();
+  CommonFunction common = CommonFunction();
 
   Future<bool?> getStorage() async {
     final logged = await SharedPreferences.getInstance();
@@ -50,6 +53,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: "homeScreen");
     super.initState();
+    common.checkTokenValidity(context);
+
     getStorage();
   }
 
@@ -69,12 +74,14 @@ class _HomePageState extends State<HomePage> {
       container = const VenuesEventDetailView();
     } else if (currentPage == DrawerSection.profileView) {
       container = const ProfileView();
+    }else if (currentPage == DrawerSection.loginPage) {
+      container = const LoginPage();
     }
     return WillPopScope(
       child: Scaffold(
         key: _scaffoldKey,
         drawer: NavDrawer(scaffoldKey: _scaffoldKey),
-        appBar: MyAppBar(scaffoldKey: _scaffoldKey),
+        appBar: currentPage == DrawerSection.loginPage ? null : MyAppBar(scaffoldKey: _scaffoldKey),
         body: !refresh
             ? container
             : Center(
@@ -83,7 +90,7 @@ class _HomePageState extends State<HomePage> {
       ),
       onWillPop: () async {
         print("back button pressed");
-        if (currentPage != DrawerSection.dashboard) {
+        if (currentPage != DrawerSection.dashboard && currentPage != DrawerSection.loginPage) {
           Provider.of<AllChangeNotifier>(context, listen: false)
               .changePage(DrawerSection.dashboard);
           return false;
@@ -92,7 +99,9 @@ class _HomePageState extends State<HomePage> {
           backPressedTime = DateTime.now();
 
           if (difference >= const Duration(seconds: 2)) {
+            //Init context we use toast
             ToastContext().init(context);
+            //Toast show message
             Toast.show("Click again to close the app",
                 duration: Toast.lengthLong, gravity: Toast.bottom);
             return false;

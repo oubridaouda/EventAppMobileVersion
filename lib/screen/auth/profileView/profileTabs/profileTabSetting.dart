@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'dart:convert';
 
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/EmailPreferences.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/PasswordSettings.dart';
@@ -15,10 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTabSetting extends StatefulWidget {
   Map userInfo;
-  ProfileTabSetting({Key? key,required this.userInfo}) : super(key: key);
+
+  ProfileTabSetting({Key? key, required this.userInfo}) : super(key: key);
 
   @override
   State<ProfileTabSetting> createState() => _ProfileTabSettingState();
@@ -26,7 +29,6 @@ class ProfileTabSetting extends StatefulWidget {
 
 class _ProfileTabSettingState extends State<ProfileTabSetting> {
   bool status = false;
-  var _selectedTabbar = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +49,14 @@ class _ProfileTabSettingState extends State<ProfileTabSetting> {
                 children: [
                   TabBar(
                     onTap: (index) {
-                      print(index);
-                      setState(() {
-                        _selectedTabbar = index;
-                      });
+                      if(index == 0){
+                        Provider.of<AllChangeNotifier>(context,listen: false).profilePageHeightCustom(1000.0);
+                      }else if(index == 1){
+                        Provider.of<AllChangeNotifier>(context,listen: false).profilePageHeightCustom(850.0);
+                      }else if(index == 2){
+                        Provider.of<AllChangeNotifier>(context,listen: false).profilePageHeightCustom(1000.0);
+                      }
+                      print("params index $index");
                     },
                     indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
@@ -142,7 +148,7 @@ class _ProfileTabSettingState extends State<ProfileTabSetting> {
           ),
           Flexible(
             child: Container(
-              child:  TabBarView(
+              child: TabBarView(
                 children: [
                   EmailPreferences(preferences: userEmailPreferences),
                   const PasswordSettings(),

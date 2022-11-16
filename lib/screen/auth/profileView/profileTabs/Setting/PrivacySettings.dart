@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:event_mobile_app/main.dart';
+import 'package:toast/toast.dart';
 
 class PrivacySettings extends StatefulWidget {
   Map preferences;
@@ -58,8 +59,8 @@ class _PrivacySettingsState extends State<PrivacySettings> {
             height: 25.0,
           ),
           privacySettingItems(context,
-              "Lock my user profile",
-              "On purchasing an event you will receive an order confirmation email.",
+              "Allow people to contact me",
+              "People will be able to send you emails through Barren who visits your profile.",
               preferences["2"] == '1' ? "1" : "0","2"),
           const SizedBox(
             height: 25.0,
@@ -72,8 +73,8 @@ class _PrivacySettingsState extends State<PrivacySettings> {
             height: 25.0,
           ),
           privacySettingItems(context,
-              "Lock my user profile",
-              "On purchasing an event you will receive an order confirmation email.",
+              "Allow people to find and invite me to relevant events",
+              "Based on your preferences event organisers will be able to send you invitations in their events.",
               preferences["3"] == '1' ? "1" : "0","3"),
           const SizedBox(
             height: 25.0,
@@ -84,6 +85,28 @@ class _PrivacySettingsState extends State<PrivacySettings> {
           ),
           const SizedBox(
             height: 25.0,
+          ),
+          privacySettingItems(context,
+              "Allow people to follow me",
+              "People will be able to follow you.",
+              preferences["4"] == '1' ? "1" : "0","4"),
+          const SizedBox(
+            height: 25.0,
+          ),
+          Divider(
+            thickness: 2,
+            color: lightColor.dBackgroud,
+          ),
+          privacySettingItems(context,
+              "Allow people to see my followings",
+              "People will be able to see whom and which organisations you are following.",
+              preferences["5"] == '1' ? "1" : "0","5"),
+          const SizedBox(
+            height: 25.0,
+          ),
+          Divider(
+            thickness: 2,
+            color: lightColor.dBackgroud,
           ),
         ],
       ),
@@ -129,11 +152,13 @@ class _PrivacySettingsState extends State<PrivacySettings> {
           inactiveText: "",
           activeColor: lightColor.cyanColor,
           inactiveColor: lightColor.cyanBlueColor,
-          onToggle: (val) {
-            setState(() {
-              status = val;
-              PreferencesController().updateUserPreferences(context, id, val ? "1":"0","privacySettings");
-            });
+          onToggle: (val) async{
+
+            //Init context we use toast
+            ToastContext().init(context);
+            //Toast show message
+            Toast.show("please wait...",duration: Toast.lengthLong, gravity: Toast.bottom);
+            await PreferencesController().updateUserPreferences(context, id, val ? "1":"0","privacySettings");
           },
         ),
       ],

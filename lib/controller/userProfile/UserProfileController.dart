@@ -41,9 +41,6 @@ class UserProfileController{
         .sendUserData(userData);
 
     Provider.of<AllChangeNotifier>(context, listen: false)
-        .pageRefresh(false);
-
-    Provider.of<AllChangeNotifier>(context, listen: false)
         .changePage(DrawerSection.profileView);
 
     return userData;

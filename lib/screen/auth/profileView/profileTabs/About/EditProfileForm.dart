@@ -990,6 +990,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
                           change = false;
                         });
 
+                        Provider.of<AllChangeNotifier>(context, listen: false)
+                            .pageRefresh(false);
                         Navigator.of(context).pop();
                         print("success");
                       },

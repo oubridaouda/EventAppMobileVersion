@@ -5,6 +5,7 @@ import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabBar.dart';
 import 'package:event_mobile_app/screen/menu/appNavBar.dart';
 import 'package:event_mobile_app/screen/menu/drawer.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -463,16 +464,8 @@ class _ProfileViewState extends State<ProfileView> {
                 offset: const Offset(0.0, -100.0),
                 child: ElevatedButton(
                   onPressed: () async{
-                    // Google logout
-                    await LogOutController().googleLogOut(context);
-
-                    //Classic log out
-                    await LogOutController().logOutClassic(context);
-
-                    //Facebook logout
-                    await LogOutController().facebookLogOut(context);
-
-                    Navigator.of(context).pushReplacementNamed("/login");
+                    // Logout user
+                    await LogOutController().logOut(context);
                   },
                   child: const Text("Log out"),
                 ),

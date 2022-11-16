@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Google signIn package initialize in var
@@ -19,7 +22,7 @@ class AuthController extends State<LoginPage> {
   bool openModal = false;
   bool modalStatus = false;
   final storage = FlutterSecureStorage();
-  String _token = 'Click the below button to generate token';
+  final String _token = 'Click the below button to generate token';
   bool badgeVisible = true;
 
 
@@ -58,8 +61,10 @@ class AuthController extends State<LoginPage> {
 
         print("token $value");
       }
+
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .changePage(DrawerSection.dashboard);
         //return home page if sign in successfully
-      Navigator.of(context).pushReplacementNamed("/");
 
 
       print("username ${user}");
@@ -102,6 +107,8 @@ class AuthController extends State<LoginPage> {
         print("token $value");
       }
 
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .changePage(DrawerSection.dashboard);
       Navigator.of(context).pushReplacementNamed("/");
     }else{
       print(result.status);
@@ -137,10 +144,18 @@ class AuthController extends State<LoginPage> {
       } else {
         print(_token);
       }
-      // print(loginArray);
+
+      await storage.write(key: 'avatar', value: loginArray['avatar']);
+
+      print(loginArray);
       final logged = await SharedPreferences.getInstance();
       //if singin succesfully pass isLoggedIn to true
       logged.setBool("isLoggedIn", true);
+
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .profileAvatarImg(loginArray['avatar']);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .changePage(DrawerSection.dashboard);
       Navigator.of(context).pushReplacementNamed("/");
     }
     //If request was failed we display modal with error message

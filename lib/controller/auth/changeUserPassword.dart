@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/PasswordSettings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ChangeUserPassword {
+class ChangeUserPassword  extends State<PasswordSettings>{
 
   String modalTitle = "";
   String modalMessage = "";
@@ -60,6 +61,14 @@ class ChangeUserPassword {
       modalTitle = result["title"];
       modalMessage = result["message"];
     }
+
+    return result;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 
 }

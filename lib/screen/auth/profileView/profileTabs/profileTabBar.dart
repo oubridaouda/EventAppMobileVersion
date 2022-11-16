@@ -41,18 +41,22 @@ class _ProfileTabBarState extends State<ProfileTabBar>
   }
 
   _buildTabContext(int lineCount) => Container(
-    child: ListView.builder(
-      physics: const ClampingScrollPhysics(),
-      itemCount: lineCount,
-      itemBuilder: (BuildContext context, int index) {
-        return Text('some content');
-      },
-    ),
-  );
+        child: ListView.builder(
+          physics: const ClampingScrollPhysics(),
+          itemCount: lineCount,
+          itemBuilder: (BuildContext context, int index) {
+            return Text('some content');
+          },
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
+    double containerHeight = Provider.of<AllChangeNotifier>(context).height;
+
+    print(containerHeight);
+    var tabIndex = 0;
     return DefaultTabController(
       length: 4,
       child: Column(
@@ -65,6 +69,11 @@ class _ProfileTabBarState extends State<ProfileTabBar>
               borderRadius: BorderRadius.circular(5.0),
             ),
             child: TabBar(
+              onTap: (index) {
+                setState(() {
+                  tabIndex = index;
+                });
+              },
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   color: lightColor.dGreen),
@@ -135,16 +144,16 @@ class _ProfileTabBarState extends State<ProfileTabBar>
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height,
+            height: 1000,
             margin: const EdgeInsets.all(10.0),
             child: TabBarView(
               children: [
-                ProfileTabHome(),
+                const ProfileTabHome(),
                 ProfileTabAbout(
                   userInfo: widget.user,
                 ),
                 ProfileTabSetting(userInfo: widget.preferences),
-                ProfileTabMyOrder(),
+                const ProfileTabMyOrder(),
               ],
             ),
           ),

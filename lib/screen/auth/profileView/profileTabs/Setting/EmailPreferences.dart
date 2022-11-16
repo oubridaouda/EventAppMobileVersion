@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:event_mobile_app/main.dart';
+import 'package:toast/toast.dart';
 
 class EmailPreferences extends StatefulWidget {
   Map preferences;
@@ -58,8 +59,8 @@ class _EmailPreferencesState extends State<EmailPreferences> {
             height: 25.0,
           ),
           emailPreferencesItems(
-              "Receive order confirmation",
-              "On purchasing an event you will receive an order confirmation email.","2",
+              "Receive communication from event organisers for my purchased events",
+              "The organisations whose events you have bought will be able send you further follow up emails.","2",
               preferences["2"] == '1' ? "1" : "0"),
           const SizedBox(
             height: 25.0,
@@ -72,9 +73,24 @@ class _EmailPreferencesState extends State<EmailPreferences> {
             height: 25.0,
           ),
           emailPreferencesItems(
-              "Receive order confirmation",
-              "On purchasing an event you will receive an order confirmation email.","3",
+              "Receive event invitations from event organisers sent to my email address",
+              "Organisations will be able to send you Invitations in their events.","3",
               preferences["3"] == '1' ? "1" : "0"),
+
+          const SizedBox(
+            height: 25.0,
+          ),
+          Divider(
+            thickness: 2,
+            color: lightColor.dBackgroud,
+          ),
+          const SizedBox(
+            height: 25.0,
+          ),
+          emailPreferencesItems(
+              "Receive reminder from Barren for my purchased events",
+              "After purchasing event you will receive reminder emails before the event starts so that you can get prepared.","4",
+              preferences["4"] == '1' ? "1" : "0"),
           const SizedBox(
             height: 25.0,
           ),
@@ -131,10 +147,11 @@ class _EmailPreferencesState extends State<EmailPreferences> {
           inactiveColor: lightColor.cyanBlueColor,
           onToggle: (val) {
             print("La valeur envoyé pour preferences $val");
+            //Init context we use toast
+            ToastContext().init(context);
+            //Toast show message
+            Toast.show("please wait...",duration: Toast.lengthLong, gravity: Toast.bottom);
             PreferencesController().updateUserPreferences(context, id, val ? "1":"0","emailPreferences");
-            setState(() {
-              status = val;
-            });
           },
         ),
       ],

@@ -6,6 +6,8 @@ import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
+import 'package:event_mobile_app/controller/commonFunction/commonFunction.dart';
+import 'package:event_mobile_app/controller/userProfile/PreferencesController.dart';
 import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileView.dart';
@@ -37,6 +39,7 @@ class _MyAppBarState extends State<MyAppBar> {
   final storage = const FlutterSecureStorage();
   dynamic saveThemeMode;
   var userData = {};
+  CommonFunction common = CommonFunction();
 
   @override
   void initState() {
@@ -44,8 +47,15 @@ class _MyAppBarState extends State<MyAppBar> {
     print("theme actu $darkMode}");
   }
 
+  Future<String?> _avatar() async{
+    String? value = await storage.read(key: 'avatar');
+    return value;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var avatarImg = Provider.of<AllChangeNotifier>(context).avatar;
+
     return AppBar(
       elevation: 0,
       backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
@@ -67,6 +77,7 @@ class _MyAppBarState extends State<MyAppBar> {
           padding: const EdgeInsets.only(left: 0.0),
           child: GestureDetector(
             onTap: () {
+              common.checkTokenValidity(context);
               Provider.of<AllChangeNotifier>(context, listen: false)
                   .changePage(DrawerSection.dashboard);
             },
@@ -113,14 +124,14 @@ class _MyAppBarState extends State<MyAppBar> {
             GestureDetector(
                 onTap: () async{
                   userData = await UserProfileController().userProfileData(context);
+                  await PreferencesController().getAllUserPreferences(context);
                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
                   //   return ProfileView();
                   // }));
                 },
-                child: const CircleAvatar(
-                  backgroundImage: AssetImage(
-                    "assets/images/profile-imgs/img-13.jpg",
-                  ),
+                child:  CircleAvatar(
+                  backgroundImage: NetworkImage(avatarImg),
+
                 )),
             const SizedBox(
               width: 10.0,

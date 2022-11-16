@@ -162,7 +162,6 @@ class _PasswordSettingsState extends State<PasswordSettings> {
                   color: Colors.red,
                 ),
               ),
-
               errorText: _submitted ? _errorPassword : null,
               suffixIcon: InkWell(
                 onTap: () => setState(() => _isSecret = !_isSecret),
@@ -188,7 +187,7 @@ class _PasswordSettingsState extends State<PasswordSettings> {
                     style: TextStyle(
                         color: lightColor.dGreen, fontWeight: FontWeight.w500),
                   ),
-                  onTap: (){
+                  onTap: () {
                     // Google logout
                     LogOutController().googleLogOut(context);
 
@@ -197,10 +196,10 @@ class _PasswordSettingsState extends State<PasswordSettings> {
 
                     //Facebook logout
                     LogOutController().facebookLogOut(context);
-                    Navigator.of(context).pushReplacementNamed("/reset-password");
+                    Navigator.of(context)
+                        .pushReplacementNamed("/reset-password");
                   },
                 ),
-
               ],
             ),
           ),
@@ -244,7 +243,6 @@ class _PasswordSettingsState extends State<PasswordSettings> {
                   color: Colors.red,
                 ),
               ),
-
               errorText: _submitted ? _errorNewPassword : null,
               suffixIcon: InkWell(
                 onTap: () => setState(() => _isSecretPass = !_isSecretPass),
@@ -256,7 +254,6 @@ class _PasswordSettingsState extends State<PasswordSettings> {
             ),
             keyboardType: TextInputType.visiblePassword,
           ),
-
           const SizedBox(
             height: 10.0,
           ),
@@ -302,7 +299,8 @@ class _PasswordSettingsState extends State<PasswordSettings> {
               ),
               errorText: _submitted ? _errorConfirmPassword : null,
               suffixIcon: InkWell(
-                onTap: () => setState(() => _isSecretNewPass = !_isSecretNewPass),
+                onTap: () =>
+                    setState(() => _isSecretNewPass = !_isSecretNewPass),
                 child: Icon(
                   !_isSecretNewPass ? Icons.visibility : Icons.visibility_off,
                   color: appColor.dGrey,
@@ -312,29 +310,34 @@ class _PasswordSettingsState extends State<PasswordSettings> {
             keyboardType: TextInputType.visiblePassword,
           ),
           const SizedBox(
-            height: 5.0,
+            height: 30.0,
           ),
           ElevatedButton(
             onPressed: () async {
               _submit();
-              if (passwordController.value.text.isNotEmpty && newPasswordController.value.text == passwordConfirmController.value.text) {
+              if (passwordController.value.text.isNotEmpty &&
+                  newPasswordController.value.text ==
+                      passwordConfirmController.value.text) {
                 setState(() => isLoading = true);
-                await ChangeUserPassword().createNewUserPassword(
-                    context,
-                    passwordController.text,
-                    newPasswordController.text,
-                    passwordConfirmController.text);
-                setState(() => isLoading = false);
 
-                ChangeUserPassword().openModal
+                var data = await ChangeUserPassword().createNewUserPassword(
+                  context,
+                  passwordController.text,
+                  newPasswordController.text,
+                  passwordConfirmController.text,
+                );
+                setState(() => isLoading = false);
+                print("pass change response ${data["status"]}");
+
+                data["status"] != null
                     ? CoolAlert.show(
-                        title: ChangeUserPassword().modalTitle,
+                        title: data["title"],
                         backgroundColor: Colors.white,
                         context: context,
-                        type: ChangeUserPassword().modalStatus
+                        type: data["status"] == 1
                             ? CoolAlertType.success
                             : CoolAlertType.error,
-                        text: ChangeUserPassword().modalMessage,
+                        text:  data["message"],
                         confirmBtnColor: appColor.dGreen,
                       )
                     : 0;
@@ -347,24 +350,25 @@ class _PasswordSettingsState extends State<PasswordSettings> {
             ),
             child: isLoading
                 ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                CircularProgressIndicator(color: Colors.white),
-                SizedBox(width: 14),
-                Text(
-                  'Veuillez  patienter...',
-                  style: TextStyle(fontSize: 16),
-                )
-              ],
-            )
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(color: Colors.white),
+                      SizedBox(width: 14),
+                      Text(
+                        'Veuillez  patienter...',
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  )
                 : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                "Update Password",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: darkMode ? darkColor.dWhite : lightColor.dWhite),
-              ),
-            ]),
+                    Text(
+                      "Update Password",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color:
+                              darkMode ? darkColor.dWhite : lightColor.dWhite),
+                    ),
+                  ]),
           ),
         ],
       ),
