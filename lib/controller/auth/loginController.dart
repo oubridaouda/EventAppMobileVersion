@@ -38,6 +38,7 @@ class AuthController extends State<LoginPage> {
       logged.setBool("isLoggedIn", true);
       logged.setString("username", user!.displayName!);
       logged.setString("email", user.email);
+      //User is connected
 
       print("google user : $user");
 
@@ -52,6 +53,7 @@ class AuthController extends State<LoginPage> {
       var result = json.decode(response.body);
 
       if (response.statusCode == 200 && result['status'] == 1) {
+        Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(true);
 
         storeUserSecureInformation(storage, result['token'], result['username'],result['email']);
         // Write value
@@ -60,6 +62,8 @@ class AuthController extends State<LoginPage> {
         logged.setBool("isLoggedIn", true);
 
         print("token $value");
+      }else{
+        Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(false);
       }
 
       Provider.of<AllChangeNotifier>(context, listen: false)
@@ -97,6 +101,7 @@ class AuthController extends State<LoginPage> {
       var jsonDecode = json.decode(response.body);
 
       if (response.statusCode == 200 && jsonDecode['status'] == 1) {
+        Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(true);
 
         storeUserSecureInformation(storage, jsonDecode['token'], jsonDecode['username'],jsonDecode['email']);
         // Write value
@@ -105,6 +110,8 @@ class AuthController extends State<LoginPage> {
         logged.setBool("isLoggedIn", true);
 
         print("token $value");
+      }else{
+        Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(false);
       }
 
       Provider.of<AllChangeNotifier>(context, listen: false)
@@ -152,6 +159,7 @@ class AuthController extends State<LoginPage> {
       //if singin succesfully pass isLoggedIn to true
       logged.setBool("isLoggedIn", true);
 
+      Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(true);
       Provider.of<AllChangeNotifier>(context, listen: false)
           .profileAvatarImg(loginArray['avatar']);
       Provider.of<AllChangeNotifier>(context, listen: false)
@@ -162,6 +170,7 @@ class AuthController extends State<LoginPage> {
     else {
       final logged = await SharedPreferences.getInstance();
       //if singin failed pass isLoggedIn to false
+      Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(false);
       logged.setBool("isLoggedIn", false);
       await storage.deleteAll();
       openModal = true;

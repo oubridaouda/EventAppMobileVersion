@@ -55,7 +55,7 @@ class _ProfileViewState extends State<ProfileView> {
               Transform.translate(
                 offset: const Offset(0.0, -100.0),
                 child: Container(
-                  height: 600,
+                  height: 550,
                   color: darkMode ? darkColor.dWhite : lightColor.dWhite,
                   margin: const EdgeInsets.all(10.0),
                   padding: const EdgeInsets.all(30),
@@ -189,36 +189,6 @@ class _ProfileViewState extends State<ProfileView> {
                       Text(
                         "Hey i am ${userData['data']['username']}",
                         style: TextStyle(color: lightColor.dGrey),
-                      ),
-                      const SizedBox(height: 25.0),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.all(12),
-                            backgroundColor:
-                                darkMode ? darkColor.dWhite : lightColor.dWhite,
-                            elevation: 2,
-                            disabledBackgroundColor: Colors.white),
-                        onPressed: () async {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "My Organisation",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black),
-                            ),
-                            const SizedBox(width: 10.0),
-                            FaIcon(
-                              FontAwesomeIcons.rightLeft,
-                              color: darkMode
-                                  ? darkColor.dBlack
-                                  : lightColor.dBlack,
-                              size: 15,
-                            )
-                          ],
-                        ),
                       ),
                       const SizedBox(height: 25.0),
                       const Text(

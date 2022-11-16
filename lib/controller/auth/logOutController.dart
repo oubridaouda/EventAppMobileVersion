@@ -53,6 +53,8 @@ class LogOutController {
     //Facebook logout
     await LogOutController().facebookLogOut(context);
 
+    Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(false);
+
     Provider.of<AllChangeNotifier>(context, listen: false)
         .changePage(DrawerSection.loginPage);
   }

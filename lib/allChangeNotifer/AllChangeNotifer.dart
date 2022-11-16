@@ -3,6 +3,7 @@ import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 
 class AllChangeNotifier extends ChangeNotifier {
+  var isLogged = false;
   var currentPage = DrawerSection.dashboard;
   var screenMode = darkMode;
   var refresh = false;
@@ -11,6 +12,10 @@ class AllChangeNotifier extends ChangeNotifier {
   var height = 1000.0;
   var avatar = "https://www.e.kossyam.com/assets/images/profile-imgs/nasa-Yj1M5riCKk4-unsplash.jpg";
 
+  void userIsLogged(newLogged) {
+    isLogged = newLogged;
+    notifyListeners();
+  }
   void changePage(newPage) {
     currentPage = newPage;
     notifyListeners();

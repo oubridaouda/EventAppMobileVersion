@@ -16,25 +16,21 @@ bool isLoggedIn = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final shareStorage = await SharedPreferences.getInstance();
-  final isLoggedIn = shareStorage.getBool('isLoggedIn') ?? false;
-  darkMode = shareStorage.getBool("darkmode") ?? false;
   runApp(ChangeNotifierProvider(
     create: (_) => AllChangeNotifier(),
-    child: MyApp(isLoggedIn: isLoggedIn),
+    child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-
-  MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
   var isLogin = true;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
+    bool loginStatus = Provider.of<AllChangeNotifier>(context).isLogged;
     return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
@@ -51,7 +47,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'DuckEvent',
         home: const HomePage(),
-        initialRoute: isLoggedIn ? '/' : '/login',
+        initialRoute: '/',
         onGenerateRoute: (settings) => RouteGenerator.generateRoute(settings),
       ),
     );

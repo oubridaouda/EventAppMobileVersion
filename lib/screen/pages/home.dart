@@ -21,10 +21,9 @@ import 'package:toast/toast.dart';
 var currentPage = DrawerSection.dashboard;
 
 class HomePage extends StatefulWidget {
-  final bool? loginStatus;
   final String text;
 
-  const HomePage({Key? key, this.loginStatus = false, this.text = ""})
+  const HomePage({Key? key, this.text = ""})
       : super(key: key);
 
   @override
@@ -44,15 +43,24 @@ class _HomePageState extends State<HomePage> {
   Future<bool?> getStorage() async {
     final logged = await SharedPreferences.getInstance();
     isLogged = logged.getBool("isLoggedIn") ?? false;
-
-    print("is logginStatus ${widget.loginStatus}");
     return isLogged;
+  }
+
+  _getLoginStatus() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final shareStorage = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isLogged = (shareStorage.getBool('isLoggedIn') ?? false);
+      Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(isLogged);
+    });
   }
 
   @override
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: "homeScreen");
     super.initState();
+    _getLoginStatus();
     common.checkTokenValidity(context);
 
     getStorage();
@@ -62,8 +70,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
     refresh = Provider.of<AllChangeNotifier>(context).refresh;
+    isLogged = Provider.of<AllChangeNotifier>(context).isLogged;
     Widget container = const DashBoard();
-    currentPage = Provider.of<AllChangeNotifier>(context).currentPage;
+    currentPage = isLogged == false ? DrawerSection.loginPage:Provider.of<AllChangeNotifier>(context).currentPage;
     if (currentPage == DrawerSection.dashboard) {
       container = const DashBoard();
     } else if (currentPage == DrawerSection.exploreEvents) {
@@ -80,7 +89,7 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: NavDrawer(scaffoldKey: _scaffoldKey),
+        drawer: currentPage == DrawerSection.loginPage ? null :NavDrawer(scaffoldKey: _scaffoldKey),
         appBar: currentPage == DrawerSection.loginPage ? null : MyAppBar(scaffoldKey: _scaffoldKey),
         body: !refresh
             ? container

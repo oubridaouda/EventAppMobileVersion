@@ -122,12 +122,6 @@ class _NavDrawerState extends State<NavDrawer> {
                               darkMode ? darkColor.dGreen : lightColor.dGreen,
                         ),
                         onPressed: () async {
-                          final logged = await SharedPreferences.getInstance();
-                          logged.setBool("isLoggedIn", false);
-                          print(storage);
-                          storage.deleteAll();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LoginPage()));
                           setState(() {});
                         },
                         child: Row(
