@@ -59,7 +59,6 @@ class UserProfileController {
   Future addUserProfileImage(context, File image, imagePath,String imageType) async {
     //Refresh page with provider variable
     final provider = Provider.of<AllChangeNotifier>(context,listen: false);
-    final providerData = Provider.of<AllChangeNotifier>(context);
 
     var client = http.Client();
     const url = 'www.e.kossyam.com';
