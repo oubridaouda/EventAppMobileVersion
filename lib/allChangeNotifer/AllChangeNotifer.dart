@@ -10,6 +10,8 @@ class AllChangeNotifier extends ChangeNotifier {
   var userData = {};
   var userPreferences = {};
   var height = 1000.0;
+  var uploadAvatarImage = "";
+  var uploadCoverImage = "";
   var avatar = "https://www.e.kossyam.com/assets/images/profile-imgs/nasa-Yj1M5riCKk4-unsplash.jpg";
 
   void userIsLogged(newLogged) {
@@ -42,6 +44,11 @@ class AllChangeNotifier extends ChangeNotifier {
   }
   void profileAvatarImg(newAvatar){
     avatar = newAvatar;
+    notifyListeners();
+  }
+  void uploadImage(newAvatar, newCover){
+    uploadAvatarImage = newAvatar;
+    uploadAvatarImage = newCover;
     notifyListeners();
   }
 }

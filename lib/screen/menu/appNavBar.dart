@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
@@ -130,7 +131,21 @@ class _MyAppBarState extends State<MyAppBar> {
                   // }));
                 },
                 child:  CircleAvatar(
-                  backgroundImage: NetworkImage(avatarImg),
+                  backgroundColor: lightColor.dBackgroud,
+                  child: CachedNetworkImage(
+                    imageUrl: avatarImg,
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
+                      ),
+                    ),
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        CircularProgressIndicator(color: lightColor.dGreen,value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),),
 
                 )),
             const SizedBox(
