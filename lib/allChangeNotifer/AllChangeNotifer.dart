@@ -12,43 +12,52 @@ class AllChangeNotifier extends ChangeNotifier {
   var height = 1000.0;
   var uploadAvatarImage = "";
   var uploadCoverImage = "";
-  var avatar = "https://www.e.kossyam.com/assets/images/profile-imgs/nasa-Yj1M5riCKk4-unsplash.jpg";
+  var avatar =
+      "https://www.e.kossyam.com/assets/images/profile-imgs/nasa-Yj1M5riCKk4-unsplash.jpg";
 
   void userIsLogged(newLogged) {
     isLogged = newLogged;
     notifyListeners();
   }
+
   void changePage(newPage) {
     currentPage = newPage;
     notifyListeners();
   }
-  void changeNightMode(bool newScreenMode){
+
+  void changeNightMode(bool newScreenMode) {
     screenMode = newScreenMode;
     notifyListeners();
   }
-  void pageRefresh(bool newRefresh){
+
+  void pageRefresh(bool newRefresh) {
     refresh = newRefresh;
     notifyListeners();
   }
-  void sendUserData(newUserData){
+
+  void sendUserData(newUserData) {
     userData = newUserData;
     notifyListeners();
   }
-  void sendUserPreferences(newUserPreferences){
+
+  void sendUserPreferences(newUserPreferences) {
     userPreferences = newUserPreferences;
     notifyListeners();
   }
-  void profilePageHeightCustom(newHeight){
+
+  void profilePageHeightCustom(newHeight) {
     height = newHeight;
     notifyListeners();
   }
-  void profileAvatarImg(newAvatar){
+
+  void profileAvatarImg(newAvatar) {
     avatar = newAvatar;
     notifyListeners();
   }
-  void uploadImage(newAvatar, newCover){
-    uploadAvatarImage = newAvatar;
-    uploadAvatarImage = newCover;
+
+  void uploadImage(newAvatar, newCover) {
+    uploadAvatarImage = newAvatar == "default" ? uploadAvatarImage : newAvatar;
+    uploadCoverImage = newCover == "default" ? uploadCoverImage : newCover;
     notifyListeners();
   }
 }

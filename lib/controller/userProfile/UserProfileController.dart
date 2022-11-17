@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/controller/commonFunction/commonFunction.dart';
 import 'package:event_mobile_app/screen/pages/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -14,11 +15,15 @@ class UserProfileController {
   dynamic saveThemeMode;
   var userData = {};
 
+
   Future userProfileData(context) async {
+    final provider = Provider.of<AllChangeNotifier>(context,listen: false);
+
     var tokenStatus = await CommonFunction().checkTokenValidity(context);
     //Refresh page with provider variable
     Provider.of<AllChangeNotifier>(context, listen: false).pageRefresh(true);
 
+    //Do request to put image in to database
     var client = http.Client();
     const url = 'www.e.kossyam.com';
     String? value = await storage.read(key: 'jwt');
@@ -38,17 +43,23 @@ class UserProfileController {
     } else {
       print("error response : ${response.body}");
     }
-    Provider.of<AllChangeNotifier>(context, listen: false)
-        .sendUserData(userData);
 
-    Provider.of<AllChangeNotifier>(context, listen: false)
-        .changePage(DrawerSection.profileView);
+    //Initialize profile var image to empty if var does not empty
+    provider.uploadImage("", "");
+
+    //Initialize user data
+    provider.sendUserData(userData);
+
+    //Switche to profile view
+    provider.changePage(DrawerSection.profileView);
 
     return userData;
   }
 
-  Future addUserProfileImage(context, File image, imagePath) async {
+  Future addUserProfileImage(context, File image, imagePath,String imageType) async {
     //Refresh page with provider variable
+    final provider = Provider.of<AllChangeNotifier>(context,listen: false);
+    final providerData = Provider.of<AllChangeNotifier>(context);
 
     var client = http.Client();
     const url = 'www.e.kossyam.com';
@@ -58,16 +69,16 @@ class UserProfileController {
 
     var request =
         http.MultipartRequest("POST", Uri.https(url, 'en/upload-avatar-image'));
-    request.fields['imageType'] = "avatar";
+    request.fields['imageType'] = imageType;
     request.fields['platform'] = "Mobile";
     request.headers['Authorization'] = "Bearer $value";
 
     var picture = http.MultipartFile.fromBytes(
         "image",
-        (await rootBundle.load("assets/images/profile-imgs/avatar.jpg"))
-            .buffer
-            .asUint8List(),
-        filename: "mon-avatar.png");
+        File(imagePath).readAsBytesSync(),
+        filename: "avatar-img-${DateTime.now().millisecondsSinceEpoch}.jpg");
+
+    print("$imagePath my image send to database ${Image.file(File(imagePath))}");
 
     request.files.add(picture);
 
@@ -81,7 +92,9 @@ class UserProfileController {
     if (response.statusCode == 200) {
       userData = json.decode(result);
       // print(loginArray);
-      print(result);
+      imageType == "avatar" ?
+      provider.uploadImage(userData["data"]["image"], "default") : provider.uploadImage("default", userData["data"]["image"]);
+      print("image data ${userData["data"]["image"]}");
     } else {
       print("error response : ${result}");
     }

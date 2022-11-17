@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
@@ -26,14 +27,25 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   String? imageFile;
+  bool avatarImageUpdate = false;
+  bool coverImageUpdate = false;
 
-  void pickedMedia() async {
+  //Picked image from gallery and upload it to database
+  Future pickedMedia(context, String typeImage) async {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (file != null) {
-      print("Image file path $imageFile");
-
       setState(() {
-        Provider.of<AllChangeNotifier>(context,listen: false).uploadImage(file.path, "");
+        typeImage == "avatar"
+            ? avatarImageUpdate = true
+            : coverImageUpdate = true;
+      });
+      print("Image file path $imageFile");
+      await UserProfileController()
+          .addUserProfileImage(context, File(file.path), file.path, typeImage);
+      setState(() {
+        typeImage == "avatar"
+            ? avatarImageUpdate = false
+            : coverImageUpdate = false;
       });
     }
   }
@@ -44,9 +56,10 @@ class _ProfileViewState extends State<ProfileView> {
     Map userPreferences =
         Provider.of<AllChangeNotifier>(context).userPreferences;
     Map socialMedia = jsonDecode(userData['data']['socialNetworks']);
-    // print("my user data ${socialMedia}");
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
-    imageFile = Provider.of<AllChangeNotifier>(context).uploadAvatarImage;
+    var avatarImg = Provider.of<AllChangeNotifier>(context).uploadAvatarImage;
+    var coverImg = Provider.of<AllChangeNotifier>(context).uploadCoverImage;
+    print("my user avatar ${avatarImg}");
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -55,20 +68,75 @@ class _ProfileViewState extends State<ProfileView> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 270.0,
-              padding: const EdgeInsets.only(
-                  left: 12, right: 12, top: 70, bottom: 80),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
-                image: DecorationImage(
-                  image: NetworkImage(userData['data']["coverImg"]),
-                  fit: BoxFit.cover,
-                ),
               ),
-              child: Row(),
+              child: coverImageUpdate
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: coverImg == ""
+                          ? userData['data']["coverImg"]
+                          : coverImg,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                  color: lightColor.dGreen,
+                                  value: downloadProgress.progress),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
             ),
             Transform.translate(
-              offset: const Offset(0.0, -100.0),
+              offset: const Offset(100.0, -230.0),
+              child: SizedBox(
+                height: 50,
+                width: 170,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(12),
+                    backgroundColor:
+                        darkMode ? darkColor.dWhite : lightColor.dWhite,
+                  ),
+                  onPressed: () async {
+                    await pickedMedia(context, "cover");
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      FaIcon(
+                        FontAwesomeIcons.panorama,
+                        size: 14,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Change Image",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Transform.translate(
+              offset: const Offset(0.0, -120.0),
               child: Container(
                 height: 550,
                 color: darkMode ? darkColor.dWhite : lightColor.dWhite,
@@ -77,84 +145,113 @@ class _ProfileViewState extends State<ProfileView> {
                 child: Column(
                   children: [
                     Transform.translate(
-                        offset: const Offset(20.0, 0.0),
-                        //User profile image section
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            //Profile photo image
-                            SizedBox(
-                              height: 130,
-                              width: 130,
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dBackgroud
-                                    : lightColor.dBackgroud,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: SizedBox(
-                                        height: 130,
-                                        width: 130,
-                                        child: CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              userData['data']["avatarImg"]),
-                                        ),
+                      offset: const Offset(20.0, 0.0),
+                      //User profile image section
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //Profile photo image
+                          SizedBox(
+                            height: 130,
+                            width: 130,
+                            child: CircleAvatar(
+                              radius: 135,
+                              backgroundColor: darkMode
+                                  ? darkColor.dBackgroud
+                                  : lightColor.dBackgroud,
+                              child: Padding(
+                                padding: EdgeInsets.all(2.0),
+                                child: CircleAvatar(
+                                  radius: 125,
+                                  backgroundColor: darkMode
+                                      ? darkColor.dWhite
+                                      : lightColor.dWhite,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: SizedBox(
+                                      height: 130,
+                                      width: 130,
+                                      child: CircleAvatar(
+                                        backgroundColor: darkMode
+                                            ? darkColor.dBackgroud
+                                            : lightColor.dBackgroud,
+                                        child: avatarImageUpdate
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator())
+                                            : CachedNetworkImage(
+                                                imageUrl: avatarImg == ""
+                                                    ? userData['data']
+                                                        ["avatarImg"]
+                                                    : avatarImg,
+                                                imageBuilder:
+                                                    (context, imageProvider) =>
+                                                        Container(
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ),
+                                                progressIndicatorBuilder:
+                                                    (context, url,
+                                                            downloadProgress) =>
+                                                        CircularProgressIndicator(
+                                                            color: lightColor
+                                                                .dGreen,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            //Profile photo image upload button
-                            Transform.translate(
-                                offset: const Offset(-45.0, 45.0),
-                                child: SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: GestureDetector(
+                          ),
+                          //Profile photo image upload button
+                          Transform.translate(
+                            offset: const Offset(-45.0, 45.0),
+                            child: SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: GestureDetector(
+                                child: CircleAvatar(
+                                  radius: 135,
+                                  backgroundColor: darkMode
+                                      ? darkColor.dGreen
+                                      : lightColor.sixBackground,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(1.0),
                                     child: CircleAvatar(
-                                      radius: 135,
+                                      radius: 125,
                                       backgroundColor: darkMode
-                                          ? darkColor.dGreen
-                                          : lightColor.sixBackground,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(1.0),
-                                        child: CircleAvatar(
-                                          radius: 125,
-                                          backgroundColor: darkMode
-                                              ? darkColor.dBlack
-                                              : lightColor.dWhite,
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(2.0),
-                                            child: SizedBox(
-                                              child: FaIcon(
-                                                  FontAwesomeIcons.camera,
-                                                  color: Colors.black,
-                                                  size: 14.0),
-                                            ),
-                                          ),
+                                          ? darkColor.dBlack
+                                          : lightColor.dWhite,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: SizedBox(
+                                          child: FaIcon(FontAwesomeIcons.camera,
+                                              color: Colors.black, size: 14.0),
                                         ),
                                       ),
                                     ),
-                                    onTap: () {
-                                      pickedMedia();
-                                      imageFile != null ?
-                                      UserProfileController()
-                                          .addUserProfileImage(
-                                          context, File(imageFile!),imageFile) : null;
-                                    },
                                   ),
-                                ),),
-                          ],
-                        ),),
+                                ),
+                                onTap: () async {
+                                  await pickedMedia(context, "avatar");
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
                     const SizedBox(
                       height: 20.0,

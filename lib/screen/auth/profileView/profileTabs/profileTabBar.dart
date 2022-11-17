@@ -1,9 +1,9 @@
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
-import 'package:event_mobile_app/screen/auth/profileView/profileTabs/ProfileTabMyOrders.dart';
-import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabAbout.dart';
-import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabHome.dart';
-import 'package:event_mobile_app/screen/auth/profileView/profileTabs/profileTabSetting.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/MyOrder/ProfileTabMyOrders.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/About/profileTabAbout.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Home/profileTabHome.dart';
+import 'package:event_mobile_app/screen/auth/profileView/profileTabs/Setting/profileTabSetting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
