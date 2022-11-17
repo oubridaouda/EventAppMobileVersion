@@ -157,8 +157,8 @@ class _ProfileViewState extends State<ProfileView> {
                             child: CircleAvatar(
                               radius: 135,
                               backgroundColor: darkMode
-                                  ? darkColor.dBackgroud
-                                  : lightColor.dBackgroud,
+                                  ? darkColor.dGreen
+                                  : lightColor.dGreen,
                               child: Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CircleAvatar(
@@ -287,7 +287,7 @@ class _ProfileViewState extends State<ProfileView> {
                         Column(
                           children: const [
                             Text(
-                              "0",
+                              "17",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text("Follower"),

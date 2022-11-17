@@ -154,7 +154,7 @@ class AuthController extends State<LoginPage> {
 
       await storage.write(key: 'avatar', value: loginArray['avatar']);
 
-      print(loginArray);
+      print("Mon user data $loginArray");
       final logged = await SharedPreferences.getInstance();
       //if singin succesfully pass isLoggedIn to true
       logged.setBool("isLoggedIn", true);

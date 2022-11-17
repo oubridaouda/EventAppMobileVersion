@@ -12,8 +12,7 @@ class AllChangeNotifier extends ChangeNotifier {
   var height = 1000.0;
   var uploadAvatarImage = "";
   var uploadCoverImage = "";
-  var avatar =
-      "https://www.e.kossyam.com/assets/images/profile-imgs/nasa-Yj1M5riCKk4-unsplash.jpg";
+  var avatar = "";
 
   void userIsLogged(newLogged) {
     isLogged = newLogged;

@@ -15,9 +15,8 @@ class UserProfileController {
   dynamic saveThemeMode;
   var userData = {};
 
-
   Future userProfileData(context) async {
-    final provider = Provider.of<AllChangeNotifier>(context,listen: false);
+    final provider = Provider.of<AllChangeNotifier>(context, listen: false);
 
     var tokenStatus = await CommonFunction().checkTokenValidity(context);
     //Refresh page with provider variable
@@ -56,9 +55,10 @@ class UserProfileController {
     return userData;
   }
 
-  Future addUserProfileImage(context, File image, imagePath,String imageType) async {
+  Future addUserProfileImage(
+      context, File image, imagePath, String imageType) async {
     //Refresh page with provider variable
-    final provider = Provider.of<AllChangeNotifier>(context,listen: false);
+    final provider = Provider.of<AllChangeNotifier>(context, listen: false);
 
     var client = http.Client();
     const url = 'www.e.kossyam.com';
@@ -73,11 +73,11 @@ class UserProfileController {
     request.headers['Authorization'] = "Bearer $value";
 
     var picture = http.MultipartFile.fromBytes(
-        "image",
-        File(imagePath).readAsBytesSync(),
+        "image", File(imagePath).readAsBytesSync(),
         filename: "avatar-img-${DateTime.now().millisecondsSinceEpoch}.jpg");
 
-    print("$imagePath my image send to database ${Image.file(File(imagePath))}");
+    print(
+        "$imagePath my image send to database ${Image.file(File(imagePath))}");
 
     request.files.add(picture);
 
@@ -91,11 +91,38 @@ class UserProfileController {
     if (response.statusCode == 200) {
       userData = json.decode(result);
       // print(loginArray);
-      imageType == "avatar" ?
-      provider.uploadImage(userData["data"]["image"], "default") : provider.uploadImage("default", userData["data"]["image"]);
+      imageType == "avatar"
+          ? provider.uploadImage(userData["data"]["image"], "default")
+          : provider.uploadImage("default", userData["data"]["image"]);
+
+      imageType == "avatar" ? provider.profileAvatarImg(userData["data"]["image"]) : null;
       print("image data ${userData["data"]["image"]}");
     } else {
       print("error response : ${result}");
+    }
+  }
+
+  Future getProfileImage(context) async {
+    //Do request to put image in to database
+    var userImage = {};
+    var client = http.Client();
+    const url = 'www.e.kossyam.com';
+    String? value = await storage.read(key: 'jwt');
+    var response =
+        await client.post(Uri.https(url, 'en/get-user-profile-image'), body: {
+      "platform": "Mobile",
+    }, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $value',
+    });
+
+    if (response.statusCode == 200) {
+      userImage = json.decode(response.body);
+      // print(loginArray);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .profileAvatarImg(userImage['data']["image"]);
+      print(response.body);
+    } else {
+      print("error response : ${response.body}");
     }
   }
 }

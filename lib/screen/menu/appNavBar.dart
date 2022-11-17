@@ -45,6 +45,7 @@ class _MyAppBarState extends State<MyAppBar> {
   @override
   void initState() {
     super.initState();
+    UserProfileController().getProfileImage(context);
     print("theme actu $darkMode}");
   }
 
@@ -145,7 +146,7 @@ class _MyAppBarState extends State<MyAppBar> {
                     ),
                     progressIndicatorBuilder: (context, url, downloadProgress) =>
                         CircularProgressIndicator(color: lightColor.dGreen,value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),),
+                    errorWidget: (context, url, error) => const CircularProgressIndicator(),),
 
                 )),
             const SizedBox(
