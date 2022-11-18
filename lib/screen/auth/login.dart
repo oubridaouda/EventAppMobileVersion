@@ -1,13 +1,16 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/resetPassword.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AppColors appColor = AppColors();
@@ -133,8 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ResetPassword()));
+                        Provider.of<AllChangeNotifier>(context, listen: false)
+                            .changePage(DrawerSection.resetPasswordPage);
                       },
                       child: Text(
                         "Mot de passe oublié?",
@@ -326,8 +329,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => SignUp()));
+                        Provider.of<AllChangeNotifier>(context, listen: false)
+                            .changePage(DrawerSection.singUpPage);
+                        print("change page");
                       },
                       child: Text('Inscription',
                           style: TextStyle(color: appColor.dGreen)),

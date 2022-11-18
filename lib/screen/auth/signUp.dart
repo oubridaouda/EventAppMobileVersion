@@ -1,11 +1,15 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/controller/auth/registerController.dart';
+import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 AppColors appColor = AppColors();
 
@@ -25,6 +29,7 @@ class _SignUpState extends State<SignUp> {
   var textPassword = "";
   var textConfirmPassword = "";
   var _submitted = false;
+  bool isSignType = false;
 
   String? get _errorText {
     final text = registerController.emailController.value.text;
@@ -74,17 +79,109 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(
-                  height: 50,
-                ),
                 SvgPicture.asset(
                   height: 50,
                   "assets/images/logo.svg",
                   semanticsLabel: "DuckEvent",
                 ),
+                SizedBox(height: 30.0,),
+                Text("Sign up to Barren as ...",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 24.0),textAlign:TextAlign.center,),
+                SizedBox(height: 30.0,),
+                Container(
+                  color: lightColor.dWhite,
+                  width: 390,
+                  height: 230,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                    CircleAvatar(
+                    backgroundColor: lightColor.btnColor,
+
+                    child: FaIcon(FontAwesomeIcons.userPlus,color: Colors.black),
+
+                  ),
+                      Text("Personal account",style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),),
+                      SizedBox(
+                        width: 300.0,
+                        child:
+                        ElevatedButton(
+                          onPressed: () async {
+                            setState(() {
+                              isSignType = true;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: appColor.dGreen,
+                            padding: const EdgeInsets.all(20),
+                            elevation: 1.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const[
+                              Text(
+                                "Créer un compte",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              SizedBox(width: 10,),
+                              FaIcon(FontAwesomeIcons.arrowRight,color: Colors.white,size: 15,)
+                            ],),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30.0,),
+                Container(
+                  color: lightColor.dWhite,
+                  width: 390,
+                  height: 230,
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: lightColor.btnColor,
+
+                      child: FaIcon(FontAwesomeIcons.solidBuilding,color: Colors.black),
+
+                    ),
+                    Text("Company account",style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),),
+                    SizedBox(
+                      width: 300.0,
+                      child:
+                      ElevatedButton(
+                        onPressed: () async {
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: appColor.dGreen,
+                          padding: const EdgeInsets.all(20),
+                          elevation: 1.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const[
+                           Text(
+                            "Créer un compte",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(width: 10,),
+                          FaIcon(FontAwesomeIcons.arrowRight,color: Colors.white,size: 15,)
+                        ],),
+                      ),
+                    )
+                  ],
+                ),
+                ),
                 const SizedBox(
                   height: 35,
                 ),
+               isSignType ? Column(
+                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                 children: [
+
                 const Text(
                   "Nom*",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
@@ -366,8 +463,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginPage()));
+                        Provider.of<AllChangeNotifier>(context, listen: false)
+                            .changePage(DrawerSection.loginPage);
                       },
                       child: Text(
                         'Connexion',
@@ -379,6 +476,10 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 40,
                 ),
+
+                 ],
+               ) : Container(),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
@@ -395,4 +496,10 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+}
+
+
+enum SinUpType {
+  person,
+  company,
 }

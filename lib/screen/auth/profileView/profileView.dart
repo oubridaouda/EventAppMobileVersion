@@ -107,7 +107,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   color: lightColor.dGreen,
                                   value: downloadProgress.progress),
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                          Container(),
                     ),
             ),
             Transform.translate(
@@ -217,7 +217,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                                     .progress),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        const Icon(Icons.error),
+                                                         Container(),
                                               ),
                                       ),
                                     ),

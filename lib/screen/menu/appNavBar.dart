@@ -146,7 +146,7 @@ class _MyAppBarState extends State<MyAppBar> {
                     ),
                     progressIndicatorBuilder: (context, url, downloadProgress) =>
                         CircularProgressIndicator(color: lightColor.dGreen,value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => const CircularProgressIndicator(),),
+                    errorWidget: (context, url, error) => Container(),),
 
                 )),
             const SizedBox(

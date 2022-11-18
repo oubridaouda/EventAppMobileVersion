@@ -6,6 +6,8 @@ import 'package:event_mobile_app/controller/commonFunction/commonFunction.dart';
 import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileView.dart';
+import 'package:event_mobile_app/screen/auth/resetPassword.dart';
+import 'package:event_mobile_app/screen/auth/signUp.dart';
 import 'package:event_mobile_app/screen/events/EventListScreenView/EventListScreenView.dart';
 import 'package:event_mobile_app/screen/events/SearchEventSection/SearchEventSection.dart';
 import 'package:event_mobile_app/screen/menu/appNavBar.dart';
@@ -76,7 +78,20 @@ class _HomePageState extends State<HomePage> {
     refresh = Provider.of<AllChangeNotifier>(context).refresh;
     isLogged = Provider.of<AllChangeNotifier>(context).isLogged;
     Widget container = const DashBoard();
-    currentPage = isLogged == false ? DrawerSection.loginPage:Provider.of<AllChangeNotifier>(context).currentPage;
+    //If user does not connection you can access to another page
+    if(isLogged == true){
+      currentPage = Provider.of<AllChangeNotifier>(context).currentPage;
+    }else if(isLogged == false && Provider.of<AllChangeNotifier>(context).currentPage == DrawerSection.resetPasswordPage){
+      currentPage = DrawerSection.resetPasswordPage;
+    }else if(isLogged==false && Provider.of<AllChangeNotifier>(context).currentPage == DrawerSection.singUpPage){
+      currentPage = DrawerSection.singUpPage;
+    }else if(isLogged==false && Provider.of<AllChangeNotifier>(context).currentPage == DrawerSection.loginPage){
+      currentPage = DrawerSection.loginPage;
+    }else if(isLogged == false){
+      currentPage = DrawerSection.loginPage;
+    }
+
+    //Initialize widget and display it
     if (currentPage == DrawerSection.dashboard) {
       container = const DashBoard();
     } else if (currentPage == DrawerSection.exploreEvents) {
@@ -89,12 +104,17 @@ class _HomePageState extends State<HomePage> {
       container = const ProfileView();
     }else if (currentPage == DrawerSection.loginPage) {
       container = const LoginPage();
+    }else if (currentPage == DrawerSection.singUpPage) {
+      container = const SignUp();
+    }else if (currentPage == DrawerSection.resetPasswordPage) {
+      container = const ResetPassword();
     }
+    print("la valeur de switch est : ${isLogged == false && Provider.of<AllChangeNotifier>(context).currentPage != DrawerSection.resetPasswordPage}");
     return WillPopScope(
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: currentPage == DrawerSection.loginPage ? null :NavDrawer(scaffoldKey: _scaffoldKey),
-        appBar: currentPage == DrawerSection.loginPage ? null : MyAppBar(scaffoldKey: _scaffoldKey),
+        drawer: currentPage == DrawerSection.loginPage || currentPage == DrawerSection.singUpPage || currentPage == DrawerSection.resetPasswordPage ? null :NavDrawer(scaffoldKey: _scaffoldKey),
+        appBar: currentPage == DrawerSection.loginPage || currentPage == DrawerSection.singUpPage || currentPage == DrawerSection.resetPasswordPage ? null : MyAppBar(scaffoldKey: _scaffoldKey),
         body: !refresh
             ? container
             : Center(
@@ -136,4 +156,5 @@ enum DrawerSection {
   profileView,
   loginPage,
   singUpPage,
+  resetPasswordPage,
 }

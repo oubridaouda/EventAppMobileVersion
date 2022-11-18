@@ -1,11 +1,14 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/loginController.dart';
 import 'package:event_mobile_app/controller/auth/resetPasswordController.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
+import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AppColors appColor = AppColors();
@@ -159,8 +162,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
+                      Provider.of<AllChangeNotifier>(context, listen: false)
+                          .changePage(DrawerSection.loginPage);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
