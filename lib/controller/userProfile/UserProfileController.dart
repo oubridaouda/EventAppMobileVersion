@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/controller/commonFunction/commonFunction.dart';
+import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +98,9 @@ class UserProfileController {
           ? provider.uploadImage(userData["data"]["image"], "default")
           : provider.uploadImage("default", userData["data"]["image"]);
 
-      imageType == "avatar" ? provider.profileAvatarImg(userData["data"]["image"]) : null;
+      imageType == "avatar"
+          ? provider.profileAvatarImg(userData["data"]["image"])
+          : null;
       print("image data ${userData["data"]["image"]}");
     } else {
       print("error response : ${result}");
@@ -120,6 +125,18 @@ class UserProfileController {
       // print(loginArray);
       Provider.of<AllChangeNotifier>(context, listen: false)
           .profileAvatarImg(userImage['data']["image"]);
+      userImage['data']["mailStatus"] == "0"
+          ? CoolAlert.show(
+              title: "Email not verified !",
+              backgroundColor: Colors.white,
+              context: context,
+              type: CoolAlertType.error,
+              text: "Check your email and click to the link button to active your account.!",
+              confirmBtnText: "Sent verification email",
+              onConfirmBtnTap: () {},
+              confirmBtnColor: appColor.dGreen,
+            )
+          : null;
       print(response.body);
     } else {
       print("error response : ${response.body}");
