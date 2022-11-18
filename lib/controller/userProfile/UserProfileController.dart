@@ -179,8 +179,8 @@ class UserProfileController {
 
     if (response.statusCode == 200) {
       emailStatus = json.decode(response.body);
-      // print(loginArray);
-      emailStatus['data']["mailStatus"] == "0"
+      print("le type de la var: ${emailStatus['data'].isNotEmpty }");
+      emailStatus['data'].isNotEmpty && emailStatus['data']["mailStatus"] == "0"
           ? CoolAlert.show(
         title: "Email not verified !",
         backgroundColor: Colors.white,

@@ -43,6 +43,7 @@ class LogOutController {
   }
 
   Future logOut(context) async{
+    //Display loader before logout
 
     // Google logout
     await LogOutController().googleLogOut(context);
