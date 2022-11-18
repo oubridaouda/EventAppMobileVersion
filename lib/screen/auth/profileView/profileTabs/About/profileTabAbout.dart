@@ -172,7 +172,7 @@ class _ProfileTabAboutState extends State<ProfileTabAbout> {
                   const SizedBox(height: 25.0),
                   //Social media icon button
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       socialMedia['facebook'] != "" && socialMedia['facebook'] != null
                           ? SizedBox(

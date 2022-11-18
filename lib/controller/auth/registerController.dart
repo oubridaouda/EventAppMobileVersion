@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/main.dart';
 import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterController {
@@ -14,6 +16,9 @@ class RegisterController {
   var nameController = TextEditingController();
   var passController = TextEditingController();
   var confirmPassController = TextEditingController();
+  var companyNameController = TextEditingController();
+  var companyEmailController = TextEditingController();
+  var companyPasswordController = TextEditingController();
 
 
   String modalTitle = "";
@@ -27,6 +32,8 @@ class RegisterController {
   Future createUser(context, widget) async {
     var client = http.Client();
     const url = 'www.auth.e.kossyam.com';
+    Map loginArray = {};
+
 
     var response = await client.post(Uri.https(url, 'fr/sign-up-method'), body: {
       "firstname": firstNameController.text,
@@ -38,6 +45,45 @@ class RegisterController {
     var result = json.decode(response.body);
 
     if (response.statusCode == 200 && result['status'] == 1) {
+      loginArray = jsonDecode(response.body);
+      //Create new token
+      openModal = false;
+      modalTitle = "";
+      modalMessage = "";
+      token(storage, result['token'], result['username']);
+// Write value
+      String? value = await storage.read(key: 'jwt');
+      final logged = await SharedPreferences.getInstance();
+      logged.setBool("isLoggedIn", true);      //If change login status to true and redirect user to home page
+      Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(true);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .profileAvatarImg(loginArray['avatar']);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .changePage(DrawerSection.dashboard);
+      print(value);
+    } else {
+      openModal = true;
+      modalTitle = result["title"];
+      modalMessage = result["message"];
+      print(response.body);
+    }
+  }
+
+  Future createCompany(context, widget) async {
+    var client = http.Client();
+    const url = 'www.auth.e.kossyam.com';
+    Map loginArray = {};
+
+    var response = await client.post(Uri.https(url, 'fr/sign-up-method'), body: {
+      "firstname": companyNameController.text,
+      "username": companyEmailController.text,
+      "password": companyPasswordController.text,
+      "recaptchaType" : "v2"
+    });
+    var result = json.decode(response.body);
+
+    if (response.statusCode == 200 && result['status'] == 1) {
+      loginArray = jsonDecode(response.body);
       //Create new token
       openModal = false;
       modalTitle = "";
@@ -47,7 +93,13 @@ class RegisterController {
       String? value = await storage.read(key: 'jwt');
       final logged = await SharedPreferences.getInstance();
       logged.setBool("isLoggedIn", true);
-      Navigator.of(context).pushReplacementNamed("/");
+
+      //If change login status to true and redirect user to home page
+      Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(true);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .profileAvatarImg(loginArray['avatar']);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .changePage(DrawerSection.dashboard);
       print(value);
     } else {
       openModal = true;
@@ -56,6 +108,7 @@ class RegisterController {
       print(response.body);
     }
   }
+
 
   static void token(storage, data, username) async {
     await storage.write(key: 'jwt', value: data);
