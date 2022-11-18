@@ -109,6 +109,8 @@ class UserProfileController {
 
   Future getProfileImage(context) async {
     //Do request to put image in to database
+    const storage = FlutterSecureStorage();
+    bool isSend = false;
     var userImage = {};
     var client = http.Client();
     const url = 'www.e.kossyam.com';
@@ -125,17 +127,79 @@ class UserProfileController {
       // print(loginArray);
       Provider.of<AllChangeNotifier>(context, listen: false)
           .profileAvatarImg(userImage['data']["image"]);
-      userImage['data']["mailStatus"] == "0"
+      print(response.body);
+    } else {
+      print("error response : ${response.body}");
+    }
+  }
+
+  Future sentEmailConfirmation(context) async {
+    //Do request to put image in to database
+    Navigator.of(context).pop();
+    Provider.of<AllChangeNotifier>(context, listen: false).pageRefresh(true);
+    var emailResponse = {};
+    var client = http.Client();
+    const url = 'www.e.kossyam.com';
+    String? value = await storage.read(key: 'jwt');
+    var response = await client
+        .post(Uri.https(url, 'en/send-email-address-confirmation'), body: {
+      "platform": "Mobile",
+    }, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $value',
+    });
+    emailResponse = json.decode(response.body);
+    print(emailResponse);
+    emailResponse["status"] == 1
+        ? CoolAlert.show(
+            title: "Success!",
+            backgroundColor: Colors.white,
+            context: context,
+            type: CoolAlertType.success,
+            text: "A verification email has sent to your email address.!",
+            confirmBtnColor: appColor.dGreen,
+          )
+        : null;
+    Provider.of<AllChangeNotifier>(context, listen: false).pageRefresh(false);
+  }
+
+  Future checkIfEmailIsValidateOrNot(context) async{
+//Do request to put image in to database
+    const storage = FlutterSecureStorage();
+    bool isSend = false;
+    var emailStatus = {};
+    var client = http.Client();
+    const url = 'www.e.kossyam.com';
+    String? value = await storage.read(key: 'jwt');
+    var response =
+        await client.post(Uri.https(url, 'en/email-address-is-valide-or-not'), body: {
+      "platform": "Mobile",
+    }, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $value',
+    });
+
+    if (response.statusCode == 200) {
+      emailStatus = json.decode(response.body);
+      // print(loginArray);
+      emailStatus['data']["mailStatus"] == "0"
           ? CoolAlert.show(
-              title: "Email not verified !",
-              backgroundColor: Colors.white,
-              context: context,
-              type: CoolAlertType.error,
-              text: "Check your email and click to the link button to active your account.!",
-              confirmBtnText: "Sent verification email",
-              onConfirmBtnTap: () {},
-              confirmBtnColor: appColor.dGreen,
-            )
+        title: "Email not verified !",
+        backgroundColor: Colors.white,
+        context: context,
+        type: CoolAlertType.error,
+        barrierDismissible: false,
+        text:
+        "Check your email and click to the link button to active your account.!",
+        confirmBtnText: "Sent verification email",
+        onCancelBtnTap: () {
+          print("Je click sur on cancel btn");
+        },
+        onConfirmBtnTap: () async {
+          await sentEmailConfirmation(context);
+          // isSend = false;
+          print("Je click sur on confirm $isSend");
+        },
+        confirmBtnColor: appColor.dGreen,
+      )
           : null;
       print(response.body);
     } else {

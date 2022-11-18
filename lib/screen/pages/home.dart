@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/controller/commonFunction/commonFunction.dart';
+import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/auth/profileView/profileView.dart';
 import 'package:event_mobile_app/screen/events/EventListScreenView/EventListScreenView.dart';
@@ -66,6 +67,7 @@ class _HomePageState extends State<HomePage> {
     _getLoginStatus();
     common.checkTokenValidity(context);
     getStorage();
+   UserProfileController().checkIfEmailIsValidateOrNot(context);
   }
 
   @override

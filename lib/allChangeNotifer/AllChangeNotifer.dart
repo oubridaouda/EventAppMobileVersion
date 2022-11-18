@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class AllChangeNotifier extends ChangeNotifier {
   var isLogged = false;
+  var requestLoad = false;
   var currentPage = DrawerSection.dashboard;
   var screenMode = darkMode;
   var refresh = false;
@@ -26,6 +27,11 @@ class AllChangeNotifier extends ChangeNotifier {
 
   void changeNightMode(bool newScreenMode) {
     screenMode = newScreenMode;
+    notifyListeners();
+  }
+
+  void requestLoadProgress(bool newRequestLoad) {
+    requestLoad = newRequestLoad;
     notifyListeners();
   }
 
