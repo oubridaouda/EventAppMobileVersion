@@ -27,7 +27,7 @@ class RegisterController {
   bool modalStatus= false;
 
   // Create storage
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future createUser(context, widget) async {
     var client = http.Client();
@@ -36,6 +36,7 @@ class RegisterController {
 
 
     var response = await client.post(Uri.https(url, 'fr/sign-up-method'), body: {
+      "typeForm": "person",
       "firstname": firstNameController.text,
       "lastname": lastNameController.text,
       "username": emailController.text,
@@ -75,6 +76,7 @@ class RegisterController {
     Map loginArray = {};
 
     var response = await client.post(Uri.https(url, 'fr/sign-up-method'), body: {
+      "typeForm": "company",
       "firstname": companyNameController.text,
       "username": companyEmailController.text,
       "password": companyPasswordController.text,
