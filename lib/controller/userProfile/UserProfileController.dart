@@ -53,14 +53,68 @@ class UserProfileController {
     //Initialize user data
     provider.sendUserData(userData);
 
-    Map network = jsonDecode(userData["data"]["socialNetworks"]);
-    network["website"] = userData["data"]["website"];
-    provider.changeUserSocialNetwork(network);
-
     //Switche to profile view
     provider.changePage(DrawerSection.profileView);
 
     return userData;
+  }
+
+
+  Future userProfileInformation(context) async {
+    //Check token validity
+    await CommonFunction().checkTokenValidity(context,stopRefresh: false,refresh: true);
+    //Refresh page with provider variable
+    final provider = Provider.of<AllChangeNotifier>(context, listen: false);
+    provider.pageRefresh(true);
+    // refresh? Provider.of<AllChangeNotifier>(context, listen: false).pageRefresh(true): null;
+
+    //Do request to put image in to database
+    var client = http.Client();
+    const url = 'www.e.kossyam.com';
+    String? value = await storage.read(key: 'jwt');
+    String? username = await storage.read(key: 'username');
+    print(username);
+    var response = await client
+        .post(Uri.https(url, 'en/my-profile-information'), body: {
+      "email": username,
+    }, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $value',
+    });
+
+    if (response.statusCode == 200) {
+      userData = json.decode(response.body);
+
+      userData['data'].isNotEmpty && userData['data']["mailStatus"] == "0"
+          ? CoolAlert.show(
+        title: "Email not verified !",
+        backgroundColor: Colors.white,
+        context: context,
+        type: CoolAlertType.error,
+        barrierDismissible: false,
+        text:
+        "Check your email and click to the link button to active your account.!",
+        confirmBtnText: "Sent verification email",
+        onCancelBtnTap: () {
+          print("Je click sur on cancel btn");
+        },
+        onConfirmBtnTap: () async {
+          await sentEmailConfirmation(context);
+          // isSend = false;
+        },
+        confirmBtnColor: appColor.dGreen,
+      )
+          : null;
+      // print(loginArray);
+      print(response.body);
+    } else {
+      print("error response : ${response.body}");
+    }
+
+    Map network = jsonDecode(userData["data"]["socialNetworks"]);
+    network["website"] = userData["data"]["website"];
+    provider.changeUserSocialNetwork(network);
+
+    provider.pageRefresh(false);
   }
 
   Future<void> userSocialNetworkAndAddressesList(context) async {

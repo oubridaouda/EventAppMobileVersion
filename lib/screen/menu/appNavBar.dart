@@ -79,7 +79,7 @@ class _MyAppBarState extends State<MyAppBar> {
           padding: const EdgeInsets.only(left: 0.0),
           child: GestureDetector(
             onTap: () {
-              common.checkTokenValidity(context);
+              common.checkUserAuthValidity(context);
               Provider.of<AllChangeNotifier>(context, listen: false)
                   .changePage(DrawerSection.dashboard);
             },

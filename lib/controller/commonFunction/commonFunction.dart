@@ -17,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CommonFunction {
   final storage = const FlutterSecureStorage();
 
-  Future checkTokenValidity(context,{stopRefresh= true}) async {
+  Future checkTokenValidity(context,{refresh = true,stopRefresh= true}) async {
     //Refresh page with provider variable
     Map userPreferences = {};
     var client = http.Client();
@@ -26,8 +26,8 @@ class CommonFunction {
     print(token);
 
     //Refresh page with provider variable
-    Provider.of<AllChangeNotifier>(context, listen: false)
-        .pageRefresh(true);
+    refresh ? Provider.of<AllChangeNotifier>(context, listen: false)
+        .pageRefresh(true): null;
     var response = await client.post(
         Uri.https(url, 'en/check-your-auth-token-status'),
         headers: {
@@ -52,8 +52,6 @@ class CommonFunction {
   }
 
   Future checkUserAuthValidity(context) async{
-    checkTokenValidity(context,stopRefresh: false);
-    UserProfileController().checkIfEmailIsValidateOrNot(context);
-
+    UserProfileController().userProfileInformation(context);
   }
 }
