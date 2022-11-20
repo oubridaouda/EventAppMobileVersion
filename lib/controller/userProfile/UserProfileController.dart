@@ -17,6 +17,7 @@ class UserProfileController {
   final storage = const FlutterSecureStorage();
   dynamic saveThemeMode;
   var userData = {};
+  var userSocialNetworkAndAddress = {};
 
   Future userProfileData(context) async {
     final provider = Provider.of<AllChangeNotifier>(context, listen: false);
@@ -52,10 +53,46 @@ class UserProfileController {
     //Initialize user data
     provider.sendUserData(userData);
 
+    Map network = jsonDecode(userData["data"]["socialNetworks"]);
+    network["website"] = userData["data"]["website"];
+    provider.changeUserSocialNetwork(network);
+
     //Switche to profile view
     provider.changePage(DrawerSection.profileView);
 
     return userData;
+  }
+
+  Future<void> userSocialNetworkAndAddressesList(context) async {
+    final provider = Provider.of<AllChangeNotifier>(context, listen: false);
+
+    //Do request to put image in to database
+    var client = http.Client();
+    const url = 'www.e.kossyam.com';
+    String? value = await storage.read(key: 'jwt');
+    String? username = await storage.read(key: 'username');
+    print(username);
+    var response = await client
+        .post(Uri.https(url, 'en/user-social-network-and-address'), body: {
+      "email": username,
+    }, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $value',
+    });
+
+    if (response.statusCode == 200) {
+      userSocialNetworkAndAddress = json.decode(response.body);
+      // print(loginArray);
+      print(response.body);
+    } else {
+      print("error response : ${response.body}");
+    }
+
+    //Initialize user address information
+    provider.changeUserAddress(jsonDecode(userSocialNetworkAndAddress["data"]["addresses"]));
+
+    //Initialize user social network
+    provider.changeUserSocialNetwork(userSocialNetworkAndAddress["data"]);
+
   }
 
   Future addUserProfileImage(

@@ -40,8 +40,7 @@ class _NavDrawerState extends State<NavDrawer> {
         darkMode = false;
         AdaptiveTheme.of(context).setLight();
         shareStorage.setBool("darkmode", false);
-        Provider.of<AllChangeNotifier>(context,
-            listen: false)
+        Provider.of<AllChangeNotifier>(context, listen: false)
             .changeNightMode(false);
       });
     } else {
@@ -50,13 +49,11 @@ class _NavDrawerState extends State<NavDrawer> {
         darkMode = true;
         AdaptiveTheme.of(context).setDark();
         shareStorage.setBool("darkmode", true);
-        Provider.of<AllChangeNotifier>(context,
-            listen: false)
+        Provider.of<AllChangeNotifier>(context, listen: false)
             .changeNightMode(true);
       });
     }
   }
-
 
   Future<void> _launchInBrowser(String urlNotParse) async {
     Uri url = Uri.parse(urlNotParse);
@@ -71,9 +68,7 @@ class _NavDrawerState extends State<NavDrawer> {
   @override
   Widget build(BuildContext context) {
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
-    Map userData = Provider.of<AllChangeNotifier>(context).userData;
-    Map socialMedia = jsonDecode(userData['data']['socialNetworks']);
-
+    Map socialMedia = Provider.of<AllChangeNotifier>(context).userSocialNetwork;
     return Drawer(
       backgroundColor: darkMode ? darkColor.dWhite : lightColor.dWhite,
       width: 400,
@@ -88,44 +83,44 @@ class _NavDrawerState extends State<NavDrawer> {
                 Column(
                   children: [
                     SizedBox(
-                        height: 100.0,
-                        child: DrawerHeader(
-                          margin: EdgeInsets.zero,
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SvgPicture.asset(
-                                height: 50,
-                                "assets/images/logo-icon.svg",
-                                semanticsLabel: "DuckEvent",
+                      height: 100.0,
+                      child: DrawerHeader(
+                        margin: EdgeInsets.zero,
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SvgPicture.asset(
+                              height: 50,
+                              "assets/images/logo-icon.svg",
+                              semanticsLabel: "DuckEvent",
+                            ),
+                            MaterialButton(
+                              disabledElevation: 0,
+                              elevation: 0,
+                              height: 40,
+                              minWidth: 40,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(3.0),
                               ),
-                              MaterialButton(
-                                disabledElevation: 0,
-                                elevation: 0,
-                                height: 40,
-                                minWidth: 40,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(3.0),
-                                ),
+                              color: darkMode
+                                  ? darkColor.dBackgroud
+                                  : lightColor.dBackgroud,
+                              onPressed: () {
+                                widget.scaffoldKey.currentState?.closeDrawer();
+                              },
+                              child: Icon(
+                                Icons.close_rounded,
                                 color: darkMode
-                                    ? darkColor.dBackgroud
-                                    : lightColor.dBackgroud,
-                                onPressed: () {
-                                  widget.scaffoldKey.currentState
-                                      ?.closeDrawer();
-                                },
-                                child: Icon(
-                                  Icons.close_rounded,
-                                  color: darkMode
-                                      ? darkColor.dGrey
-                                      : lightColor.dGrey,
-                                  size: 23,
-                                ),
+                                    ? darkColor.dGrey
+                                    : lightColor.dGrey,
+                                size: 23,
                               ),
-                            ],
-                          ),
-                        )),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Container(
                       padding: const EdgeInsets.all(30.0),
                       color: darkMode
@@ -182,15 +177,18 @@ class _NavDrawerState extends State<NavDrawer> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              drawerItem("Explore Events",DrawerSection.exploreEvents),
+                              drawerItem("Explore Events",
+                                  DrawerSection.exploreEvents),
                               const SizedBox(
                                 height: 20,
                               ),
-                              drawerItem("Venues Event Detail View",DrawerSection.venueEvent),
+                              drawerItem("Venues Event Detail View",
+                                  DrawerSection.venueEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              drawerItem("Online Event Detail View",DrawerSection.onlineEvent),
+                              drawerItem("Online Event Detail View",
+                                  DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -212,11 +210,12 @@ class _NavDrawerState extends State<NavDrawer> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              drawerItem("Our Blog",DrawerSection.onlineEvent),
+                              drawerItem("Our Blog", DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              drawerItem("Blog Detail View",DrawerSection.onlineEvent),
+                              drawerItem("Blog Detail View",
+                                  DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -234,15 +233,17 @@ class _NavDrawerState extends State<NavDrawer> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              drawerItem("FAQ",DrawerSection.onlineEvent),
+                              drawerItem("FAQ", DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              drawerItem("Help Center",DrawerSection.onlineEvent),
+                              drawerItem(
+                                  "Help Center", DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              drawerItem("Contact Us",DrawerSection.onlineEvent),
+                              drawerItem(
+                                  "Contact Us", DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -260,11 +261,13 @@ class _NavDrawerState extends State<NavDrawer> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              drawerItem("Other Pages",DrawerSection.onlineEvent),
+                              drawerItem(
+                                  "Other Pages", DrawerSection.onlineEvent),
                               const SizedBox(
                                 height: 20,
                               ),
-                              drawerItem("Create Event",DrawerSection.onlineEvent),
+                              drawerItem(
+                                  "Create Event", DrawerSection.onlineEvent),
                             ],
                           )
                         ],
@@ -292,258 +295,286 @@ class _NavDrawerState extends State<NavDrawer> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          socialMedia['facebook'] != "" && socialMedia['facebook'] != null
+                          socialMedia['facebook'] != "" &&
+                                  socialMedia['facebook'] != null
                               ? SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                _launchInBrowser(socialMedia['facebook']);
-                              },
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dGreen
-                                    : lightColor.dGreen,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 200,
-                                        child: ClipRRect(
-                                            child: SvgPicture.asset(
-                                                color: darkMode
-                                                    ? darkColor.dGreen
-                                                    : lightColor.dGreen,
-                                                height: 20,
-                                                'assets/social/facebook.svg')),
+                                  width: 40,
+                                  height: 40,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchInBrowser(socialMedia['facebook']);
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 135,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dGreen
+                                          : lightColor.dGreen,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dWhite
+                                              : lightColor.dWhite,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 200,
+                                              child: ClipRRect(
+                                                  child: SvgPicture.asset(
+                                                      color: darkMode
+                                                          ? darkColor.dGreen
+                                                          : lightColor.dGreen,
+                                                      height: 20,
+                                                      'assets/social/facebook.svg')),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          )
+                                )
                               : Container(),
-                          socialMedia['facebook'] != "" && socialMedia['facebook'] != null ? const SizedBox(
-                            width: 10,
-                          ) : Container(),
-                          socialMedia['instagram'] != "" && socialMedia['instagram'] != null
-                              ? SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                _launchInBrowser(socialMedia['instagram']);
-                              },
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dGreen
-                                    : lightColor.dGreen,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 200,
-                                        child: ClipRRect(
-                                            child: SvgPicture.asset(
-                                                color: darkMode
-                                                    ? darkColor.dGreen
-                                                    : lightColor.dGreen,
-                                                height: 20,
-                                                'assets/social/instagram.svg')),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
+                          socialMedia['facebook'] != "" &&
+                                  socialMedia['facebook'] != null
+                              ? const SizedBox(
+                                  width: 10,
+                                )
                               : Container(),
-                          socialMedia['instagram'] != "" && socialMedia['instagram'] != null ? const SizedBox(
-                            width: 10,
-                          ) : Container(),
-                          socialMedia['twitter'] != "" && socialMedia['twitter'] != null
+                          socialMedia['instagram'] != "" &&
+                                  socialMedia['instagram'] != null
                               ? SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                _launchInBrowser(socialMedia['twitter']);
-                              },
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dGreen
-                                    : lightColor.dGreen,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 200,
-                                        child: ClipRRect(
-                                            child: SvgPicture.asset(
-                                                color: darkMode
-                                                    ? darkColor.dGreen
-                                                    : lightColor.dGreen,
-                                                height: 20,
-                                                'assets/social/twitter.svg')),
+                                  width: 40,
+                                  height: 40,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchInBrowser(
+                                          socialMedia['instagram']);
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 135,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dGreen
+                                          : lightColor.dGreen,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dWhite
+                                              : lightColor.dWhite,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 200,
+                                              child: ClipRRect(
+                                                  child: SvgPicture.asset(
+                                                      color: darkMode
+                                                          ? darkColor.dGreen
+                                                          : lightColor.dGreen,
+                                                      height: 20,
+                                                      'assets/social/instagram.svg')),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          )
+                                )
                               : Container(),
-                          socialMedia['twitter'] != "" && socialMedia['twitter'] != null ? const SizedBox(
-                            width: 10,
-                          ) : Container(),
-                          socialMedia['linkedIn'] != "" && socialMedia['linkedIn'] != null
-                              ? SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                _launchInBrowser(socialMedia['linkedIn']);
-                              },
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dGreen
-                                    : lightColor.dGreen,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 200,
-                                        child: ClipRRect(
-                                            child: SvgPicture.asset(
-                                                color: darkMode
-                                                    ? darkColor.dGreen
-                                                    : lightColor.dGreen,
-                                                height: 20,
-                                                'assets/social/linkedin.svg')),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
+                          socialMedia['instagram'] != "" &&
+                                  socialMedia['instagram'] != null
+                              ? const SizedBox(
+                                  width: 10,
+                                )
                               : Container(),
-                          socialMedia['linkedIn'] != "" && socialMedia['linkedIn'] != null ? const SizedBox(
-                            width: 10,
-                          ) : Container(),
-                          socialMedia['youtube'] != "" && socialMedia['youtube'] != null
+                          socialMedia['twitter'] != "" &&
+                                  socialMedia['twitter'] != null
                               ? SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                _launchInBrowser(socialMedia['youtube']);
-                              },
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dGreen
-                                    : lightColor.dGreen,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 200,
-                                        child: ClipRRect(
-                                            child: SvgPicture.asset(
-                                                color: darkMode
-                                                    ? darkColor.dGreen
-                                                    : lightColor.dGreen,
-                                                height: 20,
-                                                'assets/social/youtube.svg')),
+                                  width: 40,
+                                  height: 40,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchInBrowser(socialMedia['twitter']);
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 135,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dGreen
+                                          : lightColor.dGreen,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dWhite
+                                              : lightColor.dWhite,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 200,
+                                              child: ClipRRect(
+                                                  child: SvgPicture.asset(
+                                                      color: darkMode
+                                                          ? darkColor.dGreen
+                                                          : lightColor.dGreen,
+                                                      height: 20,
+                                                      'assets/social/twitter.svg')),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          )
+                                )
                               : Container(),
-                          socialMedia['youtube'] != "" && socialMedia['youtube'] != null ? const SizedBox(
-                            width: 10,
-                          ) : Container(),
-                          socialMedia['webSite'] != "" && socialMedia['webSite'] != null
+                          socialMedia['twitter'] != "" &&
+                                  socialMedia['twitter'] != null
+                              ? const SizedBox(
+                                  width: 10,
+                                )
+                              : Container(),
+                          socialMedia['linkedIn'] != "" &&
+                                  socialMedia['linkedIn'] != null
                               ? SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                _launchInBrowser(socialMedia['webSite']);
-                              },
-                              child: CircleAvatar(
-                                radius: 135,
-                                backgroundColor: darkMode
-                                    ? darkColor.dGreen
-                                    : lightColor.dGreen,
-                                child: Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    radius: 125,
-                                    backgroundColor: darkMode
-                                        ? darkColor.dWhite
-                                        : lightColor.dWhite,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 200,
-                                        child: ClipRRect(
-                                            child: FaIcon(
-                                              FontAwesomeIcons.globe,
-                                              color: lightColor.dGreen,
-                                            )),
+                                  width: 40,
+                                  height: 40,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchInBrowser(socialMedia['linkedIn']);
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 135,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dGreen
+                                          : lightColor.dGreen,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dWhite
+                                              : lightColor.dWhite,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 200,
+                                              child: ClipRRect(
+                                                  child: SvgPicture.asset(
+                                                      color: darkMode
+                                                          ? darkColor.dGreen
+                                                          : lightColor.dGreen,
+                                                      height: 20,
+                                                      'assets/social/linkedin.svg')),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          )
+                                )
+                              : Container(),
+                          socialMedia['linkedIn'] != "" &&
+                                  socialMedia['linkedIn'] != null
+                              ? const SizedBox(
+                                  width: 10,
+                                )
+                              : Container(),
+                          socialMedia['youtube'] != "" &&
+                                  socialMedia['youtube'] != null
+                              ? SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchInBrowser(socialMedia['youtube']);
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 135,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dGreen
+                                          : lightColor.dGreen,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dWhite
+                                              : lightColor.dWhite,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 200,
+                                              child: ClipRRect(
+                                                  child: SvgPicture.asset(
+                                                      color: darkMode
+                                                          ? darkColor.dGreen
+                                                          : lightColor.dGreen,
+                                                      height: 20,
+                                                      'assets/social/youtube.svg')),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          socialMedia['youtube'] != "" &&
+                                  socialMedia['youtube'] != null
+                              ? const SizedBox(
+                                  width: 10,
+                                )
+                              : Container(),
+                          socialMedia['webSite'] != "" &&
+                                  socialMedia['webSite'] != null
+                              ? SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchInBrowser(socialMedia['webSite']);
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 135,
+                                      backgroundColor: darkMode
+                                          ? darkColor.dGreen
+                                          : lightColor.dGreen,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          radius: 125,
+                                          backgroundColor: darkMode
+                                              ? darkColor.dWhite
+                                              : lightColor.dWhite,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 200,
+                                              child: ClipRRect(
+                                                  child: FaIcon(
+                                                FontAwesomeIcons.globe,
+                                                color: lightColor.dGreen,
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               : Container(),
                         ],
                       ),
@@ -640,8 +671,7 @@ class _NavDrawerState extends State<NavDrawer> {
         GestureDetector(
           onTap: () {
             setState(() {
-              Provider.of<AllChangeNotifier>(context,
-                  listen: false)
+              Provider.of<AllChangeNotifier>(context, listen: false)
                   .changePage(currentPage);
               Navigator.of(context).pop();
             });

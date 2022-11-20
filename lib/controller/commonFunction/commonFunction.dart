@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:event_mobile_app/allChangeNotifer/AllChangeNotifer.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
+import 'package:event_mobile_app/controller/userProfile/UserProfileController.dart';
 import 'package:event_mobile_app/screen/auth/login.dart';
 import 'package:event_mobile_app/screen/pages/home.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CommonFunction {
   final storage = const FlutterSecureStorage();
 
-  Future checkTokenValidity(context) async {
+  Future checkTokenValidity(context,{stopRefresh= true}) async {
     //Refresh page with provider variable
     Map userPreferences = {};
     var client = http.Client();
@@ -46,7 +47,13 @@ class CommonFunction {
       await LogOutController().logOut(context);
       // exit(HttpStatus.networkAuthenticationRequired);
     }
-    Provider.of<AllChangeNotifier>(context, listen: false)
-        .pageRefresh(false);
+    stopRefresh ? Provider.of<AllChangeNotifier>(context, listen: false)
+        .pageRefresh(false) : null;
+  }
+
+  Future checkUserAuthValidity(context) async{
+    checkTokenValidity(context,stopRefresh: false);
+    UserProfileController().checkIfEmailIsValidateOrNot(context);
+
   }
 }

@@ -67,9 +67,8 @@ class _HomePageState extends State<HomePage> {
     _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: "homeScreen");
     super.initState();
     _getLoginStatus();
-    common.checkTokenValidity(context);
+    common.checkUserAuthValidity(context);
     getStorage();
-   UserProfileController().checkIfEmailIsValidateOrNot(context);
   }
 
   @override
