@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:toast/toast.dart';
 
 class UserProfileController {
   final storage = const FlutterSecureStorage();
@@ -31,38 +32,41 @@ class UserProfileController {
     const url = 'www.e.kossyam.com';
     String? value = await storage.read(key: 'jwt');
     String? username = await storage.read(key: 'username');
-    print(username);
-    var response = await client
-        .post(Uri.https(url, 'en/organiser-profile-view-mobile'), body: {
-      "email": username,
-    }, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $value',
-    });
+    try {
+      print(username);
+      var response =
+          await client.post(Uri.https(url, 'en/profile-view-on-mobile'), body: {
+        "email": username,
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $value',
+      });
 
-    if (response.statusCode == 200) {
-      userData = json.decode(response.body);
-      // print(loginArray);
-      print(response.body);
-    } else {
-      print("error response : ${response.body}");
+      if (response.statusCode == 200) {
+        userData = json.decode(response.body);
+
+        //Initialize profile var image to empty if var does not empty
+        provider.uploadImage("", "");
+        //Initialize user data
+        provider.sendUserData(userData);
+        //Switche to profile view
+        provider.changePage(DrawerSection.profileView);
+        // print(loginArray);
+        print(response.body);
+      } else {
+        provider.changePage(DrawerSection.dashboard);
+        print("error response : ${response.body}");
+      }
+    } catch (e) {
+      print("UserProfileController::userProfileData $e");
     }
-
-    //Initialize profile var image to empty if var does not empty
-    provider.uploadImage("", "");
-
-    //Initialize user data
-    provider.sendUserData(userData);
-
-    //Switche to profile view
-    provider.changePage(DrawerSection.profileView);
 
     return userData;
   }
 
-
   Future userProfileInformation(context) async {
     //Check token validity
-    await CommonFunction().checkTokenValidity(context,stopRefresh: false,refresh: true);
+    await CommonFunction()
+        .checkTokenValidity(context, stopRefresh: false, refresh: true);
     //Refresh page with provider variable
     final provider = Provider.of<AllChangeNotifier>(context, listen: false);
     provider.pageRefresh(true);
@@ -74,46 +78,51 @@ class UserProfileController {
     String? value = await storage.read(key: 'jwt');
     String? username = await storage.read(key: 'username');
     print(username);
-    var response = await client
-        .post(Uri.https(url, 'en/my-profile-information'), body: {
-      "email": username,
-    }, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $value',
-    });
 
-    if (response.statusCode == 200) {
-      userData = json.decode(response.body);
+    try {
+      var response =
+          await client.post(Uri.https(url, 'en/my-profile-information'), body: {
+        "email": username,
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $value',
+      });
 
-      userData['data'].isNotEmpty && userData['data']["mailStatus"] == "0"
-          ? CoolAlert.show(
-        title: "Email not verified !",
-        backgroundColor: Colors.white,
-        context: context,
-        type: CoolAlertType.error,
-        barrierDismissible: false,
-        text:
-        "Check your email and click to the link button to active your account.!",
-        confirmBtnText: "Sent verification email",
-        onCancelBtnTap: () {
-          print("Je click sur on cancel btn");
-        },
-        onConfirmBtnTap: () async {
-          await sentEmailConfirmation(context);
-          // isSend = false;
-        },
-        confirmBtnColor: appColor.dGreen,
-      )
-          : null;
-      // print(loginArray);
-      print(response.body);
-    } else {
-      print("error response : ${response.body}");
+      if (response.statusCode == 200) {
+        userData = json.decode(response.body);
+
+        userData['data'].isNotEmpty && userData['data']["mailStatus"] == "0"
+            ? CoolAlert.show(
+                title: "Email not verified !",
+                backgroundColor: Colors.white,
+                context: context,
+                type: CoolAlertType.error,
+                barrierDismissible: false,
+                text:
+                    "Check your email and click to the link button to active your account.!",
+                confirmBtnText: "Sent verification email",
+                onCancelBtnTap: () {
+                  print("Je click sur on cancel btn");
+                },
+                onConfirmBtnTap: () async {
+                  await sentEmailConfirmation(context);
+                  // isSend = false;
+                },
+                confirmBtnColor: appColor.dGreen,
+              )
+            : null;
+        // print(loginArray);
+        print(response.body);
+      } else {
+        print(
+            "UserProfileController::userProfileInformation error response : ${response.body}");
+      }
+
+      Map network = jsonDecode(userData["data"]["socialNetworks"]);
+      network["website"] = userData["data"]["website"];
+      provider.changeUserSocialNetwork(network);
+    } catch (e) {
+      print("UserProfileController::userProfileInformation  $e");
     }
-
-    Map network = jsonDecode(userData["data"]["socialNetworks"]);
-    network["website"] = userData["data"]["website"];
-    provider.changeUserSocialNetwork(network);
-
     provider.pageRefresh(false);
   }
 
@@ -126,31 +135,34 @@ class UserProfileController {
     String? value = await storage.read(key: 'jwt');
     String? username = await storage.read(key: 'username');
     print(username);
-    var response = await client
-        .post(Uri.https(url, 'en/user-social-network-and-address'), body: {
-      "email": username,
-    }, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $value',
-    });
+    try {
+      var response = await client
+          .post(Uri.https(url, 'en/user-social-network-and-address'), body: {
+        "email": username,
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $value',
+      });
 
-    if (response.statusCode == 200) {
-      userSocialNetworkAndAddress = json.decode(response.body);
-      // print(loginArray);
-      print(response.body);
-    } else {
-      print("error response : ${response.body}");
+      if (response.statusCode == 200) {
+        userSocialNetworkAndAddress = json.decode(response.body);
+        // print(loginArray);
+        print(response.body);
+      } else {
+        print("error response : ${response.body}");
+      }
+
+      //Initialize user address information
+      provider.changeUserAddress(
+          jsonDecode(userSocialNetworkAndAddress["data"]["addresses"]));
+
+      //Initialize user social network
+      provider.changeUserSocialNetwork(userSocialNetworkAndAddress["data"]);
+    } catch (e) {
+      print("UserProfileController::userSocialNetworkAndAddressesList  $e");
     }
-
-    //Initialize user address information
-    provider.changeUserAddress(jsonDecode(userSocialNetworkAndAddress["data"]["addresses"]));
-
-    //Initialize user social network
-    provider.changeUserSocialNetwork(userSocialNetworkAndAddress["data"]);
-
   }
 
-  Future addUserProfileImage(
-      context, File image, imagePath, String imageType) async {
+  Future addUserProfileImage(context, File image, imagePath, String imageType) async {
     //Refresh page with provider variable
     final provider = Provider.of<AllChangeNotifier>(context, listen: false);
 
@@ -160,41 +172,57 @@ class UserProfileController {
     String? username = await storage.read(key: 'username');
     print(username);
 
-    var request =
-        http.MultipartRequest("POST", Uri.https(url, 'en/upload-avatar-image'));
-    request.fields['imageType'] = imageType;
-    request.fields['platform'] = "Mobile";
-    request.headers['Authorization'] = "Bearer $value";
+    try {
+      var request = http.MultipartRequest(
+          "POST", Uri.https(url, 'en/upload-avatar-image'));
+      request.fields['imageType'] = imageType;
+      request.fields['platform'] = "Mobile";
+      request.headers['Authorization'] = "Bearer $value";
 
-    var picture = http.MultipartFile.fromBytes(
-        "image", File(imagePath).readAsBytesSync(),
-        filename: "avatar-img-${DateTime.now().millisecondsSinceEpoch}.jpg");
+      var picture = http.MultipartFile.fromBytes(
+          "image", File(imagePath).readAsBytesSync(),
+          filename: "avatar-img-${DateTime.now().millisecondsSinceEpoch}.jpg");
 
-    print(
-        "$imagePath my image send to database ${Image.file(File(imagePath))}");
+      print(
+          "$imagePath my image send to database ${Image.file(File(imagePath))}");
 
-    request.files.add(picture);
+      request.files.add(picture);
 
-    var response = await request.send();
+      var response = await request.send();
 
-    var responseData = await response.stream.toBytes();
+      var responseData = await response.stream.toBytes();
 
-    var result = String.fromCharCodes(responseData);
+      var result = String.fromCharCodes(responseData);
 
-    print(result);
-    if (response.statusCode == 200) {
-      userData = json.decode(result);
-      // print(loginArray);
-      imageType == "avatar"
-          ? provider.uploadImage(userData["data"]["image"], "default")
-          : provider.uploadImage("default", userData["data"]["image"]);
+      print(result);
+      if (response.statusCode == 200) {
+        userData = json.decode(result);
+        // print(loginArray);
+        imageType == "avatar"
+            ? provider.uploadImage(userData["data"]["image"], "default")
+            : provider.uploadImage("default", userData["data"]["image"]);
 
-      imageType == "avatar"
-          ? provider.profileAvatarImg(userData["data"]["image"])
-          : null;
-      print("image data ${userData["data"]["image"]}");
-    } else {
-      print("error response : ${result}");
+        imageType == "avatar"
+            ? provider.profileAvatarImg(userData["data"]["image"])
+            : null;
+
+        ToastContext().init(context);
+        //Toast show message
+        Toast.show(userData["message"],
+            duration: Toast.lengthLong, gravity: Toast.bottom);
+        print("image data ${userData["data"]["image"]}");
+
+      } else {
+
+        userData = json.decode(result);
+        ToastContext().init(context);
+        //Toast show message
+        Toast.show(userData["message"],
+            duration: Toast.lengthLong, gravity: Toast.bottom);
+        print("error response : ${result}");
+      }
+    } catch (e) {
+      print("UserProfileController::addUserProfileImage $e");
     }
   }
 
@@ -206,21 +234,25 @@ class UserProfileController {
     var client = http.Client();
     const url = 'www.e.kossyam.com';
     String? value = await storage.read(key: 'jwt');
-    var response =
-        await client.post(Uri.https(url, 'en/get-user-profile-image'), body: {
-      "platform": "Mobile",
-    }, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $value',
-    });
+    try {
+      var response =
+          await client.post(Uri.https(url, 'en/get-user-profile-image'), body: {
+        "platform": "Mobile",
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $value',
+      });
 
-    if (response.statusCode == 200) {
-      userImage = json.decode(response.body);
-      // print(loginArray);
-      Provider.of<AllChangeNotifier>(context, listen: false)
-          .profileAvatarImg(userImage['data']["image"]);
-      print(response.body);
-    } else {
-      print("error response : ${response.body}");
+      if (response.statusCode == 200) {
+        userImage = json.decode(response.body);
+        // print(loginArray);
+        Provider.of<AllChangeNotifier>(context, listen: false)
+            .profileAvatarImg(userImage['data']["image"]);
+        print(response.body);
+      } else {
+        print("error response : ${response.body}");
+      }
+    } catch (e) {
+      print("UserProfileController::getProfileImage  $e");
     }
   }
 
@@ -232,28 +264,32 @@ class UserProfileController {
     var client = http.Client();
     const url = 'www.e.kossyam.com';
     String? value = await storage.read(key: 'jwt');
-    var response = await client
-        .post(Uri.https(url, 'en/send-email-address-confirmation'), body: {
-      "platform": "Mobile",
-    }, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $value',
-    });
-    emailResponse = json.decode(response.body);
-    print(emailResponse);
-    emailResponse["status"] == 1
-        ? CoolAlert.show(
-            title: "Success!",
-            backgroundColor: Colors.white,
-            context: context,
-            type: CoolAlertType.success,
-            text: "A verification email has sent to your email address.!",
-            confirmBtnColor: appColor.dGreen,
-          )
-        : null;
+    try {
+      var response = await client
+          .post(Uri.https(url, 'en/send-email-address-confirmation'), body: {
+        "platform": "Mobile",
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $value',
+      });
+      emailResponse = json.decode(response.body);
+      print(emailResponse);
+      emailResponse["status"] == 1
+          ? CoolAlert.show(
+              title: "Success!",
+              backgroundColor: Colors.white,
+              context: context,
+              type: CoolAlertType.success,
+              text: "A verification email has sent to your email address.!",
+              confirmBtnColor: appColor.dGreen,
+            )
+          : null;
+    } catch (e) {
+      print("UserProfileController::sentEmailConfirmation  $e");
+    }
     Provider.of<AllChangeNotifier>(context, listen: false).pageRefresh(false);
   }
 
-  Future checkIfEmailIsValidateOrNot(context) async{
+  Future checkIfEmailIsValidateOrNot(context) async {
 //Do request to put image in to database
     const storage = FlutterSecureStorage();
     bool isSend = false;
@@ -261,40 +297,45 @@ class UserProfileController {
     var client = http.Client();
     const url = 'www.e.kossyam.com';
     String? value = await storage.read(key: 'jwt');
-    var response =
-        await client.post(Uri.https(url, 'en/email-address-is-valide-or-not'), body: {
-      "platform": "Mobile",
-    }, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $value',
-    });
+    try {
+      var response = await client
+          .post(Uri.https(url, 'en/email-address-is-valide-or-not'), body: {
+        "platform": "Mobile",
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $value',
+      });
 
-    if (response.statusCode == 200) {
-      emailStatus = json.decode(response.body);
-      print("le type de la var: ${emailStatus['data'].isNotEmpty }");
-      emailStatus['data'].isNotEmpty && emailStatus['data']["mailStatus"] == "0"
-          ? CoolAlert.show(
-        title: "Email not verified !",
-        backgroundColor: Colors.white,
-        context: context,
-        type: CoolAlertType.error,
-        barrierDismissible: false,
-        text:
-        "Check your email and click to the link button to active your account.!",
-        confirmBtnText: "Sent verification email",
-        onCancelBtnTap: () {
-          print("Je click sur on cancel btn");
-        },
-        onConfirmBtnTap: () async {
-          await sentEmailConfirmation(context);
-          // isSend = false;
-          print("Je click sur on confirm $isSend");
-        },
-        confirmBtnColor: appColor.dGreen,
-      )
-          : null;
-      print(response.body);
-    } else {
-      print("error response : ${response.body}");
+      if (response.statusCode == 200) {
+        emailStatus = json.decode(response.body);
+        print("le type de la var: ${emailStatus['data'].isNotEmpty}");
+        emailStatus['data'].isNotEmpty &&
+                emailStatus['data']["mailStatus"] == "0"
+            ? CoolAlert.show(
+                title: "Email not verified !",
+                backgroundColor: Colors.white,
+                context: context,
+                type: CoolAlertType.error,
+                barrierDismissible: false,
+                text:
+                    "Check your email and click to the link button to active your account.!",
+                confirmBtnText: "Sent verification email",
+                onCancelBtnTap: () {
+                  print("Je click sur on cancel btn");
+                },
+                onConfirmBtnTap: () async {
+                  await sentEmailConfirmation(context);
+                  // isSend = false;
+                  print("Je click sur on confirm $isSend");
+                },
+                confirmBtnColor: appColor.dGreen,
+              )
+            : null;
+        print(response.body);
+      } else {
+        print("error response : ${response.body}");
+      }
+    } catch (e) {
+      print("UserProfileController::userSocialNetworkAndAddressesList  $e");
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:event_mobile_app/colors/colors.dart';
 import 'package:event_mobile_app/controller/auth/changeUserPassword.dart';
 import 'package:event_mobile_app/controller/auth/logOutController.dart';
 import 'package:event_mobile_app/screen/auth/resetPassword.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:event_mobile_app/main.dart';
+
+AppColors appColor = AppColors();
 
 class PasswordSettings extends StatefulWidget {
   const PasswordSettings({Key? key}) : super(key: key);
@@ -114,7 +117,7 @@ class _PasswordSettingsState extends State<PasswordSettings> {
             height: 20.0,
           ),
           Text(
-            "You can update your password from here. Ifyou can't remember your current password, just log out and click on Forgot password.",
+            "You can update your password from here. If you can't remember your current password, just log out and click on Forgot password.",
             style: TextStyle(
               color: lightColor.dGrey,
             ),
@@ -176,7 +179,7 @@ class _PasswordSettingsState extends State<PasswordSettings> {
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ResetPassword()));
+                  MaterialPageRoute(builder: (context) => const ResetPassword()));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,

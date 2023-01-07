@@ -65,6 +65,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     Map userData = Provider.of<AllChangeNotifier>(context).userData;
+    print("ProfileView::Widget  ${userData['data']}");
     Map userPreferences =
         Provider.of<AllChangeNotifier>(context).userPreferences;
     Map socialMedia = jsonDecode(userData['data']['socialNetworks']);

@@ -99,7 +99,12 @@ class _MyAppBarState extends State<MyAppBar> {
                   elevation: 0,
                   height: 40,
                   color: darkMode ? darkColor.dGreen : lightColor.dGreen,
-                  onPressed: () async {},
+                  onPressed: () async {
+                    setState(() {
+                      Provider.of<AllChangeNotifier>(context, listen: false)
+                          .changePage(DrawerSection.createNewEvents);
+                    });
+                  },
                   shape: const CircleBorder(),
                   child: const FaIcon(
                     FontAwesomeIcons.plus,

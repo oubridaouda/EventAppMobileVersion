@@ -10,6 +10,9 @@ import 'package:event_mobile_app/screen/auth/resetPassword.dart';
 import 'package:event_mobile_app/screen/auth/signUp.dart';
 import 'package:event_mobile_app/screen/events/EventListScreenView/EventListScreenView.dart';
 import 'package:event_mobile_app/screen/events/SearchEventSection/SearchEventSection.dart';
+import 'package:event_mobile_app/screen/events/createNewEvent/createNewEvents.dart';
+import 'package:event_mobile_app/screen/events/createNewEvent/createOnlineEvent/createOnlineEvent.dart';
+import 'package:event_mobile_app/screen/events/createNewEvent/createVenueEvent/createVenueEvent.dart';
 import 'package:event_mobile_app/screen/menu/appNavBar.dart';
 import 'package:event_mobile_app/screen/menu/drawer.dart';
 import 'package:event_mobile_app/screen/pages/ExploreEvents/ExploreEvents.dart';
@@ -29,8 +32,7 @@ var currentPage = DrawerSection.dashboard;
 class HomePage extends StatefulWidget {
   final String text;
 
-  const HomePage({Key? key, this.text = ""})
-      : super(key: key);
+  const HomePage({Key? key, this.text = ""}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -58,7 +60,8 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       isLogged = (shareStorage.getBool('isLoggedIn') ?? false);
-      Provider.of<AllChangeNotifier>(context,listen: false).userIsLogged(isLogged);
+      Provider.of<AllChangeNotifier>(context, listen: false)
+          .userIsLogged(isLogged);
     });
   }
 
@@ -78,42 +81,41 @@ class _HomePageState extends State<HomePage> {
     isLogged = Provider.of<AllChangeNotifier>(context).isLogged;
     Widget container = const DashBoard();
     //If user does not connection you can access to another page
-    if(isLogged == true){
+    if (isLogged == true) {
       currentPage = Provider.of<AllChangeNotifier>(context).currentPage;
-    }else if(isLogged == false && Provider.of<AllChangeNotifier>(context).currentPage == DrawerSection.resetPasswordPage){
+    } else if (isLogged == false &&
+        Provider.of<AllChangeNotifier>(context).currentPage ==
+            DrawerSection.resetPasswordPage) {
       currentPage = DrawerSection.resetPasswordPage;
-    }else if(isLogged==false && Provider.of<AllChangeNotifier>(context).currentPage == DrawerSection.singUpPage){
+    } else if (isLogged == false &&
+        Provider.of<AllChangeNotifier>(context).currentPage ==
+            DrawerSection.singUpPage) {
       currentPage = DrawerSection.singUpPage;
-    }else if(isLogged==false && Provider.of<AllChangeNotifier>(context).currentPage == DrawerSection.loginPage){
+    } else if (isLogged == false &&
+        Provider.of<AllChangeNotifier>(context).currentPage ==
+            DrawerSection.loginPage) {
       currentPage = DrawerSection.loginPage;
-    }else if(isLogged == false){
+    } else if (isLogged == false) {
       currentPage = DrawerSection.loginPage;
     }
-
     //Initialize widget and display it
-    if (currentPage == DrawerSection.dashboard) {
-      container = const DashBoard();
-    } else if (currentPage == DrawerSection.exploreEvents) {
-      container = const ExploreEvents();
-    } else if (currentPage == DrawerSection.onlineEvent) {
-      container = const OnlineEventDetailView();
-    } else if (currentPage == DrawerSection.venueEvent) {
-      container = const VenuesEventDetailView();
-    } else if (currentPage == DrawerSection.profileView) {
-      container = const ProfileView();
-    }else if (currentPage == DrawerSection.loginPage) {
-      container = const LoginPage();
-    }else if (currentPage == DrawerSection.singUpPage) {
-      container = const SignUp();
-    }else if (currentPage == DrawerSection.resetPasswordPage) {
-      container = const ResetPassword();
-    }
-    print("la valeur de switch est : ${isLogged == false && Provider.of<AllChangeNotifier>(context).currentPage != DrawerSection.resetPasswordPage}");
+    container = currentSelectedPage(currentPage);
+
+    print(
+        "HomePage::Widget ${isLogged == false && Provider.of<AllChangeNotifier>(context).currentPage != DrawerSection.resetPasswordPage}");
     return WillPopScope(
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: currentPage == DrawerSection.loginPage || currentPage == DrawerSection.singUpPage || currentPage == DrawerSection.resetPasswordPage ? null :NavDrawer(scaffoldKey: _scaffoldKey),
-        appBar: currentPage == DrawerSection.loginPage || currentPage == DrawerSection.singUpPage || currentPage == DrawerSection.resetPasswordPage ? null : MyAppBar(scaffoldKey: _scaffoldKey),
+        drawer: currentPage == DrawerSection.loginPage ||
+                currentPage == DrawerSection.singUpPage ||
+                currentPage == DrawerSection.resetPasswordPage
+            ? null
+            : NavDrawer(scaffoldKey: _scaffoldKey),
+        appBar: currentPage == DrawerSection.loginPage ||
+                currentPage == DrawerSection.singUpPage ||
+                currentPage == DrawerSection.resetPasswordPage
+            ? null
+            : MyAppBar(scaffoldKey: _scaffoldKey),
         body: !refresh
             ? container
             : Center(
@@ -122,7 +124,8 @@ class _HomePageState extends State<HomePage> {
       ),
       onWillPop: () async {
         print("back button pressed");
-        if (currentPage != DrawerSection.dashboard && currentPage != DrawerSection.loginPage) {
+        if (currentPage != DrawerSection.dashboard &&
+            currentPage != DrawerSection.loginPage) {
           Provider.of<AllChangeNotifier>(context, listen: false)
               .changePage(DrawerSection.dashboard);
           return false;
@@ -147,10 +150,56 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+Widget currentSelectedPage(currentPage) {
+  Widget container;
+  switch (currentPage) {
+    //Initialize widget and display it
+    case DrawerSection.dashboard:
+      container = const DashBoard();
+      break;
+    case DrawerSection.exploreEvents:
+      container = const ExploreEvents();
+      break;
+    case DrawerSection.onlineEvent:
+      container = const OnlineEventDetailView();
+      break;
+    case DrawerSection.createNewEvents:
+      container = const CreateNewEvents();
+      break;
+    case DrawerSection.createOnlineEvent:
+      container = const CreateOnlineEvent();
+      break;
+    case DrawerSection.createVenueEvent:
+      container = const CreateVenueEvent();
+      break;
+    case DrawerSection.venueEvent:
+      container = const VenuesEventDetailView();
+      break;
+    case DrawerSection.profileView:
+      container = const ProfileView();
+      break;
+    case DrawerSection.loginPage:
+      container = const LoginPage();
+      break;
+    case DrawerSection.singUpPage:
+      container = const SignUp();
+      break;
+    case DrawerSection.resetPasswordPage:
+      container = const ResetPassword();
+      break;
+    default:
+      container = const DashBoard();
+  }
+  return container;
+}
+
 enum DrawerSection {
   dashboard,
   exploreEvents,
+  createNewEvents,
   onlineEvent,
+  createVenueEvent,
+  createOnlineEvent,
   venueEvent,
   profileView,
   loginPage,

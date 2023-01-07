@@ -9,8 +9,6 @@ class ExploreEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     darkMode = Provider.of<AllChangeNotifier>(context).screenMode;
-    return Container(
-      child: Center(child: Text("Explore Event"),),
-    );
+    return const Center(child: Text("Explore Event"),);
   }
 }
