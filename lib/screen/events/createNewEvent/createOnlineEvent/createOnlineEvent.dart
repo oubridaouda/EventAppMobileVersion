@@ -904,14 +904,14 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               child: Row(
                 children: [
                   Radio(
-                    value: "traning workshop",
+                    value: "online classes",
                     groupValue: "group value",
                     onChanged: (value) {
                       print(value); //selected value
                     },
                   ),
                   Radio(
-                    value: "standard webinar",
+                    value: "talk show",
                     groupValue: "group value",
                     onChanged: (value) {
                       print(value); //selected value
