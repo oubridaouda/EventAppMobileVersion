@@ -771,6 +771,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
             const SizedBox(
               height: 30.0,
             ),
+
             Row(
               children: [
                 Expanded(
@@ -795,14 +796,8 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                     child: Text("Image not found"),
                   ),
                 )),
-                Transform.translate(
-                  offset: const Offset(-40.0, -20.0),
-                  child: Radio(
-                      value: "radio value",
-                      groupValue: "group value",
-                      onChanged: (value) {
-                        print(value); //selected value
-                      }),
+                const SizedBox(
+                  width: 10.0,
                 ),
                 Expanded(
                   child: CachedNetworkImage(
@@ -828,21 +823,30 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                     ),
                   ),
                 ),
-                Transform.translate(
-                  offset: const Offset(-40.0, -20.0),
-                  child: Radio(
-                    value: "radio value",
+              ],
+            ),
+
+            Transform.translate(
+              offset: const Offset(130.0, -100.0),
+              child: Row(
+                children: [
+                  Radio(
+                    value: "traning workshop",
                     groupValue: "group value",
                     onChanged: (value) {
                       print(value); //selected value
                     },
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
+                  Radio(
+                    value: "standard webinar",
+                    groupValue: "group value",
+                    onChanged: (value) {
+                      print(value); //selected value
+                    },
+                  ),
+                ],
+              ),),
+
             Row(
               children: [
                 Expanded(
@@ -869,29 +873,52 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                 )),
                 const SizedBox(width: 10.0),
                 Expanded(
-                    child: CachedNetworkImage(
-                  height: 100,
-                  imageUrl:
-                      "https://www.e.kossyam.com/assets/images/icons/talk-show-1.png",
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+                  child: CachedNetworkImage(
+                    height: 100,
+                    imageUrl:
+                        "https://www.e.kossyam.com/assets/images/icons/talk-show-1.png",
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                color: lightColor.dGreen,
+                                value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Container(
+                      child: Text("Image not found"),
+                    ),
                   ),
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          color: lightColor.dGreen,
-                          value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Container(
-                    child: Text("Image not found"),
-                  ),
-                )),
+                ),
               ],
             ),
+
+            Transform.translate(
+              offset: const Offset(130.0, -100.0),
+              child: Row(
+                children: [
+                  Radio(
+                    value: "traning workshop",
+                    groupValue: "group value",
+                    onChanged: (value) {
+                      print(value); //selected value
+                    },
+                  ),
+                  Radio(
+                    value: "standard webinar",
+                    groupValue: "group value",
+                    onChanged: (value) {
+                      print(value); //selected value
+                    },
+                  ),
+                ],
+              ),),
             const SizedBox(
               height: 30.0,
             ),
