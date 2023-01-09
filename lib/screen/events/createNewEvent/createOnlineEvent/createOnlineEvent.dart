@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 class CreateOnlineEvent extends StatefulWidget {
   const CreateOnlineEvent({Key? key}) : super(key: key);
 
@@ -111,10 +110,10 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
+                    darkMode ? darkColor.InputColor : lightColor.InputColor,
                 hintText: 'Enter event name here',
                 enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: darkMode
@@ -122,7 +121,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                           : lightColor.InputBorderColor,
                     )),
                 focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: lightColor.InputBorderColor,
@@ -188,7 +187,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(2)),
+                            const BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
                           color: darkMode
                               ? darkColor.InputColor
@@ -198,7 +197,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(2)),
+                            const BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
                           color: lightColor.InputBorderColor,
                         ),
@@ -240,7 +239,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(2)),
+                            const BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
                           color: darkMode
                               ? darkColor.InputColor
@@ -250,7 +249,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(2)),
+                            const BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
                           color: lightColor.InputBorderColor,
                         ),
@@ -292,7 +291,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       enabledBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(2)),
+                            const BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
                           color: darkMode
                               ? darkColor.InputColor
@@ -302,7 +301,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       focusedBorder: OutlineInputBorder(
                         //Outline border type for TextFeild
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(2)),
+                            const BorderRadius.all(Radius.circular(2)),
                         borderSide: BorderSide(
                           color: lightColor.InputBorderColor,
                         ),
@@ -335,10 +334,10 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
+                    darkMode ? darkColor.InputColor : lightColor.InputColor,
                 hintText: 'When is your event?*',
                 enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: darkMode
@@ -346,7 +345,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                           : lightColor.InputBorderColor,
                     )),
                 focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: lightColor.InputBorderColor,
@@ -398,7 +397,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                   print(
                       pickedStartDate); //pickedStartDate output format => 2021-03-10 00:00:00.000
                   String formattedStartDate =
-                  DateFormat('yyyy-MM-dd').format(pickedStartDate);
+                      DateFormat('yyyy-MM-dd').format(pickedStartDate);
                   print(
                       formattedStartDate); //formatted date output using intl package =>  2021-03-16
                   //you can implement different kind of Date Format here according to your requirement
@@ -417,10 +416,10 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
+                    darkMode ? darkColor.InputColor : lightColor.InputColor,
                 hintText: 'YYYY/MM/DD',
                 enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: darkMode
@@ -428,7 +427,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                           : lightColor.InputBorderColor,
                     )),
                 focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: lightColor.InputBorderColor,
@@ -469,8 +468,8 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                 if (pickedStartTime != null) {
                   //output 10:51 PM
                   final formattedStartTime = TimeOfDay(
-                      hour: pickedStartTime.hour,
-                      minute: pickedStartTime.minute)
+                          hour: pickedStartTime.hour,
+                          minute: pickedStartTime.minute)
                       .format(context);
                   //converting to DateTime so that we can further format on different pattern.
                   print(formattedStartTime); //17:30
@@ -487,10 +486,10 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
+                    darkMode ? darkColor.InputColor : lightColor.InputColor,
                 hintText: 'HH:MM',
                 enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: darkMode
@@ -498,7 +497,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                           : lightColor.InputBorderColor,
                     )),
                 focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: lightColor.InputBorderColor,
@@ -542,7 +541,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                   print(
                       pickedEndDate); //pickedEndDate output format => 2021-03-10 00:00:00.000
                   String formattedEndDate =
-                  DateFormat('yyyy-MM-dd').format(pickedEndDate);
+                      DateFormat('yyyy-MM-dd').format(pickedEndDate);
                   print(
                       formattedEndDate); //formatted date output using intl package =>  2021-03-16
                   //you can implement different kind of Date Format here according to your requirement
@@ -561,10 +560,10 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
+                    darkMode ? darkColor.InputColor : lightColor.InputColor,
                 hintText: 'YYYY/MM/DD',
                 enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: darkMode
@@ -572,7 +571,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                           : lightColor.InputBorderColor,
                     )),
                 focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: lightColor.InputBorderColor,
@@ -613,8 +612,8 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                 if (pickedEndTime != null) {
                   //output 10:51 PM
                   final formattedEndTime = TimeOfDay(
-                      hour: pickedEndTime.hour,
-                      minute: pickedEndTime.minute)
+                          hour: pickedEndTime.hour,
+                          minute: pickedEndTime.minute)
                       .format(context);
                   //converting to DateTime so that we can further format on different pattern.
                   print(formattedEndTime); //17:30
@@ -631,10 +630,10 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
+                    darkMode ? darkColor.InputColor : lightColor.InputColor,
                 hintText: 'HH:MM',
                 enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: darkMode
@@ -642,7 +641,7 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                           : lightColor.InputBorderColor,
                     )),
                 focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
+                    //Outline border type for TextFeild
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                     borderSide: BorderSide(
                       color: lightColor.InputBorderColor,
@@ -687,11 +686,12 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                 height: 230.0,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
+                  color:
+                      darkMode ? darkColor.dBackgroud : lightColor.dBackgroud,
                 ),
-                child:
-                CachedNetworkImage(
-                  imageUrl: "https://www.e.kossyam.com/assets/images/banners/custom-img.jpg",
+                child: CachedNetworkImage(
+                  imageUrl:
+                      "https://www.e.kossyam.com/assets/images/banners/custom-img.jpg",
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
@@ -701,15 +701,14 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                       ),
                     ),
                   ),
-                  progressIndicatorBuilder:
-                      (context, url, downloadProgress) =>
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
                       CircularProgressIndicator(
                           color: lightColor.dGreen,
                           value: downloadProgress.progress),
-                  errorWidget: (context, url, error) =>
-                      Container(child: Text("Image not found"),),
+                  errorWidget: (context, url, error) => Container(
+                    child: Text("Image not found"),
+                  ),
                 )),
-
             Transform.translate(
               offset: const Offset(190.0, -215.0),
               child: SizedBox(
@@ -719,10 +718,9 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(12),
                     backgroundColor:
-                    darkMode ? darkColor.dWhite : lightColor.dWhite,
+                        darkMode ? darkColor.dWhite : lightColor.dWhite,
                   ),
-                  onPressed: () async {
-                  },
+                  onPressed: () async {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -758,14 +756,14 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               height: 30.0,
             ),
             const Text(
-              "Where is your event taking place? *",
+              "What type of online event are you hosting?*",
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
             ),
             const SizedBox(
               height: 10.0,
             ),
             Text(
-              "Add a venue to your event to tell your attendees where to join the event.",
+              "Choosing the type of your event helps us to create a more tailored experience for you. Learn more",
               style: TextStyle(
                 color: lightColor.dGrey,
               ),
@@ -773,391 +771,127 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
             const SizedBox(
               height: 30.0,
             ),
-            const Text(
-              "Venue*",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.0),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            TextField(
-              onChanged: (textPass) => setState(() {}),
-              style: TextStyle(
-                  color: darkMode ? lightColor.dWhite : darkColor.dWhite),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
-                hintText: 'Enter your venue',
-                enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      color: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputBorderColor,
-                    )),
-                focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      color: lightColor.InputBorderColor,
-                    )),
-                errorBorder: const OutlineInputBorder(
-                  //Outline border type for TextFeild
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.visiblePassword,
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            const Text(
-              "Country*",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.0),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            DropdownSearch<String>(
-              popupProps: const PopupProps.menu(
-                  showSearchBox: true,
-                  showSelectedItems: true,
-                  menuProps: MenuProps()),
-              items: eventListType,
-              dropdownDecoratorProps: DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  // labelText: "Menu mode",
-                  labelStyle: TextStyle(color: Colors.blue),
-                  hintText: "Select type",
-                  filled: true,
-                  fillColor:
-                  darkMode ? darkColor.InputColor : lightColor.InputColor,
-                  enabledBorder: OutlineInputBorder(
-                    //Outline border type for TextFeild
-                    borderRadius: const BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      color: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputBorderColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    //Outline border type for TextFeild
-                    borderRadius: const BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      color: lightColor.InputBorderColor,
-                    ),
-                  ),
-                  errorBorder: const OutlineInputBorder(
-                    //Outline border type for TextFeild
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-              ),
-              onChanged: ((value) {
-                print(value);
-                selectEventType = value;
-              }),
-              selectedItem: selectEventType,
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            const Text(
-              "City/Suburb*",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.0),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            TextField(
-              onChanged: (textPass) => setState(() {}),
-              style: TextStyle(
-                  color: darkMode ? lightColor.dWhite : darkColor.dWhite),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor:
-                darkMode ? darkColor.InputColor : lightColor.InputColor,
-                hintText: 'Enter your venue',
-                enabledBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      color: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputBorderColor,
-                    )),
-                focusedBorder: OutlineInputBorder(
-                  //Outline border type for TextFeild
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    borderSide: BorderSide(
-                      color: lightColor.InputBorderColor,
-                    )),
-                errorBorder: const OutlineInputBorder(
-                  //Outline border type for TextFeild
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.visiblePassword,
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            const Text(
-              "More...",
-              style: TextStyle(fontSize: 14.0),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                FlutterSwitch(
-                  width: 44.0,
-                  height: 22.0,
-                  valueFontSize: 25.0,
-                  toggleSize: 20.0,
-                  value: moreAddress,
-                  borderRadius: 30.0,
-                  padding: 2.0,
-                  showOnOff: true,
-                  activeText: "",
-                  inactiveText: "",
-                  activeColor: lightColor.cyanColor,
-                  inactiveColor: lightColor.cyanBlueColor,
-                  onToggle: (val) {
-                    setState(() {
-                      moreAddress = val;
-                    });
-                  },
+                Expanded(
+                    child: CachedNetworkImage(
+                  height: 100,
+                  imageUrl:
+                      "https://www.e.kossyam.com/assets/images/icons/standard-webinar.png",
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                          color: lightColor.dGreen,
+                          value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Container(
+                    child: Text("Image not found"),
+                  ),
+                )),
+                Transform.translate(
+                  offset: const Offset(-40.0, -20.0),
+                  child: Radio(
+                      value: "radio value",
+                      groupValue: "group value",
+                      onChanged: (value) {
+                        print(value); //selected value
+                      }),
+                ),
+                Expanded(
+                  child: CachedNetworkImage(
+                    height: 100,
+                    imageUrl:
+                        "https://www.e.kossyam.com/assets/images/icons/health-and-welbeing.png",
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                color: lightColor.dGreen,
+                                value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Container(
+                      child: Text("Image not found"),
+                    ),
+                  ),
+                ),
+                Transform.translate(
+                  offset: const Offset(-40.0, -20.0),
+                  child: Radio(
+                    value: "radio value",
+                    groupValue: "group value",
+                    onChanged: (value) {
+                      print(value); //selected value
+                    },
+                  ),
                 ),
               ],
             ),
-            moreAddress
-                ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  const Text(
-                    "Address line 1",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 14.0),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    onChanged: (textPass) => setState(() {}),
-                    style: TextStyle(
-                        color: darkMode
-                            ? lightColor.dWhite
-                            : darkColor.dWhite),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputColor,
-                      hintText: 'Enter your address line 1',
-                      enabledBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: darkMode
-                                ? darkColor.InputColor
-                                : lightColor.InputBorderColor,
-                          )),
-                      focusedBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: lightColor.InputBorderColor,
-                          )),
-                      errorBorder: const OutlineInputBorder(
-                        //Outline border type for TextFeild
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(2)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.red,
-                        ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            Row(
+              children: [
+                Expanded(
+                    child: CachedNetworkImage(
+                  height: 100,
+                  imageUrl:
+                      "https://www.e.kossyam.com/assets/images/icons/e-learning.png",
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    keyboardType: TextInputType.visiblePassword,
                   ),
-                  const SizedBox(
-                    height: 30.0,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                          color: lightColor.dGreen,
+                          value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Container(
+                    child: Text("Image not found"),
                   ),
-                  const Text(
-                    "Address line 2",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 14.0),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    onChanged: (textPass) => setState(() {}),
-                    style: TextStyle(
-                        color: darkMode
-                            ? lightColor.dWhite
-                            : darkColor.dWhite),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputColor,
-                      hintText: 'Enter your address line 2',
-                      enabledBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: darkMode
-                                ? darkColor.InputColor
-                                : lightColor.InputBorderColor,
-                          )),
-                      focusedBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: lightColor.InputBorderColor,
-                          )),
-                      errorBorder: const OutlineInputBorder(
-                        //Outline border type for TextFeild
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(2)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.red,
-                        ),
+                )),
+                const SizedBox(width: 10.0),
+                Expanded(
+                    child: CachedNetworkImage(
+                  height: 100,
+                  imageUrl:
+                      "https://www.e.kossyam.com/assets/images/icons/talk-show-1.png",
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    keyboardType: TextInputType.visiblePassword,
                   ),
-                  const SizedBox(
-                    height: 30.0,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                          color: lightColor.dGreen,
+                          value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Container(
+                    child: Text("Image not found"),
                   ),
-                  const Text(
-                    "State",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 14.0),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    onChanged: (textPass) => setState(() {}),
-                    style: TextStyle(
-                        color: darkMode
-                            ? lightColor.dWhite
-                            : darkColor.dWhite),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputColor,
-                      hintText: 'Enter your state',
-                      enabledBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: darkMode
-                                ? darkColor.InputColor
-                                : lightColor.InputBorderColor,
-                          )),
-                      focusedBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: lightColor.InputBorderColor,
-                          )),
-                      errorBorder: const OutlineInputBorder(
-                        //Outline border type for TextFeild
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(2)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  const Text(
-                    "Zip/Post Code",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 14.0),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    onChanged: (textPass) => setState(() {}),
-                    style: TextStyle(
-                        color: darkMode
-                            ? lightColor.dWhite
-                            : darkColor.dWhite),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: darkMode
-                          ? darkColor.InputColor
-                          : lightColor.InputColor,
-                      hintText: 'Enter your Zip/Post Code',
-                      enabledBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: darkMode
-                                ? darkColor.InputColor
-                                : lightColor.InputBorderColor,
-                          )),
-                      focusedBorder: OutlineInputBorder(
-                        //Outline border type for TextFeild
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(2)),
-                          borderSide: BorderSide(
-                            color: lightColor.InputBorderColor,
-                          )),
-                      errorBorder: const OutlineInputBorder(
-                        //Outline border type for TextFeild
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(2)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                  )
-                ])
-                : Container(),
+                )),
+              ],
+            ),
             const SizedBox(
               height: 30.0,
             ),
@@ -1170,26 +904,26 @@ class _CreateOnlineEventState extends State<CreateOnlineEvent> {
               ),
               child: isLoading
                   ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(color: Colors.white),
-                  SizedBox(width: 14),
-                  Text(
-                    'Veuillez  patienter...',
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              )
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(color: Colors.white),
+                        SizedBox(width: 14),
+                        Text(
+                          'Veuillez  patienter...',
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
+                    )
                   : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  "Next",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: darkMode
-                          ? darkColor.dWhite
-                          : lightColor.dWhite),
-                ),
-              ]),
+                      Text(
+                        "Next",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: darkMode
+                                ? darkColor.dWhite
+                                : lightColor.dWhite),
+                      ),
+                    ]),
             ),
           ],
         ),

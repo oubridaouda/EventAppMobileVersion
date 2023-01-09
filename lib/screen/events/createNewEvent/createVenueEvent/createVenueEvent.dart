@@ -4,9 +4,12 @@ import 'package:event_mobile_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:google_map_iframe/google_map_iframe.dart';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
 
 
 class CreateVenueEvent extends StatefulWidget {
@@ -769,6 +772,9 @@ class _CreateVenueEventState extends State<CreateVenueEvent> {
               style: TextStyle(
                 color: lightColor.dGrey,
               ),
+            ),
+            const SizedBox(
+              height: 30.0,
             ),
             const SizedBox(
               height: 30.0,
